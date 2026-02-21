@@ -40,7 +40,7 @@
             color: #fff; font-weight: 700;
         }
         .nav-logo span { color: var(--gold); }
-        .nav-tabs { display: flex; gap: 0; }
+        .nav-tabs { display: none; gap: 0; }
         .nav-tab {
             padding: 18px 16px; color: rgba(255,255,255,0.5); font-size: 13px;
             font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent;
@@ -49,8 +49,37 @@
         .nav-tab:hover { color: rgba(255,255,255,0.8); }
         .nav-tab.active { color: #fff; border-bottom-color: var(--crimson); }
 
-        @media (max-width: 900px) {
-            .nav-tab { padding: 18px 8px; font-size: 11px; }
+        /* Hamburger */
+        .nav-hamburger {
+            display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px;
+        }
+        .nav-hamburger span {
+            width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s;
+        }
+        .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Mobile menu */
+        .nav-mobile {
+            display: none; position: fixed; top: 60px; left: 0; right: 0;
+            background: rgba(13,13,26,0.98); backdrop-filter: blur(12px);
+            padding: 8px 0; z-index: 99; border-bottom: 1px solid rgba(255,255,255,0.08);
+            max-height: calc(100vh - 60px); overflow-y: auto;
+        }
+        .nav-mobile.open { display: block; }
+        .nav-mobile-item {
+            display: block; padding: 14px 24px; color: rgba(255,255,255,0.6);
+            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .nav-mobile-item:hover, .nav-mobile-item.active {
+            color: #fff; background: rgba(196,30,58,0.1); border-left-color: var(--crimson);
+        }
+
+        @media (min-width: 901px) {
+            .nav-tabs { display: flex; }
+            .nav-hamburger { display: none; }
         }
 
         /* === SECTIONS === */
@@ -233,6 +262,9 @@
 <nav class="nav">
     <div class="nav-inner">
         <div class="nav-logo">Casa <span>Companion</span></div>
+        <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
         <div class="nav-tabs">
             <div class="nav-tab active" data-tab="home">Home</div>
             <div class="nav-tab" data-tab="product">Product</div>
@@ -247,6 +279,20 @@
         </div>
     </div>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile" id="mobileMenu">
+    <div class="nav-mobile-item active" data-tab="home">Home</div>
+    <div class="nav-mobile-item" data-tab="product">Product</div>
+    <div class="nav-mobile-item" data-tab="features">Features</div>
+    <div class="nav-mobile-item" data-tab="howitworks">How It Works</div>
+    <div class="nav-mobile-item" data-tab="pricing">Pricing</div>
+    <div class="nav-mobile-item" data-tab="market">Market</div>
+    <div class="nav-mobile-item" data-tab="kickstarter">Kickstarter</div>
+    <div class="nav-mobile-item" data-tab="grandparents">Grandparents</div>
+    <div class="nav-mobile-item" data-tab="future">Future Tech</div>
+    <div class="nav-mobile-item" data-tab="story">Our Story</div>
+</div>
 
 <!-- ==================== HOME ==================== -->
 <div class="section active" id="home">
@@ -922,17 +968,31 @@
 <!-- === TAB SWITCHING === -->
 <script>
     const tabs = document.querySelectorAll('.nav-tab');
+    const mobileTabs = document.querySelectorAll('.nav-mobile-item');
     const sections = document.querySelectorAll('.section');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const hamburger = document.getElementById('hamburger');
 
     function switchTab(tabId) {
         tabs.forEach(t => t.classList.remove('active'));
+        mobileTabs.forEach(t => t.classList.remove('active'));
         sections.forEach(s => s.classList.remove('active'));
-        document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        document.querySelectorAll(`[data-tab="${tabId}"]`).forEach(t => t.classList.add('active'));
         document.getElementById(tabId).classList.add('active');
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
         window.scrollTo(0, 0);
     }
 
+    function toggleMenu() {
+        mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open');
+    }
+
     tabs.forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+    });
+    mobileTabs.forEach(tab => {
         tab.addEventListener('click', () => switchTab(tab.dataset.tab));
     });
 </script>
