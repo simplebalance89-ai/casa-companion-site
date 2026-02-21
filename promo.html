@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa Companion - 30s Promo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --crimson: #C41E3A;
+            --gold: #D4A017;
+            --green: #006847;
+            --cream: #FFFEF7;
+            --dark: #0D0D1A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 1080px;
+            height: 1920px;
+            overflow: hidden;
+            background: var(--dark);
+            font-family: 'Nunito', sans-serif;
+            position: relative;
+        }
+
+        /* Landscape 16:9 mode */
+        body.landscape {
+            width: 1920px;
+            height: 1080px;
+        }
+
+        .scene {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: none;
+            padding: 60px;
+        }
+
+        .scene.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ====== AMBIENT PARTICLES ====== */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            50% { transform: translateY(-80px) scale(1.2); }
+        }
+
+        /* ====== SCENE 1: HOOK ====== */
+        .scene-1 {
+            background: radial-gradient(ellipse at center, #1A0A0E 0%, var(--dark) 100%);
+        }
+
+        .scene-1 .question {
+            font-family: 'Nunito', sans-serif;
+            font-size: 42px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0;
+        }
+
+        .scene-1 h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 88px;
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            opacity: 0;
+        }
+
+        .scene-1 h1 span { color: var(--gold); }
+
+        .scene-1 .underline-anim {
+            width: 0;
+            height: 4px;
+            background: var(--crimson);
+            margin: 30px auto 0;
+            border-radius: 2px;
+        }
+
+        /* ====== SCENE 2: THE TOY ====== */
+        .scene-2 {
+            background: radial-gradient(ellipse at center, #1A1A2E 0%, var(--dark) 100%);
+        }
+
+        .toy-reveal {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .toy-glow {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,160,23,0.15) 0%, transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .toy-emoji {
+            font-size: 180px;
+            filter: drop-shadow(0 0 40px rgba(212,160,23,0.3));
+        }
+
+        .scene-2 h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            color: white;
+            opacity: 0;
+            margin-bottom: 16px;
+        }
+
+        .scene-2 .tagline {
+            font-size: 32px;
+            color: var(--gold);
+            font-weight: 300;
+            opacity: 0;
+        }
+
+        /* ====== SCENE 3: VOICE CLONE ====== */
+        .scene-3 {
+            background: radial-gradient(ellipse at 30% 50%, rgba(196,30,58,0.08) 0%, var(--dark) 70%);
+        }
+
+        .voice-wave {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            margin-bottom: 48px;
+        }
+
+        .wave-bar {
+            width: 8px;
+            background: var(--crimson);
+            border-radius: 4px;
+            height: 20px;
+            opacity: 0;
+        }
+
+        .scene-3 h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            color: white;
+            line-height: 1.2;
+            opacity: 0;
+        }
+
+        .scene-3 h2 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .scene-3 .detail {
+            font-size: 28px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 24px;
+            opacity: 0;
+        }
+
+        /* ====== SCENE 4: FEATURES RAPID ====== */
+        .scene-4 {
+            background: var(--dark);
+        }
+
+        .feature-flash {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .ff-item {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        .ff-icon {
+            font-size: 56px;
+            width: 80px;
+            text-align: center;
+        }
+
+        .ff-text {
+            font-size: 40px;
+            font-weight: 700;
+            color: white;
+            text-align: left;
+        }
+
+        .ff-text span {
+            color: var(--gold);
+        }
+
+        /* ====== SCENE 5: ANIMALS PARADE ====== */
+        .scene-5 {
+            background: radial-gradient(ellipse at center, #1A1A2E 0%, var(--dark) 100%);
+        }
+
+        .scene-5 h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            color: white;
+            margin-bottom: 48px;
+            opacity: 0;
+        }
+
+        .animal-parade {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .parade-animal {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(60px);
+        }
+
+        .parade-emoji {
+            font-size: 100px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .parade-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .parade-italian {
+            font-size: 20px;
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        /* ====== SCENE 6: LED EYES ====== */
+        .scene-6 {
+            background: var(--dark);
+        }
+
+        .led-showcase {
+            display: flex;
+            gap: 48px;
+            justify-content: center;
+            margin-bottom: 48px;
+        }
+
+        .led-orb {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .scene-6 h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            color: white;
+            opacity: 0;
+            margin-bottom: 16px;
+        }
+
+        .scene-6 p {
+            font-size: 28px;
+            color: rgba(255,255,255,0.5);
+            opacity: 0;
+        }
+
+        /* ====== SCENE 7: PRICING ====== */
+        .scene-7 {
+            background: radial-gradient(ellipse at center, #1A0A0E 0%, var(--dark) 100%);
+        }
+
+        .price-hero {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .price-from {
+            font-size: 32px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 8px;
+        }
+
+        .price-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 140px;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+        }
+
+        .price-amount span { color: var(--gold); }
+
+        .price-note {
+            font-size: 28px;
+            color: var(--gold);
+            margin-top: 16px;
+        }
+
+        .price-tiers {
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .price-tier {
+            padding: 20px 32px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .price-tier .tier-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .price-tier .tier-name {
+            font-size: 18px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ====== SCENE 8: CTA ====== */
+        .scene-8 {
+            background: radial-gradient(ellipse at center, #2D1117 0%, var(--dark) 100%);
+        }
+
+        .cta-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            font-weight: 900;
+            color: white;
+            opacity: 0;
+            margin-bottom: 24px;
+        }
+
+        .cta-logo span { color: var(--gold); }
+
+        .cta-tagline {
+            font-size: 36px;
+            color: rgba(255,255,255,0.6);
+            font-weight: 300;
+            opacity: 0;
+            margin-bottom: 48px;
+        }
+
+        .cta-badge {
+            display: inline-block;
+            padding: 20px 48px;
+            background: var(--crimson);
+            color: white;
+            font-size: 28px;
+            font-weight: 800;
+            border-radius: 60px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: scale(0.8);
+            box-shadow: 0 8px 40px rgba(196,30,58,0.5);
+        }
+
+        .cta-url {
+            margin-top: 32px;
+            font-size: 24px;
+            color: var(--gold);
+            opacity: 0;
+            letter-spacing: 1px;
+        }
+
+        /* ====== PROGRESS BAR ====== */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--crimson);
+            z-index: 100;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* ====== CONTROLS ====== */
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+            display: flex;
+            gap: 12px;
+        }
+
+        .ctrl-btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .ctrl-btn:hover { background: rgba(255,255,255,0.2); }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            color: rgba(255,255,255,0.3);
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particles" id="particles"></div>
+    <div class="progress-bar" id="progress"></div>
+    <div class="timer" id="timer">0:00</div>
+
+    <div class="controls">
+        <button class="ctrl-btn" onclick="toggleSize()">9:16 / 16:9</button>
+        <button class="ctrl-btn" onclick="restartPromo()">Replay</button>
+        <button class="ctrl-btn" onclick="togglePause()">Pause</button>
+    </div>
+
+    <!-- SCENE 1: HOOK (0-4s) -->
+    <div class="scene scene-1" id="scene-1">
+        <div class="question">What if your child could hear</div>
+        <h1>Your <span>Voice</span><br>Anytime</h1>
+        <div class="underline-anim"></div>
+    </div>
+
+    <!-- SCENE 2: THE TOY (4-8s) -->
+    <div class="scene scene-2" id="scene-2">
+        <div class="toy-reveal">
+            <div class="toy-glow">
+                <span class="toy-emoji">&#x1F426;&#x200D;&#x2B1B;</span>
+            </div>
+        </div>
+        <h2>Casa Companion</h2>
+        <div class="tagline">AI that speaks in your voice</div>
+    </div>
+
+    <!-- SCENE 3: VOICE CLONE (8-12s) -->
+    <div class="scene scene-3" id="scene-3">
+        <div class="voice-wave" id="voiceWave"></div>
+        <h2>Record <em>12 phrases</em>.<br>Clone your voice.</h2>
+        <div class="detail">Stories. Lullabies. Languages. In your voice.</div>
+    </div>
+
+    <!-- SCENE 4: FEATURES (12-18s) -->
+    <div class="scene scene-4" id="scene-4">
+        <div class="feature-flash">
+            <div class="ff-item"><span class="ff-icon">&#x1F30D;</span><span class="ff-text"><span>3</span> languages built in</span></div>
+            <div class="ff-item"><span class="ff-icon">&#x1F4F8;</span><span class="ff-text">Squeeze to <span>snap photos</span></span></div>
+            <div class="ff-item"><span class="ff-icon">&#x2600;&#xFE0F;</span><span class="ff-text"><span>Solar</span> charging nest</span></div>
+            <div class="ff-item"><span class="ff-icon">&#x1F50A;</span><span class="ff-text">Plug into <span>any speaker</span></span></div>
+            <div class="ff-item"><span class="ff-icon">&#x1F6C1;</span><span class="ff-text"><span>Machine</span> washable</span></div>
+            <div class="ff-item"><span class="ff-icon">&#x1F331;</span><span class="ff-text">Grows with <span>your child</span></span></div>
+        </div>
+    </div>
+
+    <!-- SCENE 5: ANIMALS (18-22s) -->
+    <div class="scene scene-5" id="scene-5">
+        <h2>Five friends. One family.</h2>
+        <div class="animal-parade">
+            <div class="parade-animal"><span class="parade-emoji">&#x1F426;&#x200D;&#x2B1B;</span><div class="parade-name">Crow</div><div class="parade-italian">Corvo</div></div>
+            <div class="parade-animal"><span class="parade-emoji">&#x1F989;</span><div class="parade-name">Owl</div><div class="parade-italian">Gufo</div></div>
+            <div class="parade-animal"><span class="parade-emoji">&#x1F43B;</span><div class="parade-name">Bear</div><div class="parade-italian">Orsetto</div></div>
+            <div class="parade-animal"><span class="parade-emoji">&#x1F98A;</span><div class="parade-name">Fox</div><div class="parade-italian">Volpe</div></div>
+            <div class="parade-animal"><span class="parade-emoji">&#x1F430;</span><div class="parade-name">Bunny</div><div class="parade-italian">Coniglio</div></div>
+        </div>
+    </div>
+
+    <!-- SCENE 6: LED EYES (22-25s) -->
+    <div class="scene scene-6" id="scene-6">
+        <div class="led-showcase">
+            <div class="led-orb" style="background: #4A9EFF; box-shadow: 0 0 60px #4A9EFF;"></div>
+            <div class="led-orb" style="background: #FFB347; box-shadow: 0 0 60px #FFB347;"></div>
+            <div class="led-orb" style="background: #FFD700; box-shadow: 0 0 60px #FFD700;"></div>
+            <div class="led-orb" style="background: #50C878; box-shadow: 0 0 60px #50C878;"></div>
+            <div class="led-orb" style="background: #9B59B6; box-shadow: 0 0 60px #9B59B6;"></div>
+        </div>
+        <h2>Eyes that feel alive</h2>
+        <p>Listening. Thinking. Speaking. Dreaming.</p>
+    </div>
+
+    <!-- SCENE 7: PRICING (25-28s) -->
+    <div class="scene scene-7" id="scene-7">
+        <div class="price-hero">
+            <div class="price-from">Starting at</div>
+            <div class="price-amount">$<span>79</span></div>
+            <div class="price-note">Kickstarter Early Bird</div>
+        </div>
+        <div class="price-tiers">
+            <div class="price-tier"><div class="tier-price">$79</div><div class="tier-name">Basic</div></div>
+            <div class="price-tier" style="border-color: var(--crimson);"><div class="tier-price">$119</div><div class="tier-name">Premium</div></div>
+            <div class="price-tier"><div class="tier-price">$159</div><div class="tier-name">Gift Edition</div></div>
+        </div>
+    </div>
+
+    <!-- SCENE 8: CTA (28-30s) -->
+    <div class="scene scene-8" id="scene-8">
+        <div class="cta-logo">Casa <span>Companion</span></div>
+        <div class="cta-tagline">Your voice. Their companion.</div>
+        <div class="cta-badge">Coming to Kickstarter 2026</div>
+        <div class="cta-url">casacompanion.com</div>
+    </div>
+
+    <script>
+        // ====== TIMELINE ENGINE ======
+        const TOTAL_DURATION = 30000; // 30 seconds
+        let startTime = 0;
+        let paused = false;
+        let pauseTime = 0;
+        let animFrame;
+
+        const timeline = [
+            // [timeMs, action]
+            // Scene 1: Hook (0-4s)
+            [0,    () => showScene(1)],
+            [200,  () => animateIn('#scene-1 .question', 600)],
+            [800,  () => animateIn('#scene-1 h1', 800)],
+            [1600, () => { const u = document.querySelector('#scene-1 .underline-anim'); u.style.transition = 'width 1s ease'; u.style.width = '200px'; }],
+
+            // Scene 2: Toy Reveal (4-8s)
+            [4000, () => showScene(2)],
+            [4200, () => { const g = document.querySelector('.toy-glow'); g.style.transition = 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)'; g.style.opacity = '1'; g.style.transform = 'scale(1)'; }],
+            [5000, () => animateIn('#scene-2 h2', 600)],
+            [5600, () => animateIn('#scene-2 .tagline', 500)],
+
+            // Scene 3: Voice Clone (8-12s)
+            [8000, () => showScene(3)],
+            [8200, () => animateWave()],
+            [9000, () => animateIn('#scene-3 h2', 700)],
+            [10000, () => animateIn('#scene-3 .detail', 500)],
+
+            // Scene 4: Features Rapid (12-18s)
+            [12000, () => showScene(4)],
+            [12200, () => flashFeature(0)],
+            [13000, () => flashFeature(1)],
+            [13800, () => flashFeature(2)],
+            [14600, () => flashFeature(3)],
+            [15400, () => flashFeature(4)],
+            [16200, () => flashFeature(5)],
+
+            // Scene 5: Animals (18-22s)
+            [18000, () => showScene(5)],
+            [18200, () => animateIn('#scene-5 h2', 500)],
+            [18600, () => paradeAnimal(0)],
+            [19000, () => paradeAnimal(1)],
+            [19400, () => paradeAnimal(2)],
+            [19800, () => paradeAnimal(3)],
+            [20200, () => paradeAnimal(4)],
+
+            // Scene 6: LED Eyes (22-25s)
+            [22000, () => showScene(6)],
+            [22200, () => showLed(0)],
+            [22500, () => showLed(1)],
+            [22800, () => showLed(2)],
+            [23100, () => showLed(3)],
+            [23400, () => showLed(4)],
+            [23800, () => animateIn('#scene-6 h2', 500)],
+            [24200, () => animateIn('#scene-6 p', 400)],
+
+            // Scene 7: Pricing (25-28s)
+            [25000, () => showScene(7)],
+            [25200, () => { const p = document.querySelector('.price-hero'); p.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'; p.style.opacity = '1'; p.style.transform = 'scale(1)'; }],
+            [26000, () => showTier(0)],
+            [26300, () => showTier(1)],
+            [26600, () => showTier(2)],
+
+            // Scene 8: CTA (28-30s)
+            [28000, () => showScene(8)],
+            [28200, () => animateIn('.cta-logo', 600)],
+            [28600, () => animateIn('.cta-tagline', 500)],
+            [29000, () => { const b = document.querySelector('.cta-badge'); b.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
+            [29400, () => animateIn('.cta-url', 400)],
+        ];
+
+        let executed = new Set();
+
+        function showScene(n) {
+            document.querySelectorAll('.scene').forEach(s => {
+                s.classList.remove('active');
+                s.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            });
+            const scene = document.getElementById(`scene-${n}`);
+            scene.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            scene.classList.add('active');
+        }
+
+        function animateIn(selector, dur) {
+            const el = document.querySelector(selector);
+            if (!el) return;
+            el.style.transition = `opacity ${dur}ms ease, transform ${dur}ms ease`;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }
+
+        function animateWave() {
+            const bars = document.querySelectorAll('.wave-bar');
+            bars.forEach((bar, i) => {
+                setTimeout(() => {
+                    bar.style.transition = 'all 0.3s ease';
+                    bar.style.opacity = '1';
+                    const h = 20 + Math.random() * 80;
+                    bar.style.height = h + 'px';
+                    // Animate bars
+                    setInterval(() => {
+                        if (!paused) bar.style.height = (20 + Math.random() * 80) + 'px';
+                    }, 200 + Math.random() * 200);
+                }, i * 30);
+            });
+        }
+
+        function flashFeature(i) {
+            const items = document.querySelectorAll('.ff-item');
+            if (items[i]) {
+                items[i].style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                items[i].style.opacity = '1';
+                items[i].style.transform = 'translateX(0)';
+            }
+        }
+
+        function paradeAnimal(i) {
+            const animals = document.querySelectorAll('.parade-animal');
+            if (animals[i]) {
+                animals[i].style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                animals[i].style.opacity = '1';
+                animals[i].style.transform = 'translateY(0)';
+            }
+        }
+
+        function showLed(i) {
+            const orbs = document.querySelectorAll('.led-orb');
+            if (orbs[i]) {
+                orbs[i].style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                orbs[i].style.opacity = '1';
+                orbs[i].style.transform = 'scale(1)';
+                // Pulse
+                setTimeout(() => {
+                    orbs[i].style.animation = 'ledPulseAnim 2s ease-in-out infinite';
+                }, 500);
+            }
+        }
+
+        function showTier(i) {
+            const tiers = document.querySelectorAll('.price-tier');
+            if (tiers[i]) {
+                tiers[i].style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                tiers[i].style.opacity = '1';
+                tiers[i].style.transform = 'translateY(0)';
+            }
+        }
+
+        // ====== MAIN LOOP ======
+        function tick() {
+            if (paused) { animFrame = requestAnimationFrame(tick); return; }
+
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / TOTAL_DURATION * 100, 100);
+            document.getElementById('progress').style.width = progress + '%';
+
+            // Timer display
+            const secs = Math.floor(elapsed / 1000);
+            const ms = Math.floor((elapsed % 1000) / 10);
+            document.getElementById('timer').textContent = `0:${secs.toString().padStart(2,'0')}`;
+
+            // Execute timeline events
+            timeline.forEach(([time, action], idx) => {
+                if (elapsed >= time && !executed.has(idx)) {
+                    executed.add(idx);
+                    action();
+                }
+            });
+
+            if (elapsed < TOTAL_DURATION + 2000) {
+                animFrame = requestAnimationFrame(tick);
+            }
+        }
+
+        // ====== INIT ======
+        function initParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.width = (2 + Math.random() * 4) + 'px';
+                p.style.height = p.style.width;
+                p.style.background = Math.random() > 0.5 ? 'rgba(212,160,23,0.3)' : 'rgba(196,30,58,0.3)';
+                p.style.animationDelay = (Math.random() * 6) + 's';
+                p.style.animationDuration = (4 + Math.random() * 4) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        function initWaveBars() {
+            const wave = document.getElementById('voiceWave');
+            for (let i = 0; i < 32; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'wave-bar';
+                wave.appendChild(bar);
+            }
+        }
+
+        // Set initial states
+        function resetAll() {
+            executed.clear();
+
+            document.querySelectorAll('.scene').forEach(s => {
+                s.classList.remove('active');
+                s.style.transition = 'none';
+                s.style.opacity = '0';
+                s.style.transform = 'scale(0.95)';
+            });
+
+            // Reset all animated elements
+            document.querySelectorAll('.question, #scene-1 h1, #scene-2 h2, .tagline, #scene-3 h2, .detail, #scene-5 h2, #scene-6 h2, #scene-6 p, .cta-logo, .cta-tagline, .cta-url').forEach(el => {
+                el.style.transition = 'none';
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+            });
+
+            document.querySelector('.underline-anim').style.width = '0';
+            document.querySelector('.toy-glow').style.cssText = 'opacity:0; transform:scale(0.5);';
+            document.querySelector('.price-hero').style.cssText = 'opacity:0; transform:scale(0.8);';
+            document.querySelector('.cta-badge').style.cssText = 'opacity:0; transform:scale(0.8);';
+
+            document.querySelectorAll('.wave-bar').forEach(b => { b.style.opacity = '0'; b.style.height = '20px'; });
+            document.querySelectorAll('.ff-item').forEach(f => { f.style.opacity = '0'; f.style.transform = 'translateX(-40px)'; });
+            document.querySelectorAll('.parade-animal').forEach(a => { a.style.opacity = '0'; a.style.transform = 'translateY(60px)'; });
+            document.querySelectorAll('.led-orb').forEach(o => { o.style.opacity = '0'; o.style.transform = 'scale(0)'; o.style.animation = 'none'; });
+            document.querySelectorAll('.price-tier').forEach(t => { t.style.opacity = '0'; t.style.transform = 'translateY(20px)'; });
+
+            document.getElementById('progress').style.width = '0%';
+        }
+
+        function startPromo() {
+            resetAll();
+            startTime = Date.now();
+            paused = false;
+            tick();
+        }
+
+        function restartPromo() {
+            cancelAnimationFrame(animFrame);
+            startPromo();
+        }
+
+        function togglePause() {
+            if (paused) {
+                startTime += Date.now() - pauseTime;
+                paused = false;
+            } else {
+                pauseTime = Date.now();
+                paused = true;
+            }
+        }
+
+        function toggleSize() {
+            document.body.classList.toggle('landscape');
+        }
+
+        // Add LED pulse keyframe
+        const style = document.createElement('style');
+        style.textContent = `@keyframes ledPulseAnim { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 1; } }`;
+        document.head.appendChild(style);
+
+        // Boot
+        initParticles();
+        initWaveBars();
+        startPromo();
+    </script>
+</body>
+</html>

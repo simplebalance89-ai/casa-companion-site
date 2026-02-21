@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa Companion — AI Family Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --crimson: #C41E3A;
+            --gold: #D4A017;
+            --green: #006847;
+            --cream: #FFFEF7;
+            --surface: #FFFFFF;
+            --text: #1A1A1A;
+            --text-light: #6B6B6B;
+            --border: #E8DDD0;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ====== HERO ====== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1A0A0E 0%, #2D1117 30%, #1A1A2E 70%, #0D0D1A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(196,30,58,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(212,160,23,0.06) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-2%, 2%); }
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid rgba(212,160,23,0.4);
+            border-radius: 50px;
+            color: var(--gold);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span { color: var(--gold); }
+
+        .hero-sub {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: rgba(255,255,255,0.7);
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: var(--crimson);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(196,30,58,0.4);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(196,30,58,0.5);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            justify-content: center;
+            margin-top: 64px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .hero-stat .label {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        /* ====== SCROLL INDICATOR ====== */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            stroke: rgba(255,255,255,0.3);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ====== SECTION COMMON ====== */
+        section {
+            padding: 100px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--crimson);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .section-sub {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        /* ====== THE STORY ====== */
+        .story {
+            background: white;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .story-text blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--crimson);
+            line-height: 1.5;
+            border-left: 3px solid var(--gold);
+            padding-left: 24px;
+            margin-bottom: 24px;
+        }
+
+        .story-text p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        .story-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .story-orb {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, #FFE4B5, var(--gold), var(--crimson));
+            opacity: 0.15;
+            animation: orbPulse 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .story-orb::after {
+            content: '🐦‍⬛';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            opacity: 6;
+        }
+
+        @keyframes orbPulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.05); opacity: 0.25; }
+        }
+
+        /* ====== ANIMALS ====== */
+        .animals { background: var(--cream); }
+
+        .animal-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+        }
+
+        .animal-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gold);
+        }
+
+        .animal-card.featured {
+            border-color: var(--crimson);
+            box-shadow: 0 4px 20px rgba(196,30,58,0.15);
+        }
+
+        .animal-emoji {
+            font-size: 56px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .animal-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .animal-italian {
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .animal-trait {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .animal-card.featured .animal-name { color: var(--crimson); }
+
+        .featured-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--crimson);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 50px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ====== FEATURES ====== */
+        .features { background: white; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--gold);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ====== HOW IT WORKS ====== */
+        .how-it-works { background: var(--cream); }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--crimson);
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .step h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* ====== LED STATES ====== */
+        .led-section { background: #0D0D1A; color: white; }
+
+        .led-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .led-card {
+            text-align: center;
+            padding: 32px 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        .led-dot {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: ledPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes ledPulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .led-card h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .led-card p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ====== PRICING ====== */
+        .pricing { background: white; }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .price-card {
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .price-card.popular {
+            border-color: var(--crimson);
+            box-shadow: 0 4px 20px rgba(196,30,58,0.15);
+            position: relative;
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--crimson);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .price-header {
+            padding: 40px 32px 24px;
+            text-align: center;
+        }
+
+        .price-card.popular .price-header { padding-top: 56px; }
+
+        .price-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .price-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--crimson);
+        }
+
+        .price-amount span { font-size: 1.2rem; color: var(--text-light); }
+
+        .price-body {
+            padding: 0 32px 32px;
+        }
+
+        .price-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .price-feature:last-child { border-bottom: none; }
+
+        .price-check { color: var(--green); font-weight: bold; }
+
+        .price-btn {
+            display: block;
+            margin: 24px 32px 32px;
+            padding: 14px;
+            text-align: center;
+            border-radius: 50px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .price-btn-primary {
+            background: var(--crimson);
+            color: white;
+            border: none;
+        }
+
+        .price-btn-secondary {
+            background: transparent;
+            color: var(--crimson);
+            border: 2px solid var(--crimson);
+        }
+
+        /* ====== SUBSCRIPTION ====== */
+        .subscription { background: var(--cream); }
+
+        .sub-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .sub-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px 24px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .sub-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--crimson);
+            margin-bottom: 4px;
+        }
+
+        .sub-period {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        .sub-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .sub-features {
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 2;
+            color: var(--text-light);
+        }
+
+        /* ====== CTA / EMAIL ====== */
+        .cta-section {
+            background: linear-gradient(135deg, #1A0A0E 0%, #2D1117 50%, #1A1A2E 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section .section-label { color: var(--gold); }
+        .cta-section .section-title { color: white; }
+
+        .cta-section .section-sub {
+            color: rgba(255,255,255,0.6);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .email-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 12px;
+        }
+
+        .email-form input {
+            flex: 1;
+            padding: 16px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .email-form input::placeholder { color: rgba(255,255,255,0.4); }
+
+        .email-form input:focus { border-color: var(--gold); }
+
+        .email-form button {
+            padding: 16px 32px;
+            border-radius: 50px;
+            background: var(--gold);
+            color: #1A1A1A;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .email-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(212,160,23,0.4);
+        }
+
+        .cta-note {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            background: #0D0D1A;
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        /* ====== MOBILE ====== */
+        @media (max-width: 900px) {
+            .animal-grid { grid-template-columns: repeat(3, 1fr); }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps { grid-template-columns: repeat(2, 1fr); }
+            .led-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .sub-grid { grid-template-columns: repeat(2, 1fr); }
+            .story-grid { grid-template-columns: 1fr; }
+            .story-visual { order: -1; }
+        }
+
+        @media (max-width: 600px) {
+            .animal-grid { grid-template-columns: repeat(2, 1fr); }
+            .feature-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; }
+            .led-grid { grid-template-columns: repeat(2, 1fr); }
+            .sub-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+            .hero-stats { gap: 32px; }
+            .email-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ====== HERO WITH EMBEDDED PROMO ====== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Coming to Kickstarter 2026</div>
+            <h1>Your voice.<br>Their <span>companion</span>.</h1>
+            <p class="hero-sub">The first AI plush toy that speaks in your voice. Stories, languages, milestones. Growing with your child from day one.</p>
+
+            <!-- Embedded Promo Video -->
+            <div style="margin: 32px auto; max-width: 560px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.4); position: relative; cursor: pointer;" onclick="openPromo()">
+                <div style="aspect-ratio: 16/9; background: linear-gradient(135deg, #1A0A0E, #1A1A2E); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+                    <div style="font-size: 64px; margin-bottom: 8px;">&#x1F426;&#x200D;&#x2B1B;</div>
+                    <div style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: white; font-weight: 700;">Watch the 30s Promo</div>
+                    <div style="position: absolute; width: 64px; height: 64px; border-radius: 50%; background: rgba(196,30,58,0.9); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(196,30,58,0.5);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="8,5 19,12 8,19"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#notify" class="hero-cta">
+                <span>Get Early Access</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="number">5</div>
+                    <div class="label">Companion Animals</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">3</div>
+                    <div class="label">Languages</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">1,000</div>
+                    <div class="label">First Days</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </div>
+    </section>
+
+    <!-- Promo Overlay -->
+    <div id="promoOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; justify-content:center; align-items:center;">
+        <div style="position:relative; width:90%; max-width:900px; aspect-ratio:16/9;">
+            <iframe id="promoFrame" src="" style="width:100%; height:100%; border:none; border-radius:12px;" allowfullscreen></iframe>
+            <button onclick="closePromo()" style="position:absolute; top:-40px; right:0; background:none; border:none; color:white; font-size:32px; cursor:pointer; font-family:'Nunito',sans-serif;">&times; Close</button>
+        </div>
+    </div>
+
+    <!-- ====== THE STORY ====== -->
+    <section class="story">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-text">
+                    <div class="section-label">The Story</div>
+                    <div class="section-title">Built by a father.<br>For his daughter.</div>
+                    <blockquote>"I wanted GL to hear my voice telling her stories, even when I couldn't be there."</blockquote>
+                    <p>Casa Companion started as one dad's weekend project. A cloned voice inside a stuffed crow, so his baby girl could hear bedtime stories in her father's voice anytime.</p>
+                    <p>It grew into something bigger. A platform that helps families connect, learn together, preserve their heritage, and capture the magic of those first 1,000 days.</p>
+                    <p>Now we want every family to have this.</p>
+                </div>
+                <div class="story-visual">
+                    <div class="story-orb"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== ANIMALS ====== -->
+    <section class="animals">
+        <div class="container">
+            <div class="section-label">Choose Your Companion</div>
+            <div class="section-title">Five friends. One family.</div>
+            <div class="section-sub">Each companion shares the same AI brain. Pick the one that speaks to your family. Same magic inside, different personality outside.</div>
+
+            <div class="animal-grid">
+                <div class="animal-card featured">
+                    <div class="featured-badge">Original</div>
+                    <span class="animal-emoji">&#x1F426;&#x200D;&#x2B1B;</span>
+                    <div class="animal-name">Crow</div>
+                    <div class="animal-italian">Corvo</div>
+                    <div class="animal-trait">Wise. Curious. Collects your family's stories like shiny treasures.</div>
+                </div>
+                <div class="animal-card">
+                    <span class="animal-emoji">&#x1F989;</span>
+                    <div class="animal-name">Owl</div>
+                    <div class="animal-italian">Gufo</div>
+                    <div class="animal-trait">Calm. Patient. The bedtime story guardian with a rotating head.</div>
+                </div>
+                <div class="animal-card">
+                    <span class="animal-emoji">&#x1F43B;</span>
+                    <div class="animal-name">Bear Cub</div>
+                    <div class="animal-italian">Orsetto</div>
+                    <div class="animal-trait">Cuddly. Warm. The classic companion every kid wants to hug.</div>
+                </div>
+                <div class="animal-card">
+                    <span class="animal-emoji">&#x1F98A;</span>
+                    <div class="animal-name">Fox</div>
+                    <div class="animal-italian">Volpe</div>
+                    <div class="animal-trait">Clever. Playful. Crinkle ears and a magnetic tail for accessories.</div>
+                </div>
+                <div class="animal-card">
+                    <span class="animal-emoji">&#x1F430;</span>
+                    <div class="animal-name">Bunny</div>
+                    <div class="animal-italian">Coniglio</div>
+                    <div class="animal-trait">Soft. Gentle. Weighted floppy ears. Made for the littlest ones.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FEATURES ====== -->
+    <section class="features">
+        <div class="container">
+            <div class="section-label">What It Does</div>
+            <div class="section-title">More than a toy. A family companion.</div>
+            <div class="section-sub">Voice-cloned AI that grows with your child through the first 1,000 days and beyond.</div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F3A4;</span>
+                    <h3>Your Voice, Always There</h3>
+                    <p>Clone your voice so your child hears YOU telling stories, singing lullabies, teaching words. Even when you're at work or traveling.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F30D;</span>
+                    <h3>Three Languages</h3>
+                    <p>English, Italian, and Spanish. Trilingual vocab, pronunciation, and cultural stories. Heritage preserved through play.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F4F8;</span>
+                    <h3>Squeeze to Snap</h3>
+                    <p>Squeeze the paw and your iPhone takes a photo. Moments captured and saved to your family app automatically.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F331;</span>
+                    <h3>Grows With Them</h3>
+                    <p>Content evolves as your child develops. Milestones tracked, activities suggested, difficulty adapts. From newborn to preschool.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x2600;&#xFE0F;</span>
+                    <h3>Solar Charging Nest</h3>
+                    <p>Place your companion in its themed nest to charge. Solar panel on top keeps it powered by sunlight. Magnetic, effortless.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F50A;</span>
+                    <h3>Plug In Anywhere</h3>
+                    <p>3.5mm aux jack for car rides, headphones for quiet time, Bluetooth for the living room speaker. The toy is the brain, any speaker is the voice.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F4E6;</span>
+                    <h3>Monthly Updates</h3>
+                    <p>New stories, seasonal content, language packs, and milestone activities pushed over WiFi while your companion sleeps in its nest.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F6C1;</span>
+                    <h3>Machine Washable</h3>
+                    <p>Remove the electronics pod (2 seconds), toss the plush in the wash. Because kids are kids.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F6E1;&#xFE0F;</span>
+                    <h3>Safe by Design</h3>
+                    <p>Volume-capped at 85dB. No camera. No data sold. COPPA compliant. ASTM F963 toy safety certified. Built by a parent, for parents.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== HOW IT WORKS ====== -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-label">How It Works</div>
+            <div class="section-title">Four steps to magic.</div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Unbox</h3>
+                    <p>Your companion arrives with its charging nest, cable, and a quick-start card. Gift-ready packaging.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Connect</h3>
+                    <p>Open the Casa app. Pair via Bluetooth. Connect to WiFi. Takes 90 seconds.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Record</h3>
+                    <p>Read 12 short phrases. Our AI clones your voice in under 5 minutes. Mom, Dad, or Grandma.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Play</h3>
+                    <p>Hand it to your child. Watch them hear your voice come from their new best friend.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== LED STATES ====== -->
+    <section class="led-section">
+        <div class="container">
+            <div class="section-label" style="color: var(--gold);">Expressive Eyes</div>
+            <div class="section-title">Your companion feels alive.</div>
+            <p class="section-sub" style="color: rgba(255,255,255,0.5);">LED eyes that glow, pulse, and breathe. Your child always knows what their friend is doing.</p>
+
+            <div class="led-grid">
+                <div class="led-card">
+                    <div class="led-dot" style="background: #4A9EFF; box-shadow: 0 0 20px #4A9EFF;"></div>
+                    <h4>Listening</h4>
+                    <p>Soft blue pulse</p>
+                </div>
+                <div class="led-card">
+                    <div class="led-dot" style="background: #FFB347; box-shadow: 0 0 20px #FFB347;"></div>
+                    <h4>Thinking</h4>
+                    <p>Amber rotation</p>
+                </div>
+                <div class="led-card">
+                    <div class="led-dot" style="background: #FFD700; box-shadow: 0 0 20px #FFD700;"></div>
+                    <h4>Speaking</h4>
+                    <p>Warm gold glow</p>
+                </div>
+                <div class="led-card">
+                    <div class="led-dot" style="background: #50C878; box-shadow: 0 0 20px #50C878;"></div>
+                    <h4>Happy</h4>
+                    <p>Green sparkle</p>
+                </div>
+                <div class="led-card">
+                    <div class="led-dot" style="background: #9B59B6; box-shadow: 0 0 20px #9B59B6; animation-duration: 4s;"></div>
+                    <h4>Sleepy</h4>
+                    <p>Dim purple fade</p>
+                </div>
+                <div class="led-card">
+                    <div class="led-dot" style="background: #FF4444; box-shadow: 0 0 20px #FF4444; animation-duration: 0.5s;"></div>
+                    <h4>Low Battery</h4>
+                    <p>Red blink</p>
+                </div>
+                <div class="led-card">
+                    <div class="led-dot" style="background: #FFFFFF; box-shadow: 0 0 20px rgba(255,255,255,0.5); animation-duration: 3s;"></div>
+                    <h4>Charging</h4>
+                    <p>Breathing white</p>
+                </div>
+                <div class="led-card">
+                    <div class="led-dot" style="background: linear-gradient(135deg, #FFD700, #FF6B6B, #4A9EFF); box-shadow: 0 0 20px rgba(255,215,0,0.5);"></div>
+                    <h4>Story Time</h4>
+                    <p>Rainbow cycle</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== PRICING ====== -->
+    <section class="pricing">
+        <div class="container">
+            <div class="section-label">Pricing</div>
+            <div class="section-title">Pick your companion.</div>
+            <div class="section-sub">Kickstarter early bird pricing. Limited quantities at each tier.</div>
+
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="price-header">
+                        <div class="price-name">Basic</div>
+                        <div class="price-amount">$79 <span>early bird</span></div>
+                        <div style="font-size:0.85rem; color:var(--text-light); margin-top:4px;">Retail $99</div>
+                    </div>
+                    <div class="price-body">
+                        <div class="price-feature"><span class="price-check">&#10003;</span> AI companion (choice of 5 animals)</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Magnetic charging nest</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> USB-C cable</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Quick-start guide</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> 3 months Premium free</div>
+                    </div>
+                    <a href="#notify" class="price-btn price-btn-secondary">Back This</a>
+                </div>
+
+                <div class="price-card popular">
+                    <div class="popular-tag">Most Popular</div>
+                    <div class="price-header">
+                        <div class="price-name">Premium</div>
+                        <div class="price-amount">$119 <span>early bird</span></div>
+                        <div style="font-size:0.85rem; color:var(--text-light); margin-top:4px;">Retail $149</div>
+                    </div>
+                    <div class="price-body">
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Everything in Basic</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Solar charging nest</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Waterproof EVA carry case</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> 6 months Premium free</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Backer-exclusive colorway</div>
+                    </div>
+                    <a href="#notify" class="price-btn price-btn-primary">Back This</a>
+                </div>
+
+                <div class="price-card">
+                    <div class="price-header">
+                        <div class="price-name">Gift Edition</div>
+                        <div class="price-amount">$159 <span>early bird</span></div>
+                        <div style="font-size:0.85rem; color:var(--text-light); margin-top:4px;">Retail $199</div>
+                    </div>
+                    <div class="price-body">
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Everything in Premium</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Premium gift box</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Embroidered child's name</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> 12 months Premium free</div>
+                        <div class="price-feature"><span class="price-check">&#10003;</span> Sticker sheet + postcards</div>
+                    </div>
+                    <a href="#notify" class="price-btn price-btn-secondary">Back This</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SUBSCRIPTION ====== -->
+    <section class="subscription">
+        <div class="container">
+            <div class="section-label">Subscription</div>
+            <div class="section-title">Content that grows with them.</div>
+            <div class="section-sub">New stories, activities, and languages delivered monthly over WiFi.</div>
+
+            <div class="sub-grid">
+                <div class="sub-card">
+                    <div class="sub-price">Free</div>
+                    <div class="sub-period">forever</div>
+                    <div class="sub-name">Basic</div>
+                    <div class="sub-features">
+                        &#10003; 5 stories per day<br>
+                        &#10003; 1 language<br>
+                        &#10003; Basic milestones<br>
+                        &#10003; LED eye states
+                    </div>
+                </div>
+                <div class="sub-card">
+                    <div class="sub-price">$4.99</div>
+                    <div class="sub-period">per month</div>
+                    <div class="sub-name">Family</div>
+                    <div class="sub-features">
+                        &#10003; Unlimited stories<br>
+                        &#10003; All 3 languages<br>
+                        &#10003; Full milestones<br>
+                        &#10003; Games + activities
+                    </div>
+                </div>
+                <div class="sub-card" style="border-color: var(--crimson);">
+                    <div class="sub-price">$9.99</div>
+                    <div class="sub-period">per month</div>
+                    <div class="sub-name">Premium</div>
+                    <div class="sub-features">
+                        &#10003; Voice cloning<br>
+                        &#10003; Photo memories<br>
+                        &#10003; Push updates<br>
+                        &#10003; Heritage content
+                    </div>
+                </div>
+                <div class="sub-card">
+                    <div class="sub-price">$14.99</div>
+                    <div class="sub-period">per month</div>
+                    <div class="sub-name">Heritage</div>
+                    <div class="sub-features">
+                        &#10003; Custom story AI<br>
+                        &#10003; Grandparent voices<br>
+                        &#10003; Family history<br>
+                        &#10003; Priority features
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CTA ====== -->
+    <section class="cta-section" id="notify">
+        <div class="container">
+            <div class="section-label">Be First</div>
+            <div class="section-title">Join the founding families.</div>
+            <div class="section-sub">Get notified when we launch on Kickstarter. Early backers get exclusive pricing and first access.</div>
+
+            <form class="email-form" onsubmit="handleSubmit(event)">
+                <input type="email" placeholder="your@email.com" required>
+                <button type="submit">Notify Me</button>
+            </form>
+            <p class="cta-note">No spam. Just one email when we launch. Unsubscribe anytime.</p>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer>
+        <p>Casa Companion &copy; 2026. Built with love in Miami.</p>
+        <p style="margin-top: 8px;">A <a href="#">Gianelli</a> creation.</p>
+    </footer>
+
+    <script>
+        // Promo overlay
+        function openPromo() {
+            const overlay = document.getElementById('promoOverlay');
+            overlay.style.display = 'flex';
+            document.getElementById('promoFrame').src = '/static/promo.html';
+        }
+        function closePromo() {
+            document.getElementById('promoOverlay').style.display = 'none';
+            document.getElementById('promoFrame').src = '';
+        }
+        document.getElementById('promoOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closePromo();
+        });
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const btn = e.target.querySelector('button');
+            const email = input.value;
+
+            btn.textContent = 'Added!';
+            btn.style.background = '#006847';
+            input.value = '';
+
+            setTimeout(() => {
+                btn.textContent = 'Notify Me';
+                btn.style.background = '';
+            }, 3000);
+
+            // TODO: Connect to email service (Mailchimp, ConvertKit, etc.)
+            console.log('Email captured:', email);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Fade-in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animal-card, .feature-card, .price-card, .sub-card, .step, .led-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
