@@ -6,7 +6,7 @@
     <meta name="version" content="4.0">
     <meta name="description" content="Casa Companion - An AI plush toy that tells bedtime stories in your voice. Voice cloning, heritage languages, and a family companion that grows with your child. Coming to Kickstarter May 5, 2026.">
     <meta property="og:title" content="Casa Companion — Your Voice. Their Companion.">
-    <meta property="og:description" content="An AI plush toy that tells bedtime stories in your voice. Even when you can't be there. 10 companions, 3 languages, powered by Capo AI.">
+    <meta property="og:description" content="An AI plush toy that tells bedtime stories in your voice. Even when you can't be there. 10 companions, all languages, powered by Capo AI.">
     <meta property="og:image" content="images/scene3-heroes.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://simplebalance89-ai.github.io/casa-companion-site/">
@@ -186,15 +186,22 @@
             z-index: 1;
         }
 
-        .ps-1  { background-image: url('images/scene1-father.png'); }
-        .ps-2  { background-image: url('images/life-boy-crow.png'); }
-        .ps-5  { background-image: url('images/life-nonna-kitchen.png'); }
-        .ps-6  { background-image: url('images/life-grandparent-distance.png'); }
-        .ps-7  { background-image: url('images/banner-father-recording.png'); }
-        .ps-8  { background-image: url('images/scene5-crow.png'); }
-        .ps-9  { background-image: url('images/eng-exploded.png'); }
-        .ps-10 { background-image: url('images/packaging-box.png'); }
-        .ps-11 { background-image: url('images/banner-crow-cinematic.png'); }
+        .ps-1  { background-image: url('images/slide1-dad-baby-crow.png'); }
+        .ps-2  { background-image: url('images/generated/social-child-hug.png'); }
+        .ps-3  { background-image: url('images/generated/marketing-no-screen.png'); }
+        .ps-4  { background-image: url('images/generated/life-elefante-family.png'); }
+        .ps-6  { background-image: url('images/generated/life-xolo-heritage.png'); }
+        .ps-7  { background-image: url('images/slide5-grandma-cooking-phone.png'); }
+        .ps-8  { background-image: url('images/generated/life-delfino-pool.png'); }
+        .ps-9  { background-image: url('images/generated/social-corvo-close.png'); }
+        .ps-10 { background-color: #0D0D1A; }
+        .ps-10::before { background: none !important; }
+        .ps-11 { background-image: url('images/slide8-generation-nostalgia.png'); }
+        .ps-12 { background-image: url('images/slide9-exploded-engineering.png'); }
+        .ps-13 { background-image: url('images/generated/marketing-magnetic-dock.png'); }
+        .ps-14 { background-image: url('images/generated/mode-stem-sparks.png'); }
+        .ps-15 { background-image: url('images/generated/marketing-lineup.png'); }
+        .ps-16 { background-image: url('images/generated/social-group-pile.png'); }
         .ps-heroes { background-color: #0D0D1A; }
         .ps-heroes::before { background: none !important; }
         .ps-cta { background-image: url('images/scene6-banner.png'); justify-content: center !important; }
@@ -612,17 +619,27 @@
             <div class="promo-slide ps-1" id="ps-1">
                 <div class="p-text-box">
                     <div class="p-phrase">Half my life in music. The other half building <em>enterprise software</em> for some of the biggest companies in the country.</div>
-                    <div class="p-phrase">When my son was born, I combined everything I knew. AI was transforming my business and my life. But for my child? <em>Nothing.</em></div>
+                </div>
+            </div>
+            <!-- Slide 2: The Realization -->
+            <div class="promo-slide ps-2" id="ps-2">
+                <div class="p-text-box">
+                    <div class="p-phrase">When my son was born, I combined everything I knew. AI was transforming my business. But for my child? <em>Nothing.</em></div>
+                </div>
+            </div>
+            <!-- Slide 3: The Mission -->
+            <div class="promo-slide ps-3" id="ps-3">
+                <div class="p-text-box">
                     <div class="p-phrase">No real companion. Nothing to hold, learn from, bond with — away from a screen. <em>So I built one.</em></div>
                 </div>
             </div>
-            <!-- Slide 2: The Florida Test -->
-            <div class="promo-slide ps-2" id="ps-2">
+            <!-- Slide 4: The Florida Test -->
+            <div class="promo-slide ps-4" id="ps-4">
                 <div class="p-text-box">
-                    <div class="p-phrase">Took it to Florida for my nephews. <em>They wouldn't put it down.</em> Mom and dad chimed in. The whole family bonded over one toy. <em>That's when I knew.</em></div>
+                    <div class="p-phrase">Took it to Florida for my nephews. <em>They wouldn't put it down.</em> The whole family bonded over one toy.</div>
                 </div>
             </div>
-            <!-- Slide 3/4: Hero Group -->
+            <!-- Slide 5: Hero Group -->
             <div class="promo-slide ps-heroes" id="ps-heroes" style="flex-direction:column; justify-content:flex-start; background:#0D0D1A;">
                 <div style="position:relative; z-index:2; text-align:center; padding: clamp(8px,1.5vw,20px) clamp(8px,2vw,24px) 0;">
                     <div class="p-phrase p-highlight" style="font-size:clamp(12px,1.8vw,22px);"><em>Ten companions.</em> Each with their own personality.</div>
@@ -643,55 +660,71 @@
                     <div style="font-size:clamp(9px,1.1vw,13px); color:rgba(255,255,255,0.45); letter-spacing:1.5px; font-weight:300;">Powered by <span style="color:var(--gold); font-weight:600; font-style:italic;">Capo AI</span></div>
                 </div>
             </div>
-            <!-- Slide 5: Heritage / Grandparents -->
-            <div class="promo-slide ps-5" id="ps-5">
-                <div class="p-text-box">
-                    <div class="p-phrase"><em>Seventy-five percent</em> of heritage languages disappear by the third generation.</div>
-                    <div class="p-phrase">This is a toy that <em>connects grandparents to grandchildren.</em> A bridge across distance, language, and time.</div>
-                </div>
-            </div>
-            <!-- Slide 6: Daddy Away / Homework -->
+            <!-- Slide 6: Heritage Languages -->
             <div class="promo-slide ps-6" id="ps-6">
                 <div class="p-text-box">
+                    <div class="p-phrase"><em>Seventy-five percent</em> of heritage languages disappear by the third generation.</div>
+                </div>
+            </div>
+            <!-- Slide 7: Grandparents Bridge -->
+            <div class="promo-slide ps-7" id="ps-7">
+                <div class="p-text-box">
+                    <div class="p-phrase">A toy that <em>connects grandparents to grandchildren.</em> A bridge across distance, language, and time.</div>
+                </div>
+            </div>
+            <!-- Slide 8: Daddy Away -->
+            <div class="promo-slide ps-8" id="ps-8">
+                <div class="p-text-box">
                     <div class="p-phrase">Dad's on a business trip. But tonight, he's still <em>helping with homework.</em> Still reading the bedtime story.</div>
+                </div>
+            </div>
+            <!-- Slide 9: Voice Companion -->
+            <div class="promo-slide ps-9" id="ps-9">
+                <div class="p-text-box">
                     <div class="p-phrase">Not through a screen. Through a companion that <em>carries his voice.</em></div>
                 </div>
             </div>
-            <!-- Slide 7: Mother's Voice / Legacy -->
-            <div class="promo-slide ps-7" id="ps-7">
-                <div class="p-text-box">
-                    <div class="p-phrase">I lost my mother at an early age. I haven't been able to clone her voice yet.</div>
-                    <div class="p-phrase">I only have about <em>ten memories</em> of it. But if we find enough, my son will hear her.</div>
-                    <div class="p-phrase"><em>That's not a feature. That's a legacy.</em></div>
-                </div>
-            </div>
-            <!-- Slide 8: This Generation -->
-            <div class="promo-slide ps-8" id="ps-8">
-                <div class="p-text-box">
-                    <div class="p-phrase">Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. This is what <em>this generation deserves.</em> Built with <em>Capo AI.</em></div>
-                </div>
-            </div>
-            <!-- Slide 9: Engineering + Features -->
-            <div class="promo-slide ps-9" id="ps-9">
-                <div class="p-text-box">
-                    <div class="p-phrase">One pod. <em>Ten shells.</em> Magnetic dock. Machine washable.</div>
-                    <div class="p-phrase">Bluetooth sync. Parent mode. Teaching mode.</div>
-                    <div class="p-phrase"><em>No camera. No screen. No microtransactions.</em></div>
-                </div>
-            </div>
-            <!-- Slide 10: Growth / Future -->
+            <!-- Slide 10: Mother's Legacy (dark, text only) -->
             <div class="promo-slide ps-10" id="ps-10">
                 <div class="p-text-box">
-                    <div class="p-phrase">Right now, Capo AI is built for <em>ages one through five.</em> But this is software. It updates. It <em>grows with your child.</em></div>
-                    <div class="p-phrase">Memories, homework, bedtime stories — all synced to your phone.</div>
-                    <div class="p-phrase">Think Alexa and Siri, <em>but done right.</em> Parent models coming soon. We're just getting started.</div>
+                    <div class="p-phrase">I lost my mother at an early age. I only have about <em>ten memories</em> of her voice.</div>
+                    <div class="p-phrase">But if we find enough, my son will hear her. <em>That's not a feature. That's a legacy.</em></div>
                 </div>
             </div>
-            <!-- Slide 11: Capisce Closer -->
+            <!-- Slide 11: This Generation -->
             <div class="promo-slide ps-11" id="ps-11">
                 <div class="p-text-box">
-                    <div class="p-phrase p-highlight">Casa Companion. <em>Working with families. US made and built.</em></div>
-                    <div class="p-phrase p-highlight">Taking back childhood the way I was raised and the way <em>a new generation will be.</em></div>
+                    <div class="p-phrase">Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. This is what <em>this generation deserves.</em></div>
+                </div>
+            </div>
+            <!-- Slide 12: Engineering -->
+            <div class="promo-slide ps-12" id="ps-12">
+                <div class="p-text-box">
+                    <div class="p-phrase">One pod. <em>Ten shells.</em> Magnetic dock. Machine washable. <em>No camera. No screen. No microtransactions.</em></div>
+                </div>
+            </div>
+            <!-- Slide 13: Features -->
+            <div class="promo-slide ps-13" id="ps-13">
+                <div class="p-text-box">
+                    <div class="p-phrase">Bluetooth sync. Parent mode. <em>Homework helper. All languages.</em> Built with Capo AI.</div>
+                </div>
+            </div>
+            <!-- Slide 14: Growth -->
+            <div class="promo-slide ps-14" id="ps-14">
+                <div class="p-text-box">
+                    <div class="p-phrase">Right now, Capo AI is built for <em>ages one through five.</em> But this is software. It <em>grows with your child.</em></div>
+                </div>
+            </div>
+            <!-- Slide 15: Sync -->
+            <div class="promo-slide ps-15" id="ps-15">
+                <div class="p-text-box">
+                    <div class="p-phrase">Memories, homework, bedtime stories — all synced to your phone. Think Alexa and Siri, <em>but done right.</em></div>
+                </div>
+            </div>
+            <!-- Slide 16: Capisce Closer -->
+            <div class="promo-slide ps-16" id="ps-16">
+                <div class="p-text-box">
+                    <div class="p-phrase p-highlight">Casa Companion. <em>US made and built.</em> Taking back childhood.</div>
                     <div class="p-phrase p-highlight">Kickstarter May fifth. <em>Capisce.</em></div>
                 </div>
             </div>
@@ -710,7 +743,7 @@
 
     <div class="hero-stats">
         <div class="hero-stat"><div class="num">10</div><div class="label">Companions</div></div>
-        <div class="hero-stat"><div class="num">3</div><div class="label">Languages</div></div>
+        <div class="hero-stat"><div class="num" style="font-size:20px; line-height:36px;">All</div><div class="label">Languages</div></div>
         <div class="hero-stat"><div class="num" style="font-size:20px; line-height:36px;">Powered by</div><div class="label" style="color:var(--gold); font-weight:600; font-style:italic; font-size:14px; letter-spacing:0;">Capo AI</div></div>
     </div>
 </section>
@@ -1229,13 +1262,13 @@
     }
 
     // === PROMO ENGINE (audio-driven, 1 clip = 1 slide) ===
-    const PROMO_CLIP_COUNT = 10;
+    const PROMO_CLIP_COUNT = 16;
     let promoAudio = [];
     let promoRunning = false;
 
     function preloadPromoAudio() {
         for (let i = 1; i <= PROMO_CLIP_COUNT; i++) {
-            const a = new Audio('audio/narration-' + i + '.mp3?v=70');
+            const a = new Audio('audio/narration-' + i + '.mp3?v=80');
             a.preload = 'auto';
             promoAudio.push(a);
         }
@@ -1313,7 +1346,7 @@
         const heroSlide = document.getElementById('ps-heroes');
         if (heroSlide) heroSlide.querySelectorAll('.p-phrase').forEach(p => p.classList.add('revealed'));
 
-        const audio = promoAudio[2];
+        const audio = promoAudio[4]; // clip 5 (index 4) = heroes
         if (!audio) { if (onDone) onDone(); return; }
         audio.currentTime = 0;
         audio.onended = () => { if (onDone) onDone(); };
@@ -1336,19 +1369,28 @@
     }
 
     function runPromoSequence() {
-        // 10 clips, 1:1 mapping. No gaps. No empty clips.
-        // Clip 1=ps-1, 2=ps-2, 3=ps-heroes, 4=ps-5, 5=ps-6, 6=ps-7, 7=ps-8, 8=ps-9, 9=ps-10, 10=ps-11
-        const afterHeroSlides = [
-            { slide: 'ps-5', clip: 3 },
-            { slide: 'ps-6', clip: 4 },
-            { slide: 'ps-7', clip: 5 },
-            { slide: 'ps-8', clip: 6 },
-            { slide: 'ps-9', clip: 7 },
-            { slide: 'ps-10', clip: 8 },
-            { slide: 'ps-11', clip: 9 },
+        // 16 clips, 1:1 mapping. Each clip = 1 slide with 1 sentence.
+        // Clips 1-4 = ps-1..ps-4, clip 5 = ps-heroes, clips 6-16 = ps-6..ps-16
+        const allSlides = [
+            { slide: 'ps-1', clip: 0 },
+            { slide: 'ps-2', clip: 1 },
+            { slide: 'ps-3', clip: 2 },
+            { slide: 'ps-4', clip: 3 },
+            { slide: 'ps-heroes', clip: 4, isHeroes: true },
+            { slide: 'ps-6', clip: 5 },
+            { slide: 'ps-7', clip: 6 },
+            { slide: 'ps-8', clip: 7 },
+            { slide: 'ps-9', clip: 8 },
+            { slide: 'ps-10', clip: 9 },
+            { slide: 'ps-11', clip: 10 },
+            { slide: 'ps-12', clip: 11 },
+            { slide: 'ps-13', clip: 12 },
+            { slide: 'ps-14', clip: 13 },
+            { slide: 'ps-15', clip: 14 },
+            { slide: 'ps-16', clip: 15 },
         ];
 
-        const totalSteps = 2 + 1 + afterHeroSlides.length + 1; // intro slides + heroes + rest + cta
+        const totalSteps = allSlides.length + 1; // slides + cta
         let currentStep = 0;
 
         function updateProgress() {
@@ -1357,29 +1399,17 @@
             document.getElementById('promoProgress').style.width = pct + '%';
         }
 
-        function playSlideChain(slideList, idx, onAllDone) {
-            if (idx >= slideList.length) { if (onAllDone) onAllDone(); return; }
-            const { slide, clip } = slideList[idx];
-            playNarratedSlide(slide, clip, () => {
-                updateProgress();
-                playSlideChain(slideList, idx + 1, onAllDone);
-            });
+        function playSlideChain(idx) {
+            if (idx >= allSlides.length) { showCTA(); promoRunning = false; return; }
+            const { slide, clip, isHeroes } = allSlides[idx];
+            if (isHeroes) {
+                playClip3WithHeroes(() => { updateProgress(); playSlideChain(idx + 1); });
+            } else {
+                playNarratedSlide(slide, clip, () => { updateProgress(); playSlideChain(idx + 1); });
+            }
         }
 
-        // Sequence: ps-1 (clip 0) → ps-2 (clip 1) → ps-heroes (clip 2) → ps-5..ps-11 (clips 3-9) → CTA
-        playNarratedSlide('ps-1', 0, () => {
-            updateProgress();
-            playNarratedSlide('ps-2', 1, () => {
-                updateProgress();
-                playClip3WithHeroes(() => {
-                    updateProgress();
-                    playSlideChain(afterHeroSlides, 0, () => {
-                        showCTA();
-                        promoRunning = false;
-                    });
-                });
-            });
-        });
+        playSlideChain(0);
     }
 
     function resetPromoState() {

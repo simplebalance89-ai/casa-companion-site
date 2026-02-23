@@ -1,5 +1,5 @@
 """
-Generate 10 narration MP3s for the Casa Companion founder story promo.
+Generate 16 narration MP3s for the Casa Companion founder story promo.
 
 Architecture: 1 audio clip = 1 slide. Each clip maps to exactly one visual slide.
 Audio-driven timeline: JS plays clip N, shows slide N, advances on clip.onended.
@@ -19,52 +19,68 @@ AZURE_BASE = "https://pwgcerp-9302-resource.openai.azure.com"
 TTS_DEPLOYMENT = "gpt-4o-mini-tts"
 TTS_API_VERSION = "2025-04-01-preview"
 
-# 10 clips, 1:1 with 10 slides. NO gaps. NO empty clips.
-# V3 — full rewrite, Peter's story
+# 16 clips, 1:1 with 16 slides. One sentence per slide. Image-heavy.
+# V4 — expanded from V3, split into single sentences
 NARRATION = [
-    # Clip 1 → ps-1 (the founder)
-    "Half my life in music. The other half building enterprise software for some of the biggest "
-    "companies in the country. When my son was born, I combined everything I knew. AI was transforming "
-    "my business and my life. But for my child? Nothing. No real companion. Nothing to hold, learn from, "
-    "bond with away from a screen. So I built one.",
+    # Clip 1 → ps-1 (founder intro)
+    "Half my life in music. The other half building enterprise software "
+    "for some of the biggest companies in the country.",
 
-    # Clip 2 → ps-2 (florida test)
-    "Took it to Florida for my nephews. They wouldn't put it down. Mom and dad chimed in. "
-    "The whole family bonded over one toy. That's when I knew.",
+    # Clip 2 → ps-2 (the realization)
+    "When my son was born, I combined everything I knew. AI was transforming "
+    "my business. But for my child? Nothing.",
 
-    # Clip 3 → ps-heroes (character grid)
+    # Clip 3 → ps-3 (the mission)
+    "No real companion. Nothing to hold, learn from, bond with — "
+    "away from a screen. So I built one.",
+
+    # Clip 4 → ps-4 (florida test)
+    "Took it to Florida for my nephews. They wouldn't put it down. "
+    "The whole family bonded over one toy.",
+
+    # Clip 5 → ps-heroes (character grid)
     "Ten companions. Each with their own personality. "
     "Corvo, Gufo, Orsetto, Coniglio, Tartaruga, Elefante, Leone, Delfino, Drago, and Xolo.",
 
-    # Clip 4 → ps-5 (heritage/grandparents)
-    "Seventy-five percent of heritage languages disappear by the third generation. "
-    "This is a toy that connects grandparents to grandchildren. A bridge across distance, language, and time.",
+    # Clip 6 → ps-6 (heritage languages)
+    "Seventy-five percent of heritage languages disappear by the third generation.",
 
-    # Clip 5 → ps-6 (daddy away/homework)
+    # Clip 7 → ps-7 (grandparents bridge)
+    "A toy that connects grandparents to grandchildren. "
+    "A bridge across distance, language, and time.",
+
+    # Clip 8 → ps-8 (daddy away)
     "Dad's on a business trip. But tonight, he's still helping with homework. "
-    "Still reading the bedtime story. Not through a screen. Through a companion that carries his voice.",
+    "Still reading the bedtime story.",
 
-    # Clip 6 → ps-7 (mother's voice/legacy)
-    "I lost my mother at an early age. I haven't been able to clone her voice yet. "
-    "I only have about ten memories of it. But if we find enough, my son will hear her. "
-    "That's not a feature. That's a legacy.",
+    # Clip 9 → ps-9 (voice companion)
+    "Not through a screen. Through a companion that carries his voice.",
 
-    # Clip 7 → ps-8 (this generation)
+    # Clip 10 → ps-10 (mother's legacy — dark slide)
+    "I lost my mother at an early age. I only have about ten memories of her voice. "
+    "But if we find enough, my son will hear her. That's not a feature. That's a legacy.",
+
+    # Clip 11 → ps-11 (this generation)
     "Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. "
-    "This is what this generation deserves. Built with Capo AI.",
+    "This is what this generation deserves.",
 
-    # Clip 8 → ps-9 (engineering + features)
-    "One pod. Ten shells. Magnetic dock. Machine washable. Bluetooth sync. "
-    "Parent mode. Teaching mode. No camera. No screen. No microtransactions.",
+    # Clip 12 → ps-12 (engineering)
+    "One pod. Ten shells. Magnetic dock. Machine washable. "
+    "No camera. No screen. No microtransactions.",
 
-    # Clip 9 → ps-10 (growth/future)
-    "Right now, Capo AI is built for ages one through five. But this is software. It updates. "
-    "It grows with your child. Memories, homework, bedtime stories, all synced to your phone. "
-    "Think Alexa and Siri, but done right. Parent models coming soon. We're just getting started.",
+    # Clip 13 → ps-13 (features)
+    "Bluetooth sync. Parent mode. Homework helper. All languages. Built with Capo AI.",
 
-    # Clip 10 → ps-11 (capisce closer)
-    "Casa Companion. Working with families. US made and built. "
-    "Taking back childhood the way I was raised and the way a new generation will be. "
+    # Clip 14 → ps-14 (growth)
+    "Right now, Capo AI is built for ages one through five. But this is software. "
+    "It grows with your child.",
+
+    # Clip 15 → ps-15 (sync / future)
+    "Memories, homework, bedtime stories — all synced to your phone. "
+    "Think Alexa and Siri, but done right.",
+
+    # Clip 16 → ps-16 (capisce closer)
+    "Casa Companion. US made and built. Taking back childhood. "
     "Kickstarter May fifth. Capisce.",
 ]
 
