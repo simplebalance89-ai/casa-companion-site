@@ -446,6 +446,7 @@
         }
 
         .ctrl-btn:hover { background: rgba(255,255,255,0.2); }
+        .ctrl-btn.muted { background: rgba(220,60,60,0.3); border-color: rgba(220,60,60,0.5); }
 
         .timer {
             position: fixed;
@@ -469,6 +470,7 @@
         <button class="ctrl-btn" onclick="toggleSize()">9:16 / 16:9</button>
         <button class="ctrl-btn" onclick="restartPromo()">Replay</button>
         <button class="ctrl-btn" onclick="togglePause()">Pause</button>
+        <button class="ctrl-btn" id="muteBtn" onclick="toggleMute()">&#x1F50A; Audio</button>
     </div>
 
     <!-- SCENE 1: HOOK (0-4s) -->
@@ -556,6 +558,53 @@
     </div>
 
     <script>
+        // ====== NARRATION AUDIO ======
+        const SCENE_COUNT = 8;
+        let narrationAudio = [];
+        let audioMuted = false;
+        let currentNarration = null;
+
+        // Preload all narration audio files
+        function preloadNarration() {
+            for (let i = 1; i <= SCENE_COUNT; i++) {
+                const audio = new Audio(`audio/narration-${i}.mp3`);
+                audio.preload = 'auto';
+                narrationAudio.push(audio);
+            }
+        }
+
+        function playNarration(sceneIndex) {
+            // Stop any currently playing narration
+            if (currentNarration) {
+                currentNarration.pause();
+                currentNarration.currentTime = 0;
+            }
+            const audio = narrationAudio[sceneIndex];
+            if (audio && !audioMuted) {
+                audio.currentTime = 0;
+                currentNarration = audio;
+                audio.play().catch(() => {});
+            }
+        }
+
+        function stopAllNarration() {
+            narrationAudio.forEach(a => { a.pause(); a.currentTime = 0; });
+            currentNarration = null;
+        }
+
+        function toggleMute() {
+            audioMuted = !audioMuted;
+            const btn = document.getElementById('muteBtn');
+            if (audioMuted) {
+                btn.innerHTML = '&#x1F507; Muted';
+                btn.classList.add('muted');
+                if (currentNarration) { currentNarration.pause(); }
+            } else {
+                btn.innerHTML = '&#x1F50A; Audio';
+                btn.classList.remove('muted');
+            }
+        }
+
         // ====== TIMELINE ENGINE ======
         const TOTAL_DURATION = 30000; // 30 seconds
         let startTime = 0;
@@ -566,25 +615,25 @@
         const timeline = [
             // [timeMs, action]
             // Scene 1: Hook (0-4s)
-            [0,    () => showScene(1)],
+            [0,    () => { showScene(1); playNarration(0); }],
             [200,  () => animateIn('#scene-1 .question', 600)],
             [800,  () => animateIn('#scene-1 h1', 800)],
             [1600, () => { const u = document.querySelector('#scene-1 .underline-anim'); u.style.transition = 'width 1s ease'; u.style.width = '200px'; }],
 
             // Scene 2: Toy Reveal (4-8s)
-            [4000, () => showScene(2)],
+            [4000, () => { showScene(2); playNarration(1); }],
             [4200, () => { const g = document.querySelector('.toy-glow'); g.style.transition = 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)'; g.style.opacity = '1'; g.style.transform = 'scale(1)'; }],
             [5000, () => animateIn('#scene-2 h2', 600)],
             [5600, () => animateIn('#scene-2 .tagline', 500)],
 
             // Scene 3: Voice Clone (8-12s)
-            [8000, () => showScene(3)],
+            [8000, () => { showScene(3); playNarration(2); }],
             [8200, () => animateWave()],
             [9000, () => animateIn('#scene-3 h2', 700)],
             [10000, () => animateIn('#scene-3 .detail', 500)],
 
             // Scene 4: Features Rapid (12-18s)
-            [12000, () => showScene(4)],
+            [12000, () => { showScene(4); playNarration(3); }],
             [12200, () => flashFeature(0)],
             [13000, () => flashFeature(1)],
             [13800, () => flashFeature(2)],
@@ -593,7 +642,7 @@
             [16200, () => flashFeature(5)],
 
             // Scene 5: Animals (18-22s)
-            [18000, () => showScene(5)],
+            [18000, () => { showScene(5); playNarration(4); }],
             [18200, () => animateIn('#scene-5 h2', 500)],
             [18600, () => paradeAnimal(0)],
             [19000, () => paradeAnimal(1)],
@@ -602,7 +651,7 @@
             [20200, () => paradeAnimal(4)],
 
             // Scene 6: LED Eyes (22-25s)
-            [22000, () => showScene(6)],
+            [22000, () => { showScene(6); playNarration(5); }],
             [22200, () => showLed(0)],
             [22500, () => showLed(1)],
             [22800, () => showLed(2)],
@@ -612,14 +661,14 @@
             [24200, () => animateIn('#scene-6 p', 400)],
 
             // Scene 7: Pricing (25-28s)
-            [25000, () => showScene(7)],
+            [25000, () => { showScene(7); playNarration(6); }],
             [25200, () => { const p = document.querySelector('.price-hero'); p.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'; p.style.opacity = '1'; p.style.transform = 'scale(1)'; }],
             [26000, () => showTier(0)],
             [26300, () => showTier(1)],
             [26600, () => showTier(2)],
 
             // Scene 8: CTA (28-30s)
-            [28000, () => showScene(8)],
+            [28000, () => { showScene(8); playNarration(7); }],
             [28200, () => animateIn('.cta-logo', 600)],
             [28600, () => animateIn('.cta-tagline', 500)],
             [29000, () => { const b = document.querySelector('.cta-badge'); b.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
@@ -757,6 +806,7 @@
         // Set initial states
         function resetAll() {
             executed.clear();
+            stopAllNarration();
 
             document.querySelectorAll('.scene').forEach(s => {
                 s.classList.remove('active');
@@ -802,9 +852,11 @@
             if (paused) {
                 startTime += Date.now() - pauseTime;
                 paused = false;
+                if (currentNarration && !audioMuted) currentNarration.play().catch(() => {});
             } else {
                 pauseTime = Date.now();
                 paused = true;
+                if (currentNarration) currentNarration.pause();
             }
         }
 
@@ -818,6 +870,7 @@
         document.head.appendChild(style);
 
         // Boot
+        preloadNarration();
         initParticles();
         initWaveBars();
         startPromo();
