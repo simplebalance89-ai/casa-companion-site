@@ -1319,7 +1319,7 @@
         };
         audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
 
-        // After ~3s intro text, start cycling heroes every 1.5s as voice names them
+        // After ~3s intro text, start cycling heroes every 2.5s as voice names them
         setTimeout(() => {
             let heroIdx = 0;
             showSlide('ps-h0');
@@ -1331,7 +1331,7 @@
                 } else {
                     showSlide(`ps-h${heroIdx}`);
                 }
-            }, 1500);
+            }, 2500);
         }, 3000);
     }
 
