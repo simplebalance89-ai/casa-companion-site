@@ -31,18 +31,18 @@ TTS_API_VERSION = "2025-04-01-preview"
 USE_ELEVENLABS = os.getenv("USE_ELEVENLABS", "0") == "1"
 
 NARRATION = [
-    # Scene 1: The Loss (0-10s)
-    "I lost my mom to cancer when I was seventeen. I have maybe ten memories of her voice. Ten. If I could have had something that kept her voice alive when I was a kid, I would have held onto it for the rest of my life.",
-    # Scene 2: The Nephews (10-18s)
-    "So I cloned my voice for my nephews. Liam and Logan. Uncle Pete reading stories, even when I was miles away.",
-    # Scene 3: GL (18-26s)
-    "Then my son was born. And I built more. Stories in Italian, because heritage disappears in one generation if you let it. Music. Games. A whole world in a voice he trusts.",
-    # Scene 4: The Reference (26-34s)
-    "Teddy Ruxpin's bond. Cabbage Patch's personalization. Furby's personality. But yours. Your voice. Your family's stories.",
-    # Scene 5: The Product (34-48s)
-    "Casa Companion. Five animals. Three languages. Record twelve phrases and your voice lives inside a toy your child can hold, squeeze, and fall asleep with. No screen. Just your voice.",
-    # Scene 6: CTA (48-60s)
-    "Everyone else announced it. We built it. Your voice. Their companion.",
+    # Scene 1: The Builder (0-10s)
+    "I build AI tools for a living. When my first son was born, I wanted something that would actually get him playing, learning, and off a screen. Nothing existed. So I built one.",
+    # Scene 2: The Prototype (10-20s)
+    "Started as a custom GPT on a stuffed crow. Then I flew to Florida and let my nephews try it. Two and four years old. They wouldn't put it down. Their parents loved it. That's when I knew.",
+    # Scene 3: The Build (20-28s)
+    "So I built it the right way. The way I build for work. Five animals, each with their own personality. Corvo the Crow. Gufo the Owl. Orsetto the Bear. Volpe the Fox. Coniglio the Bunny.",
+    # Scene 4: What It Does (28-40s)
+    "Stories. Languages. Homework help. Grandparents connecting over FaceTime from across the country. It grows with your kid. And if you want, you can clone your voice so your child hears you, even when you're not there.",
+    # Scene 5: The Vision (40-50s)
+    "Teddy Ruxpin gave us a bond with a toy. Cabbage Patch made it personal. Furby gave it personality. This is what this generation deserves. But built with real AI. And built to last.",
+    # Scene 6: CTA (50-60s)
+    "Casa Companion. Everyone else announced it. We built it.",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "audio")

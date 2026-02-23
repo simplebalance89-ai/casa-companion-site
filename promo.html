@@ -10,785 +10,250 @@
             --crimson: #C41E3A;
             --gold: #D4A017;
             --green: #006847;
-            --cream: #FFFEF7;
             --dark: #0D0D1A;
-            --amber: #D4943A;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--dark); font-family: 'Nunito', sans-serif; overflow: hidden; width: 100vw; height: 100vh; }
 
-        body {
-            background: var(--dark);
-            font-family: 'Nunito', sans-serif;
-            overflow: hidden;
-            width: 100vw;
-            height: 100vh;
-        }
+        .stage { position: relative; width: 100%; height: 100%; overflow: hidden; }
 
-        .promo-stage {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        /* ====== SCENES ====== */
         .scene {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            opacity: 0;
-            transition: none;
-            padding: clamp(20px, 5vw, 60px);
-            z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: clamp(20px, 5vw, 60px); z-index: 1;
+        }
+        .scene.active { display: flex; z-index: 2; }
+
+        .phrase {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(20px, 4vw, 48px);
+            color: rgba(255,255,255,0.8); line-height: 1.5; max-width: 800px; opacity: 0;
+        }
+        .phrase em { color: var(--gold); font-style: italic; }
+        .phrase.big { font-size: clamp(24px, 5vw, 56px); color: #fff; font-weight: 700; }
+        .phrase + .phrase { margin-top: clamp(10px, 2vw, 20px); }
+
+        /* Heroes parade */
+        .heroes { display: flex; gap: clamp(16px, 4vw, 48px); justify-content: center; margin: clamp(16px, 3vw, 40px) 0; }
+        .hero { text-align: center; opacity: 0; transform: translateY(40px); }
+        .hero-emoji { font-size: clamp(40px, 8vw, 90px); display: block; margin-bottom: 4px; }
+        .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(14px, 2.5vw, 24px); color: #fff; font-weight: 700; }
+        .hero-it { font-size: clamp(11px, 1.8vw, 18px); color: var(--gold); font-style: italic; }
+
+        /* Feature pills */
+        .pills { display: flex; flex-wrap: wrap; gap: clamp(6px, 1vw, 12px); justify-content: center; margin-top: clamp(12px, 2vw, 32px); }
+        .pill {
+            padding: clamp(6px, 1vw, 12px) clamp(12px, 2vw, 24px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 50px;
+            color: rgba(255,255,255,0.7); font-size: clamp(11px, 1.5vw, 16px); font-weight: 600;
+            opacity: 0; transform: scale(0.8);
         }
 
-        .scene.active {
-            opacity: 1;
-            z-index: 2;
+        /* Toy reference names */
+        .ref-name {
+            font-family: 'Playfair Display', serif; font-size: clamp(28px, 6vw, 72px);
+            font-weight: 900; color: rgba(255,255,255,0.12); opacity: 0; position: absolute;
         }
+        .ref-name.flash { color: #fff; text-shadow: 0 0 40px rgba(255,255,255,0.3); }
 
-        /* ====== PARTICLES ====== */
-        .particles {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
+        /* CTA */
+        .cta-logo { font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 80px); font-weight: 900; color: #fff; opacity: 0; }
+        .cta-logo span { color: var(--gold); }
+        .cta-tagline { font-size: clamp(18px, 3.5vw, 42px); color: rgba(255,255,255,0.6); font-weight: 300; opacity: 0; margin: clamp(8px, 1.5vw, 20px) 0 clamp(20px, 3vw, 48px); }
+        .cta-badge {
+            display: inline-block; padding: clamp(12px, 2vw, 20px) clamp(24px, 4vw, 48px);
+            background: var(--crimson); color: #fff; font-size: clamp(14px, 2.5vw, 28px);
+            font-weight: 800; border-radius: 60px; letter-spacing: 2px; text-transform: uppercase;
+            opacity: 0; transform: scale(0.8); box-shadow: 0 8px 40px rgba(196,30,58,0.5);
         }
+        .cta-url { margin-top: clamp(12px, 2vw, 32px); font-size: clamp(14px, 2vw, 24px); color: var(--gold); opacity: 0; }
 
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0;
-            animation: float 6s ease-in-out infinite;
-        }
+        /* Progress */
+        .progress { position: fixed; bottom: 0; left: 0; height: 4px; background: var(--crimson); z-index: 100; width: 0%; }
 
+        /* Particles */
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .particle { position: absolute; border-radius: 50%; opacity: 0; animation: float 6s ease-in-out infinite; }
         @keyframes float {
             0%, 100% { transform: translateY(0) scale(1); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
+            10% { opacity: 0.5; } 90% { opacity: 0.5; }
             50% { transform: translateY(-60px) scale(1.2); }
         }
 
-        /* ====== SCENE 1: THE LOSS (0-10s) ====== */
-        .scene-1 {
-            background: radial-gradient(ellipse at center, #1A0A0E 0%, var(--dark) 100%);
-        }
-
-        .scene-1 .phrase {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(20px, 4vw, 48px);
-            color: rgba(255,255,255,0.7);
-            line-height: 1.5;
-            max-width: 800px;
-            opacity: 0;
-        }
-
-        .scene-1 .phrase em {
-            font-style: italic;
-            color: var(--amber);
-        }
-
-        .scene-1 .phrase.highlight {
-            color: #fff;
-            font-weight: 700;
-            font-size: clamp(24px, 5vw, 56px);
-        }
-
-        .amber-glow {
-            position: absolute;
-            width: clamp(200px, 40vw, 500px);
-            height: clamp(200px, 40vw, 500px);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(212,148,58,0.08) 0%, transparent 70%);
-            pointer-events: none;
-            opacity: 0;
-        }
-
-        /* ====== SCENE 2: THE NEPHEWS (10-18s) ====== */
-        .scene-2 {
-            background: radial-gradient(ellipse at center, #1A1520 0%, var(--dark) 100%);
-        }
-
-        .scene-2 .phrase {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(22px, 4vw, 48px);
-            color: rgba(255,255,255,0.8);
-            line-height: 1.5;
-            max-width: 700px;
-            opacity: 0;
-        }
-
-        .scene-2 .phrase em {
-            color: var(--gold);
-            font-style: normal;
-            font-weight: 700;
-        }
-
-        .gold-particles {
-            display: flex;
-            gap: clamp(4px, 1vw, 12px);
-            margin-bottom: clamp(16px, 3vw, 40px);
-        }
-
-        .gold-dot {
-            width: clamp(6px, 1.2vw, 16px);
-            height: clamp(6px, 1.2vw, 16px);
-            border-radius: 50%;
-            background: var(--gold);
-            opacity: 0;
-            box-shadow: 0 0 20px rgba(212,160,23,0.4);
-        }
-
-        .silhouettes {
-            display: flex;
-            gap: clamp(20px, 4vw, 60px);
-            margin-top: clamp(20px, 3vw, 40px);
-        }
-
-        .silhouette {
-            width: clamp(40px, 8vw, 100px);
-            height: clamp(60px, 12vw, 150px);
-            background: rgba(212,160,23,0.1);
-            border-radius: 50% 50% 45% 45%;
-            opacity: 0;
-            position: relative;
-        }
-
-        .silhouette::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 4px;
-            background: rgba(212,160,23,0.2);
-            border-radius: 2px;
-        }
-
-        /* ====== SCENE 3: GL (18-26s) ====== */
-        .scene-3 {
-            background: radial-gradient(ellipse at 40% 50%, rgba(0,104,71,0.06) 0%, var(--dark) 70%);
-        }
-
-        .scene-3 .phrase {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(20px, 3.5vw, 44px);
-            color: rgba(255,255,255,0.8);
-            line-height: 1.5;
-            max-width: 750px;
-            opacity: 0;
-        }
-
-        .scene-3 .phrase em {
-            font-style: italic;
-            color: var(--gold);
-        }
-
-        .heritage-bar {
-            display: flex;
-            gap: 0;
-            height: clamp(3px, 0.5vw, 6px);
-            width: clamp(120px, 20vw, 300px);
-            margin-top: clamp(16px, 3vw, 40px);
-            border-radius: 3px;
-            overflow: hidden;
-            opacity: 0;
-        }
-
-        .heritage-bar .bar-green { flex: 1; background: #006847; }
-        .heritage-bar .bar-white { flex: 1; background: #F0F0F0; }
-        .heritage-bar .bar-red { flex: 1; background: #CE2B37; }
-
-        .life-burst {
-            position: absolute;
-            width: clamp(300px, 60vw, 800px);
-            height: clamp(300px, 60vw, 800px);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(80,200,120,0.04) 0%, transparent 60%);
-            pointer-events: none;
-            opacity: 0;
-        }
-
-        /* ====== SCENE 4: THE REFERENCE (26-34s) ====== */
-        .scene-4 {
-            background: var(--dark);
-        }
-
-        .toy-name {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(28px, 6vw, 72px);
-            font-weight: 900;
-            color: rgba(255,255,255,0.15);
-            opacity: 0;
-            position: absolute;
-        }
-
-        .toy-name.flash {
-            color: #fff;
-            text-shadow: 0 0 40px rgba(255,255,255,0.3);
-        }
-
-        .scene-4 .crow-reveal {
-            opacity: 0;
-            font-size: clamp(60px, 12vw, 160px);
-            filter: drop-shadow(0 0 40px rgba(212,160,23,0.3));
-        }
-
-        .scene-4 .subtext {
-            font-size: clamp(16px, 3vw, 36px);
-            color: var(--gold);
-            font-weight: 300;
-            opacity: 0;
-            margin-top: clamp(8px, 1.5vw, 20px);
-        }
-
-        /* ====== SCENE 5: THE PRODUCT (34-48s) ====== */
-        .scene-5 {
-            background: radial-gradient(ellipse at center, #1A1A2E 0%, var(--dark) 100%);
-        }
-
-        .scene-5 .product-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(32px, 6vw, 72px);
-            font-weight: 900;
-            color: #fff;
-            opacity: 0;
-            margin-bottom: clamp(12px, 2vw, 32px);
-        }
-
-        .scene-5 .product-title span { color: var(--gold); }
-
-        .heroes-parade {
-            display: flex;
-            gap: clamp(12px, 3vw, 48px);
-            justify-content: center;
-            margin: clamp(12px, 2vw, 32px) 0;
-        }
-
-        .hero-animal {
-            text-align: center;
-            opacity: 0;
-            transform: translateY(40px);
-        }
-
-        .hero-emoji {
-            font-size: clamp(36px, 7vw, 80px);
-            display: block;
-            margin-bottom: clamp(4px, 0.5vw, 8px);
-        }
-
-        .hero-name {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(12px, 2vw, 22px);
-            color: #fff;
-            font-weight: 700;
-        }
-
-        .hero-italian {
-            font-size: clamp(10px, 1.5vw, 16px);
-            color: var(--gold);
-            font-style: italic;
-        }
-
-        .feature-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: clamp(6px, 1vw, 12px);
-            justify-content: center;
-            margin-top: clamp(12px, 2vw, 32px);
-        }
-
-        .pill {
-            padding: clamp(6px, 1vw, 12px) clamp(12px, 2vw, 24px);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 50px;
-            color: rgba(255,255,255,0.7);
-            font-size: clamp(11px, 1.5vw, 16px);
-            font-weight: 600;
-            opacity: 0;
-            transform: scale(0.8);
-        }
-
-        .pill .pill-icon { margin-right: 6px; }
-
-        /* ====== SCENE 6: CTA (48-60s) ====== */
-        .scene-6 {
-            background: radial-gradient(ellipse at center, #2D1117 0%, var(--dark) 100%);
-        }
-
-        .scene-6 .cta-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(36px, 7vw, 80px);
-            font-weight: 900;
-            color: #fff;
-            opacity: 0;
-        }
-
-        .scene-6 .cta-logo span { color: var(--gold); }
-
-        .scene-6 .cta-tagline {
-            font-size: clamp(18px, 3.5vw, 42px);
-            color: rgba(255,255,255,0.6);
-            font-weight: 300;
-            opacity: 0;
-            margin: clamp(8px, 1.5vw, 20px) 0 clamp(20px, 3vw, 48px);
-        }
-
-        .scene-6 .cta-badge {
-            display: inline-block;
-            padding: clamp(12px, 2vw, 20px) clamp(24px, 4vw, 48px);
-            background: var(--crimson);
-            color: #fff;
-            font-size: clamp(14px, 2.5vw, 28px);
-            font-weight: 800;
-            border-radius: 60px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0;
-            transform: scale(0.8);
-            box-shadow: 0 8px 40px rgba(196,30,58,0.5);
-        }
-
-        .scene-6 .cta-url {
-            margin-top: clamp(12px, 2vw, 32px);
-            font-size: clamp(14px, 2vw, 24px);
-            color: var(--gold);
-            opacity: 0;
-            letter-spacing: 1px;
-        }
-
-        /* ====== PROGRESS BAR ====== */
-        .progress-bar {
-            position: fixed;
-            bottom: 0; left: 0;
-            height: 4px;
-            background: var(--crimson);
-            z-index: 100;
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-
-        /* ====== CONTROLS (standalone only) ====== */
-        body.embedded .controls,
-        body.embedded .timer { display: none; }
-
-        .controls {
-            position: fixed;
-            top: 16px; right: 16px;
-            z-index: 200;
-            display: flex;
-            gap: 8px;
-        }
-
+        /* Controls */
+        .controls { position: fixed; top: 16px; right: 16px; z-index: 200; display: flex; gap: 8px; }
         .ctrl-btn {
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 13px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
+            padding: 8px 16px; background: rgba(255,255,255,0.1); color: #fff;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
+            font-family: 'Nunito', sans-serif; font-size: 13px; cursor: pointer; backdrop-filter: blur(10px);
         }
-
         .ctrl-btn:hover { background: rgba(255,255,255,0.2); }
         .ctrl-btn.muted { background: rgba(220,60,60,0.3); border-color: rgba(220,60,60,0.5); }
-
-        .timer {
-            position: fixed;
-            top: 16px; left: 16px;
-            z-index: 200;
-            font-family: 'Nunito', sans-serif;
-            font-size: 16px;
-            color: rgba(255,255,255,0.3);
-            font-variant-numeric: tabular-nums;
-        }
-
-        .chrome-note {
-            position: fixed;
-            bottom: 12px; right: 16px;
-            font-size: 11px;
-            color: rgba(255,255,255,0.2);
-            z-index: 200;
-        }
+        .timer { position: fixed; top: 16px; left: 16px; z-index: 200; font-family: 'Nunito', sans-serif; font-size: 16px; color: rgba(255,255,255,0.3); font-variant-numeric: tabular-nums; }
+        .chrome-note { position: fixed; bottom: 12px; right: 16px; font-size: 11px; color: rgba(255,255,255,0.2); z-index: 200; }
     </style>
 </head>
 <body>
-
-    <div class="promo-stage">
+    <div class="stage">
         <div class="particles" id="particles"></div>
-        <div class="progress-bar" id="progress"></div>
+        <div class="progress" id="progress"></div>
         <div class="timer" id="timer">0:00</div>
-
         <div class="controls">
             <button class="ctrl-btn" onclick="restartPromo()">Replay</button>
             <button class="ctrl-btn" onclick="togglePause()">Pause</button>
             <button class="ctrl-btn" id="muteBtn" onclick="toggleMute()">&#x1F50A; Audio</button>
         </div>
 
-        <!-- SCENE 1: THE LOSS (0-10s) -->
-        <div class="scene scene-1" id="scene-1">
-            <div class="amber-glow" id="amberGlow"></div>
-            <div class="phrase" id="loss-1">I lost my mom to cancer when I was <em>seventeen</em>.</div>
-            <div class="phrase" id="loss-2" style="margin-top: 20px;">I have maybe <em>ten memories</em> of her voice.</div>
-            <div class="phrase highlight" id="loss-3" style="margin-top: 30px;">Ten.</div>
-            <div class="phrase" id="loss-4" style="margin-top: 20px;">If I could have had something that kept her voice alive...</div>
+        <!-- Scene 1: The Builder (0-10s) -->
+        <div class="scene" id="s1" style="background: radial-gradient(ellipse at center, #1A1A2E, var(--dark));">
+            <div class="phrase" id="s1a">I build <em>AI tools</em> for a living.</div>
+            <div class="phrase" id="s1b">When my first son was born, I wanted something that would actually get him <em>playing, learning</em>, and off a screen.</div>
+            <div class="phrase big" id="s1c">Nothing existed. So I built one.</div>
         </div>
 
-        <!-- SCENE 2: THE NEPHEWS (10-18s) -->
-        <div class="scene scene-2" id="scene-2">
-            <div class="gold-particles" id="goldDots">
-                <div class="gold-dot"></div><div class="gold-dot"></div><div class="gold-dot"></div>
-                <div class="gold-dot"></div><div class="gold-dot"></div><div class="gold-dot"></div>
-                <div class="gold-dot"></div><div class="gold-dot"></div>
-            </div>
-            <div class="phrase" id="nephew-1">So I cloned my voice for my nephews.</div>
-            <div class="phrase" id="nephew-2" style="margin-top: 16px;"><em>Liam</em> and <em>Logan</em>.</div>
-            <div class="phrase" id="nephew-3" style="margin-top: 16px;">Uncle Pete reading stories, even when I was miles away.</div>
-            <div class="silhouettes">
-                <div class="silhouette" id="sil-1"></div>
-                <div class="silhouette" id="sil-2"></div>
-            </div>
+        <!-- Scene 2: The Prototype (10-20s) -->
+        <div class="scene" id="s2" style="background: radial-gradient(ellipse at center, #1A1520, var(--dark));">
+            <div class="phrase" id="s2a">Started as a <em>custom GPT</em> on a stuffed crow.</div>
+            <div class="phrase" id="s2b">Then I flew to Florida and let my nephews try it. <em>Two and four years old.</em></div>
+            <div class="phrase big" id="s2c">They wouldn't put it down.</div>
+            <div class="phrase" id="s2d">Their parents loved it. That's when I knew.</div>
         </div>
 
-        <!-- SCENE 3: GL (18-26s) -->
-        <div class="scene scene-3" id="scene-3">
-            <div class="life-burst" id="lifeBurst"></div>
-            <div class="phrase" id="gl-1">Then my <em>son</em> was born.</div>
-            <div class="phrase" id="gl-2" style="margin-top: 16px;">And I built more.</div>
-            <div class="phrase" id="gl-3" style="margin-top: 16px;">Stories in <em>Italian</em>, because heritage disappears in one generation if you let it.</div>
-            <div class="phrase" id="gl-4" style="margin-top: 16px;">Music. Games. A whole world in a voice he trusts.</div>
-            <div class="heritage-bar" id="heritageBar">
-                <div class="bar-green"></div>
-                <div class="bar-white"></div>
-                <div class="bar-red"></div>
+        <!-- Scene 3: The Heroes (20-28s) -->
+        <div class="scene" id="s3" style="background: radial-gradient(ellipse at center, #1A1A2E, var(--dark));">
+            <div class="phrase" id="s3a">So I built it <em>the right way</em>. The way I build for work.</div>
+            <div class="heroes" id="heroParade">
+                <div class="hero" id="h0"><span class="hero-emoji">&#x1F426;&#x200D;&#x2B1B;</span><div class="hero-name">Crow</div><div class="hero-it">Corvo</div></div>
+                <div class="hero" id="h1"><span class="hero-emoji">&#x1F989;</span><div class="hero-name">Owl</div><div class="hero-it">Gufo</div></div>
+                <div class="hero" id="h2"><span class="hero-emoji">&#x1F43B;</span><div class="hero-name">Bear</div><div class="hero-it">Orsetto</div></div>
+                <div class="hero" id="h3"><span class="hero-emoji">&#x1F98A;</span><div class="hero-name">Fox</div><div class="hero-it">Volpe</div></div>
+                <div class="hero" id="h4"><span class="hero-emoji">&#x1F430;</span><div class="hero-name">Bunny</div><div class="hero-it">Coniglio</div></div>
             </div>
+            <div class="phrase" id="s3b">Five animals. Each with their own <em>personality</em>.</div>
         </div>
 
-        <!-- SCENE 4: THE REFERENCE (26-34s) -->
-        <div class="scene scene-4" id="scene-4">
-            <div class="toy-name" id="toy-teddy" style="top: 25%; left: 15%;">Teddy Ruxpin</div>
-            <div class="toy-name" id="toy-cabbage" style="top: 45%; right: 10%;">Cabbage Patch</div>
-            <div class="toy-name" id="toy-furby" style="bottom: 30%; left: 20%;">Furby</div>
-            <div class="crow-reveal" id="crowReveal">&#x1F426;&#x200D;&#x2B1B;</div>
-            <div class="subtext" id="refSubtext">But <em style="color: var(--gold); font-style: italic;">yours</em>. Your voice. Your family's stories.</div>
-        </div>
-
-        <!-- SCENE 5: THE PRODUCT (34-48s) -->
-        <div class="scene scene-5" id="scene-5">
-            <div class="product-title" id="prodTitle">Casa <span>Companion</span></div>
-            <div class="heroes-parade" id="heroesParade">
-                <div class="hero-animal" id="hero-0"><span class="hero-emoji">&#x1F426;&#x200D;&#x2B1B;</span><div class="hero-name">Crow</div><div class="hero-italian">Corvo</div></div>
-                <div class="hero-animal" id="hero-1"><span class="hero-emoji">&#x1F989;</span><div class="hero-name">Owl</div><div class="hero-italian">Gufo</div></div>
-                <div class="hero-animal" id="hero-2"><span class="hero-emoji">&#x1F43B;</span><div class="hero-name">Bear</div><div class="hero-italian">Orsetto</div></div>
-                <div class="hero-animal" id="hero-3"><span class="hero-emoji">&#x1F98A;</span><div class="hero-name">Fox</div><div class="hero-italian">Volpe</div></div>
-                <div class="hero-animal" id="hero-4"><span class="hero-emoji">&#x1F430;</span><div class="hero-name">Bunny</div><div class="hero-italian">Coniglio</div></div>
-            </div>
-            <div class="feature-pills" id="featurePills">
-                <div class="pill"><span class="pill-icon">&#x1F30D;</span>3 Languages</div>
-                <div class="pill"><span class="pill-icon">&#x1F3A4;</span>12 Phrases</div>
-                <div class="pill"><span class="pill-icon">&#x1F50A;</span>Your Voice</div>
-                <div class="pill"><span class="pill-icon">&#x1F4F4;</span>No Screen</div>
-                <div class="pill"><span class="pill-icon">&#x1F6C1;</span>Washable</div>
-                <div class="pill"><span class="pill-icon">&#x2600;&#xFE0F;</span>Solar Charge</div>
+        <!-- Scene 4: What It Does (28-40s) -->
+        <div class="scene" id="s4" style="background: radial-gradient(ellipse at 40% 50%, rgba(0,104,71,0.06), var(--dark));">
+            <div class="phrase" id="s4a"><em>Stories. Languages. Homework help.</em></div>
+            <div class="phrase" id="s4b">Grandparents connecting over <em>FaceTime</em> from across the country.</div>
+            <div class="phrase" id="s4c">It grows with your kid.</div>
+            <div class="phrase" id="s4d">And if you want, you can <em>clone your voice</em> so your child hears you, even when you're not there.</div>
+            <div class="pills" id="pills4">
+                <div class="pill">&#x1F4DA; Stories</div>
+                <div class="pill">&#x1F30D; 3 Languages</div>
+                <div class="pill">&#x1F4DD; Homework</div>
+                <div class="pill">&#x1F4F1; FaceTime</div>
+                <div class="pill">&#x1F3A4; Voice Clone</div>
+                <div class="pill">&#x1F331; Grows With Them</div>
             </div>
         </div>
 
-        <!-- SCENE 6: CTA (48-60s) -->
-        <div class="scene scene-6" id="scene-6">
+        <!-- Scene 5: The Vision (40-50s) -->
+        <div class="scene" id="s5" style="background: var(--dark);">
+            <div class="ref-name" id="ref-teddy" style="top: 20%; left: 12%;">Teddy Ruxpin</div>
+            <div class="ref-name" id="ref-cabbage" style="top: 45%; right: 8%;">Cabbage Patch</div>
+            <div class="ref-name" id="ref-furby" style="bottom: 25%; left: 15%;">Furby</div>
+            <div class="phrase big" id="s5a" style="position:relative; z-index:3;">This is what this generation <em>deserves</em>.</div>
+            <div class="phrase" id="s5b" style="position:relative; z-index:3;">Built with real AI. And built to <em>last</em>.</div>
+        </div>
+
+        <!-- Scene 6: CTA (50-60s) -->
+        <div class="scene" id="s6" style="background: radial-gradient(ellipse at center, #2D1117, var(--dark));">
             <div class="cta-logo" id="ctaLogo">Casa <span>Companion</span></div>
-            <div class="cta-tagline" id="ctaTagline">Your voice. Their companion.</div>
+            <div class="cta-tagline" id="ctaTag">Everyone else announced it. We built it.</div>
             <div class="cta-badge" id="ctaBadge">Coming to Kickstarter 2026</div>
             <div class="cta-url" id="ctaUrl">casacompanion.com</div>
         </div>
     </div>
-
     <div class="chrome-note">Best in Chrome</div>
 
     <script>
-        // ====== NARRATION AUDIO ======
         const SCENE_COUNT = 6;
-        let narrationAudio = [];
-        let audioMuted = false;
-        let currentNarration = null;
+        let narrationAudio = [], audioMuted = false, currentNarration = null;
+        function preloadAudio() { for (let i = 1; i <= SCENE_COUNT; i++) { const a = new Audio(`audio/narration-${i}.mp3`); a.preload = 'auto'; narrationAudio.push(a); } }
+        function playNarr(i) { if (currentNarration) { currentNarration.pause(); currentNarration.currentTime = 0; } const a = narrationAudio[i]; if (a && !audioMuted) { a.currentTime = 0; currentNarration = a; a.play().catch(() => {}); } }
+        function stopAudio() { narrationAudio.forEach(a => { a.pause(); a.currentTime = 0; }); currentNarration = null; }
+        function toggleMute() { audioMuted = !audioMuted; const b = document.getElementById('muteBtn'); if (audioMuted) { b.innerHTML = '&#x1F507; Muted'; b.classList.add('muted'); if (currentNarration) currentNarration.pause(); } else { b.innerHTML = '&#x1F50A; Audio'; b.classList.remove('muted'); } }
 
-        function preloadNarration() {
-            for (let i = 1; i <= SCENE_COUNT; i++) {
-                const audio = new Audio(`audio/narration-${i}.mp3`);
-                audio.preload = 'auto';
-                narrationAudio.push(audio);
-            }
-        }
+        const DURATION = 60000;
+        let startTime = 0, paused = false, pauseTime = 0, animFrame, executed = new Set();
 
-        function playNarration(sceneIndex) {
-            if (currentNarration) {
-                currentNarration.pause();
-                currentNarration.currentTime = 0;
-            }
-            const audio = narrationAudio[sceneIndex];
-            if (audio && !audioMuted) {
-                audio.currentTime = 0;
-                currentNarration = audio;
-                audio.play().catch(() => {});
-            }
-        }
-
-        function stopAllNarration() {
-            narrationAudio.forEach(a => { a.pause(); a.currentTime = 0; });
-            currentNarration = null;
-        }
-
-        function toggleMute() {
-            audioMuted = !audioMuted;
-            const btn = document.getElementById('muteBtn');
-            if (audioMuted) {
-                btn.innerHTML = '&#x1F507; Muted';
-                btn.classList.add('muted');
-                if (currentNarration) currentNarration.pause();
-            } else {
-                btn.innerHTML = '&#x1F50A; Audio';
-                btn.classList.remove('muted');
-            }
-        }
-
-        // ====== TIMELINE ENGINE ======
-        const TOTAL_DURATION = 60000; // 60 seconds
-        let startTime = 0;
-        let paused = false;
-        let pauseTime = 0;
-        let animFrame;
+        function show(n) { document.querySelectorAll('.scene').forEach(s => s.classList.remove('active')); document.getElementById(`s${n}`).classList.add('active'); }
+        function fi(sel, dur) { const el = document.querySelector(sel); if (el) { el.style.transition = `opacity ${dur}ms ease`; el.style.opacity = '1'; } }
+        function revealHero(i) { const h = document.getElementById(`h${i}`); if (h) { h.style.transition = 'all 0.5s cubic-bezier(0.34,1.56,0.64,1)'; h.style.opacity = '1'; h.style.transform = 'translateY(0)'; } }
+        function flashRef(id) { const el = document.getElementById(id); el.style.transition = 'all 0.5s ease'; el.style.opacity = '1'; el.classList.add('flash'); setTimeout(() => { el.style.transition = 'all 0.6s ease'; el.classList.remove('flash'); el.style.color = 'rgba(255,255,255,0.08)'; }, 1200); }
+        function flashPills() { document.querySelectorAll('#pills4 .pill').forEach((p, i) => { setTimeout(() => { p.style.transition = 'all 0.4s cubic-bezier(0.34,1.56,0.64,1)'; p.style.opacity = '1'; p.style.transform = 'scale(1)'; }, i * 180); }); }
 
         const timeline = [
-            // Scene 1: The Loss (0-10s)
-            [0,    () => { showScene(1); playNarration(0); }],
-            [300,  () => fadeIn('#loss-1', 800)],
-            [2500, () => fadeIn('#loss-2', 800)],
-            [5000, () => fadeIn('#loss-3', 500)],
-            [6500, () => fadeIn('#loss-4', 1000)],
-            [4000, () => { const g = document.getElementById('amberGlow'); g.style.transition = 'opacity 4s ease'; g.style.opacity = '1'; }],
+            [0,     () => { show(1); playNarr(0); }],
+            [300,   () => fi('#s1a', 800)],
+            [2500,  () => fi('#s1b', 900)],
+            [6000,  () => fi('#s1c', 600)],
 
-            // Scene 2: The Nephews (10-18s)
-            [10000, () => { showScene(2); playNarration(1); }],
-            [10300, () => fadeIn('#nephew-1', 700)],
-            [12000, () => fadeIn('#nephew-2', 600)],
-            [13500, () => fadeIn('#nephew-3', 700)],
-            [10500, () => animateGoldDots()],
-            [14500, () => { const s = document.getElementById('sil-1'); s.style.transition = 'opacity 0.8s ease'; s.style.opacity = '0.6'; }],
-            [15000, () => { const s = document.getElementById('sil-2'); s.style.transition = 'opacity 0.8s ease'; s.style.opacity = '0.6'; }],
+            [10000, () => { show(2); playNarr(1); }],
+            [10300, () => fi('#s2a', 700)],
+            [12500, () => fi('#s2b', 800)],
+            [16000, () => fi('#s2c', 500)],
+            [17000, () => fi('#s2d', 700)],
 
-            // Scene 3: GL (18-26s)
-            [18000, () => { showScene(3); playNarration(2); }],
-            [18300, () => fadeIn('#gl-1', 700)],
-            [19500, () => fadeIn('#gl-2', 600)],
-            [20500, () => fadeIn('#gl-3', 800)],
-            [23000, () => fadeIn('#gl-4', 700)],
-            [21000, () => { const h = document.getElementById('heritageBar'); h.style.transition = 'opacity 1s ease'; h.style.opacity = '1'; }],
-            [18500, () => { const b = document.getElementById('lifeBurst'); b.style.transition = 'opacity 3s ease'; b.style.opacity = '1'; }],
+            [20000, () => { show(3); playNarr(2); }],
+            [20300, () => fi('#s3a', 700)],
+            [22000, () => revealHero(0)],
+            [22500, () => revealHero(1)],
+            [23000, () => revealHero(2)],
+            [23500, () => revealHero(3)],
+            [24000, () => revealHero(4)],
+            [25500, () => fi('#s3b', 700)],
 
-            // Scene 4: The Reference (26-34s)
-            [26000, () => { showScene(4); playNarration(3); }],
-            [26200, () => flashToyName('toy-teddy')],
-            [28000, () => flashToyName('toy-cabbage')],
-            [29800, () => flashToyName('toy-furby')],
-            [31500, () => dissolveToyNames()],
-            [32000, () => { const c = document.getElementById('crowReveal'); c.style.transition = 'opacity 1s ease, transform 1s cubic-bezier(0.34,1.56,0.64,1)'; c.style.opacity = '1'; c.style.transform = 'scale(1)'; }],
-            [32500, () => fadeIn('#refSubtext', 700)],
+            [28000, () => { show(4); playNarr(3); }],
+            [28300, () => fi('#s4a', 700)],
+            [30000, () => fi('#s4b', 800)],
+            [33000, () => fi('#s4c', 600)],
+            [34500, () => fi('#s4d', 900)],
+            [37000, () => flashPills()],
 
-            // Scene 5: The Product (34-48s)
-            [34000, () => { showScene(5); playNarration(4); }],
-            [34200, () => fadeIn('#prodTitle', 600)],
-            [35500, () => revealHero(0)],
-            [36500, () => revealHero(1)],
-            [37500, () => revealHero(2)],
-            [38500, () => revealHero(3)],
-            [39500, () => revealHero(4)],
-            [41000, () => flashPills()],
+            [40000, () => { show(5); playNarr(4); }],
+            [40200, () => flashRef('ref-teddy')],
+            [42000, () => flashRef('ref-cabbage')],
+            [43800, () => flashRef('ref-furby')],
+            [45500, () => { document.querySelectorAll('.ref-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
+            [46000, () => fi('#s5a', 700)],
+            [47500, () => fi('#s5b', 600)],
 
-            // Scene 6: CTA (48-60s)
-            [48000, () => { showScene(6); playNarration(5); }],
-            [48300, () => fadeIn('#ctaLogo', 700)],
-            [49500, () => fadeIn('#ctaTagline', 600)],
-            [51000, () => { const b = document.getElementById('ctaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
-            [52500, () => fadeIn('#ctaUrl', 500)],
+            [50000, () => { show(6); playNarr(5); }],
+            [50300, () => fi('#ctaLogo', 700)],
+            [51500, () => fi('#ctaTag', 600)],
+            [53000, () => { const b = document.getElementById('ctaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
+            [54500, () => fi('#ctaUrl', 500)],
         ];
 
-        let executed = new Set();
-
-        function showScene(n) {
-            document.querySelectorAll('.scene').forEach(s => {
-                s.style.transition = 'opacity 0.5s ease';
-                s.classList.remove('active');
-            });
-            const scene = document.getElementById(`scene-${n}`);
-            scene.style.transition = 'opacity 0.8s ease';
-            scene.classList.add('active');
-        }
-
-        function fadeIn(selector, dur) {
-            const el = document.querySelector(selector);
-            if (!el) return;
-            el.style.transition = `opacity ${dur}ms ease, transform ${dur}ms ease`;
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }
-
-        function animateGoldDots() {
-            document.querySelectorAll('.gold-dot').forEach((dot, i) => {
-                setTimeout(() => {
-                    dot.style.transition = 'all 0.4s ease';
-                    dot.style.opacity = '1';
-                    dot.style.transform = 'scale(1)';
-                }, i * 100);
-            });
-        }
-
-        function flashToyName(id) {
-            const el = document.getElementById(id);
-            el.style.transition = 'all 0.6s ease';
-            el.style.opacity = '1';
-            el.classList.add('flash');
-            setTimeout(() => {
-                el.style.transition = 'all 0.8s ease';
-                el.classList.remove('flash');
-                el.style.color = 'rgba(255,255,255,0.1)';
-            }, 1400);
-        }
-
-        function dissolveToyNames() {
-            document.querySelectorAll('.toy-name').forEach(el => {
-                el.style.transition = 'opacity 0.8s ease';
-                el.style.opacity = '0';
-            });
-        }
-
-        function revealHero(i) {
-            const hero = document.getElementById(`hero-${i}`);
-            if (hero) {
-                hero.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)';
-                hero.style.opacity = '1';
-                hero.style.transform = 'translateY(0)';
-            }
-        }
-
-        function flashPills() {
-            document.querySelectorAll('.pill').forEach((pill, i) => {
-                setTimeout(() => {
-                    pill.style.transition = 'all 0.4s cubic-bezier(0.34,1.56,0.64,1)';
-                    pill.style.opacity = '1';
-                    pill.style.transform = 'scale(1)';
-                }, i * 200);
-            });
-        }
-
-        // ====== MAIN LOOP ======
         function tick() {
             if (paused) { animFrame = requestAnimationFrame(tick); return; }
-
             const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / TOTAL_DURATION * 100, 100);
-            document.getElementById('progress').style.width = progress + '%';
-
-            const totalSecs = Math.floor(elapsed / 1000);
-            const mins = Math.floor(totalSecs / 60);
-            const secs = totalSecs % 60;
-            document.getElementById('timer').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-
-            timeline.forEach(([time, action], idx) => {
-                if (elapsed >= time && !executed.has(idx)) {
-                    executed.add(idx);
-                    action();
-                }
-            });
-
-            if (elapsed < TOTAL_DURATION + 2000) {
-                animFrame = requestAnimationFrame(tick);
-            }
-        }
-
-        // ====== INIT ======
-        function initParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 20; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.top = Math.random() * 100 + '%';
-                const size = (2 + Math.random() * 4) + 'px';
-                p.style.width = size;
-                p.style.height = size;
-                p.style.background = Math.random() > 0.5 ? 'rgba(212,160,23,0.3)' : 'rgba(196,30,58,0.2)';
-                p.style.animationDelay = (Math.random() * 6) + 's';
-                p.style.animationDuration = (4 + Math.random() * 4) + 's';
-                container.appendChild(p);
-            }
+            document.getElementById('progress').style.width = Math.min(elapsed / DURATION * 100, 100) + '%';
+            const t = Math.floor(elapsed / 1000); document.getElementById('timer').textContent = `${Math.floor(t/60)}:${(t%60).toString().padStart(2,'0')}`;
+            timeline.forEach(([time, action], idx) => { if (elapsed >= time && !executed.has(idx)) { executed.add(idx); action(); } });
+            if (elapsed < DURATION + 2000) animFrame = requestAnimationFrame(tick);
         }
 
         function resetAll() {
-            executed.clear();
-            stopAllNarration();
-
-            document.querySelectorAll('.scene').forEach(s => {
-                s.classList.remove('active');
-                s.style.transition = 'none';
-                s.style.opacity = '0';
-            });
-
-            // Reset all animated elements
-            document.querySelectorAll('.phrase, .silhouette, .gold-dot, .hero-animal, .pill, .toy-name, .crow-reveal, .subtext, .product-title, .cta-logo, .cta-tagline, .cta-url').forEach(el => {
-                el.style.transition = 'none';
-                el.style.opacity = '0';
-                el.style.transform = '';
-            });
-
-            document.querySelectorAll('.hero-animal').forEach(el => { el.style.transform = 'translateY(40px)'; });
+            executed.clear(); stopAudio();
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.phrase, .hero, .pill, .ref-name, .cta-logo, .cta-tagline, .cta-url, .cta-badge').forEach(el => { el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = ''; });
+            document.querySelectorAll('.hero').forEach(el => { el.style.transform = 'translateY(40px)'; });
             document.querySelectorAll('.pill').forEach(el => { el.style.transform = 'scale(0.8)'; });
-            document.querySelectorAll('.toy-name').forEach(el => { el.classList.remove('flash'); el.style.color = ''; });
-
-            document.getElementById('amberGlow').style.opacity = '0';
-            document.getElementById('lifeBurst').style.opacity = '0';
-            document.getElementById('heritageBar').style.opacity = '0';
-            document.getElementById('crowReveal').style.transform = 'scale(0.5)';
-            document.getElementById('ctaBadge').style.cssText = 'opacity:0; transform:scale(0.8);';
+            document.querySelectorAll('.ref-name').forEach(el => { el.classList.remove('flash'); el.style.color = ''; });
+            const cb = document.getElementById('ctaBadge'); if (cb) { cb.style.opacity = '0'; cb.style.transform = 'scale(0.8)'; }
             document.getElementById('progress').style.width = '0%';
         }
 
-        function startPromo() {
-            resetAll();
-            startTime = Date.now();
-            paused = false;
-            tick();
-        }
+        function startPromo() { resetAll(); startTime = Date.now(); paused = false; tick(); }
+        function restartPromo() { cancelAnimationFrame(animFrame); startPromo(); }
+        function togglePause() { if (paused) { startTime += Date.now() - pauseTime; paused = false; if (currentNarration && !audioMuted) currentNarration.play().catch(() => {}); } else { pauseTime = Date.now(); paused = true; if (currentNarration) currentNarration.pause(); } }
 
-        function restartPromo() {
-            cancelAnimationFrame(animFrame);
-            startPromo();
-        }
+        function initParticles() { const c = document.getElementById('particles'); for (let i = 0; i < 20; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random()*100+'%'; p.style.top = Math.random()*100+'%'; const sz = (2+Math.random()*4)+'px'; p.style.width = sz; p.style.height = sz; p.style.background = Math.random()>0.5 ? 'rgba(212,160,23,0.3)' : 'rgba(196,30,58,0.2)'; p.style.animationDelay = (Math.random()*6)+'s'; p.style.animationDuration = (4+Math.random()*4)+'s'; c.appendChild(p); } }
 
-        function togglePause() {
-            if (paused) {
-                startTime += Date.now() - pauseTime;
-                paused = false;
-                if (currentNarration && !audioMuted) currentNarration.play().catch(() => {});
-            } else {
-                pauseTime = Date.now();
-                paused = true;
-                if (currentNarration) currentNarration.pause();
-            }
-        }
-
-        // Boot
-        preloadNarration();
-        initParticles();
-        startPromo();
+        preloadAudio(); initParticles(); startPromo();
     </script>
 </body>
 </html>
