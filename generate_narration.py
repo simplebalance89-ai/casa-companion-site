@@ -32,7 +32,7 @@ USE_ELEVENLABS = os.getenv("USE_ELEVENLABS", "0") == "1"
 
 NARRATION = [
     # Scene 1: The Builder (0-10s)
-    "I build AI tools for a living. When my first son was born, I wanted something that would actually get him playing, learning, and off a screen. Nothing existed. So I built one.",
+    "I build AI tools for business. ERP solutions. Enterprise software. When my first son was born, I wanted something that would actually get him playing, learning, and off a screen. Nothing existed. So I built one.",
     # Scene 2: The Prototype (10-20s)
     "Started as a custom GPT on my phone. Just ChatGPT. I saw the potential, but I saw the limitations. Flew to Florida and let my nephews try it. Two and four years old. They wouldn't put it down. Their parents loved it. That's when I knew.",
     # Scene 3: The Build (20-28s)

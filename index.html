@@ -421,7 +421,7 @@
                 <!-- Scene 1: The Builder — father + son on couch -->
                 <div class="promo-scene ps-1" id="ps-1">
                     <div class="p-text-box">
-                        <div class="p-phrase" id="p1a">I build <em>AI tools</em> for a living.</div>
+                        <div class="p-phrase" id="p1a">I build <em>AI tools</em> for business. ERP solutions. Enterprise software.</div>
                         <div class="p-phrase" id="p1b">When my first son was born, I wanted something that would get him <em>playing, learning</em>, and off a screen.</div>
                         <div class="p-phrase p-highlight" id="p1c">Nothing existed. So I built one.</div>
                     </div>
@@ -1184,10 +1184,10 @@
     let promoExecuted = new Set();
     let promoAnimFrame;
 
-    // Preload 6 narration MP3s
+    // Preload 6 narration MP3s (v3 = cache bust)
     function preloadPromoAudio() {
         for (let i = 1; i <= 6; i++) {
-            const a = new Audio(`audio/narration-${i}.mp3`);
+            const a = new Audio(`audio/narration-${i}.mp3?v=3`);
             a.preload = 'auto';
             promoAudio.push(a);
         }
