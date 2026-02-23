@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casa Companion - 30s Promo</title>
+    <title>Casa Companion — Founder Story</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,32 +12,27 @@
             --green: #006847;
             --cream: #FFFEF7;
             --dark: #0D0D1A;
+            --amber: #D4943A;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            width: 1080px;
-            height: 1920px;
-            overflow: hidden;
             background: var(--dark);
             font-family: 'Nunito', sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .promo-stage {
             position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
-        /* Landscape 16:9 mode */
-        body.landscape {
-            width: 1920px;
-            height: 1080px;
-        }
-
-        /* Embedded mode: scale the fixed canvas to fit the iframe */
-        body.embedded {
-            width: 1920px;
-            height: 1080px;
-            transform-origin: top left;
-        }
-
+        /* ====== SCENES ====== */
         .scene {
             position: absolute;
             top: 0; left: 0;
@@ -48,17 +43,17 @@
             align-items: center;
             text-align: center;
             opacity: 0;
-            transform: scale(0.95);
             transition: none;
-            padding: 60px;
+            padding: clamp(20px, 5vw, 60px);
+            z-index: 1;
         }
 
         .scene.active {
             opacity: 1;
-            transform: scale(1);
+            z-index: 2;
         }
 
-        /* ====== AMBIENT PARTICLES ====== */
+        /* ====== PARTICLES ====== */
         .particles {
             position: fixed;
             top: 0; left: 0;
@@ -76,331 +71,283 @@
 
         @keyframes float {
             0%, 100% { transform: translateY(0) scale(1); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            50% { transform: translateY(-80px) scale(1.2); }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            50% { transform: translateY(-60px) scale(1.2); }
         }
 
-        /* ====== SCENE 1: HOOK ====== */
+        /* ====== SCENE 1: THE LOSS (0-10s) ====== */
         .scene-1 {
             background: radial-gradient(ellipse at center, #1A0A0E 0%, var(--dark) 100%);
         }
 
-        .scene-1 .question {
-            font-family: 'Nunito', sans-serif;
-            font-size: 42px;
-            color: rgba(255,255,255,0.5);
-            font-weight: 300;
-            margin-bottom: 40px;
-            opacity: 0;
-        }
-
-        .scene-1 h1 {
+        .scene-1 .phrase {
             font-family: 'Playfair Display', serif;
-            font-size: 88px;
-            font-weight: 900;
-            color: white;
-            line-height: 1.1;
+            font-size: clamp(20px, 4vw, 48px);
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+            max-width: 800px;
             opacity: 0;
         }
 
-        .scene-1 h1 span { color: var(--gold); }
+        .scene-1 .phrase em {
+            font-style: italic;
+            color: var(--amber);
+        }
 
-        .scene-1 .underline-anim {
-            width: 0;
+        .scene-1 .phrase.highlight {
+            color: #fff;
+            font-weight: 700;
+            font-size: clamp(24px, 5vw, 56px);
+        }
+
+        .amber-glow {
+            position: absolute;
+            width: clamp(200px, 40vw, 500px);
+            height: clamp(200px, 40vw, 500px);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,148,58,0.08) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* ====== SCENE 2: THE NEPHEWS (10-18s) ====== */
+        .scene-2 {
+            background: radial-gradient(ellipse at center, #1A1520 0%, var(--dark) 100%);
+        }
+
+        .scene-2 .phrase {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(22px, 4vw, 48px);
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+            max-width: 700px;
+            opacity: 0;
+        }
+
+        .scene-2 .phrase em {
+            color: var(--gold);
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .gold-particles {
+            display: flex;
+            gap: clamp(4px, 1vw, 12px);
+            margin-bottom: clamp(16px, 3vw, 40px);
+        }
+
+        .gold-dot {
+            width: clamp(6px, 1.2vw, 16px);
+            height: clamp(6px, 1.2vw, 16px);
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0;
+            box-shadow: 0 0 20px rgba(212,160,23,0.4);
+        }
+
+        .silhouettes {
+            display: flex;
+            gap: clamp(20px, 4vw, 60px);
+            margin-top: clamp(20px, 3vw, 40px);
+        }
+
+        .silhouette {
+            width: clamp(40px, 8vw, 100px);
+            height: clamp(60px, 12vw, 150px);
+            background: rgba(212,160,23,0.1);
+            border-radius: 50% 50% 45% 45%;
+            opacity: 0;
+            position: relative;
+        }
+
+        .silhouette::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
             height: 4px;
-            background: var(--crimson);
-            margin: 30px auto 0;
+            background: rgba(212,160,23,0.2);
             border-radius: 2px;
         }
 
-        /* ====== SCENE 2: THE TOY ====== */
-        .scene-2 {
-            background: radial-gradient(ellipse at center, #1A1A2E 0%, var(--dark) 100%);
-        }
-
-        .toy-reveal {
-            position: relative;
-            margin-bottom: 48px;
-        }
-
-        .toy-glow {
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(212,160,23,0.15) 0%, transparent 70%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0.5);
-        }
-
-        .toy-emoji {
-            font-size: 180px;
-            filter: drop-shadow(0 0 40px rgba(212,160,23,0.3));
-        }
-
-        .scene-2 h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 64px;
-            color: white;
-            opacity: 0;
-            margin-bottom: 16px;
-        }
-
-        .scene-2 .tagline {
-            font-size: 32px;
-            color: var(--gold);
-            font-weight: 300;
-            opacity: 0;
-        }
-
-        /* ====== SCENE 3: VOICE CLONE ====== */
+        /* ====== SCENE 3: GL (18-26s) ====== */
         .scene-3 {
-            background: radial-gradient(ellipse at 30% 50%, rgba(196,30,58,0.08) 0%, var(--dark) 70%);
+            background: radial-gradient(ellipse at 40% 50%, rgba(0,104,71,0.06) 0%, var(--dark) 70%);
         }
 
-        .voice-wave {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            justify-content: center;
-            height: 120px;
-            margin-bottom: 48px;
-        }
-
-        .wave-bar {
-            width: 8px;
-            background: var(--crimson);
-            border-radius: 4px;
-            height: 20px;
-            opacity: 0;
-        }
-
-        .scene-3 h2 {
+        .scene-3 .phrase {
             font-family: 'Playfair Display', serif;
-            font-size: 72px;
-            color: white;
-            line-height: 1.2;
+            font-size: clamp(20px, 3.5vw, 44px);
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+            max-width: 750px;
             opacity: 0;
         }
 
-        .scene-3 h2 em {
+        .scene-3 .phrase em {
             font-style: italic;
             color: var(--gold);
         }
 
-        .scene-3 .detail {
-            font-size: 28px;
-            color: rgba(255,255,255,0.5);
-            margin-top: 24px;
+        .heritage-bar {
+            display: flex;
+            gap: 0;
+            height: clamp(3px, 0.5vw, 6px);
+            width: clamp(120px, 20vw, 300px);
+            margin-top: clamp(16px, 3vw, 40px);
+            border-radius: 3px;
+            overflow: hidden;
             opacity: 0;
         }
 
-        /* ====== SCENE 4: FEATURES RAPID ====== */
+        .heritage-bar .bar-green { flex: 1; background: #006847; }
+        .heritage-bar .bar-white { flex: 1; background: #F0F0F0; }
+        .heritage-bar .bar-red { flex: 1; background: #CE2B37; }
+
+        .life-burst {
+            position: absolute;
+            width: clamp(300px, 60vw, 800px);
+            height: clamp(300px, 60vw, 800px);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(80,200,120,0.04) 0%, transparent 60%);
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* ====== SCENE 4: THE REFERENCE (26-34s) ====== */
         .scene-4 {
             background: var(--dark);
         }
 
-        .feature-flash {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .ff-item {
-            display: flex;
-            align-items: center;
-            gap: 24px;
+        .toy-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 6vw, 72px);
+            font-weight: 900;
+            color: rgba(255,255,255,0.15);
             opacity: 0;
-            transform: translateX(-40px);
+            position: absolute;
         }
 
-        .ff-icon {
-            font-size: 56px;
-            width: 80px;
-            text-align: center;
+        .toy-name.flash {
+            color: #fff;
+            text-shadow: 0 0 40px rgba(255,255,255,0.3);
         }
 
-        .ff-text {
-            font-size: 40px;
-            font-weight: 700;
-            color: white;
-            text-align: left;
+        .scene-4 .crow-reveal {
+            opacity: 0;
+            font-size: clamp(60px, 12vw, 160px);
+            filter: drop-shadow(0 0 40px rgba(212,160,23,0.3));
         }
 
-        .ff-text span {
+        .scene-4 .subtext {
+            font-size: clamp(16px, 3vw, 36px);
             color: var(--gold);
+            font-weight: 300;
+            opacity: 0;
+            margin-top: clamp(8px, 1.5vw, 20px);
         }
 
-        /* ====== SCENE 5: ANIMALS PARADE ====== */
+        /* ====== SCENE 5: THE PRODUCT (34-48s) ====== */
         .scene-5 {
             background: radial-gradient(ellipse at center, #1A1A2E 0%, var(--dark) 100%);
         }
 
-        .scene-5 h2 {
+        .scene-5 .product-title {
             font-family: 'Playfair Display', serif;
-            font-size: 56px;
-            color: white;
-            margin-bottom: 48px;
+            font-size: clamp(32px, 6vw, 72px);
+            font-weight: 900;
+            color: #fff;
             opacity: 0;
+            margin-bottom: clamp(12px, 2vw, 32px);
         }
 
-        .animal-parade {
+        .scene-5 .product-title span { color: var(--gold); }
+
+        .heroes-parade {
             display: flex;
-            gap: 40px;
+            gap: clamp(12px, 3vw, 48px);
             justify-content: center;
+            margin: clamp(12px, 2vw, 32px) 0;
         }
 
-        .parade-animal {
+        .hero-animal {
             text-align: center;
             opacity: 0;
-            transform: translateY(60px);
+            transform: translateY(40px);
         }
 
-        .parade-emoji {
-            font-size: 100px;
+        .hero-emoji {
+            font-size: clamp(36px, 7vw, 80px);
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: clamp(4px, 0.5vw, 8px);
         }
 
-        .parade-name {
+        .hero-name {
             font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            color: white;
+            font-size: clamp(12px, 2vw, 22px);
+            color: #fff;
             font-weight: 700;
         }
 
-        .parade-italian {
-            font-size: 20px;
+        .hero-italian {
+            font-size: clamp(10px, 1.5vw, 16px);
             color: var(--gold);
             font-style: italic;
         }
 
-        /* ====== SCENE 6: LED EYES ====== */
-        .scene-6 {
-            background: var(--dark);
-        }
-
-        .led-showcase {
+        .feature-pills {
             display: flex;
-            gap: 48px;
+            flex-wrap: wrap;
+            gap: clamp(6px, 1vw, 12px);
             justify-content: center;
-            margin-bottom: 48px;
+            margin-top: clamp(12px, 2vw, 32px);
         }
 
-        .led-orb {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            opacity: 0;
-            transform: scale(0);
-        }
-
-        .scene-6 h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 56px;
-            color: white;
-            opacity: 0;
-            margin-bottom: 16px;
-        }
-
-        .scene-6 p {
-            font-size: 28px;
-            color: rgba(255,255,255,0.5);
-            opacity: 0;
-        }
-
-        /* ====== SCENE 7: PRICING ====== */
-        .scene-7 {
-            background: radial-gradient(ellipse at center, #1A0A0E 0%, var(--dark) 100%);
-        }
-
-        .price-hero {
+        .pill {
+            padding: clamp(6px, 1vw, 12px) clamp(12px, 2vw, 24px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50px;
+            color: rgba(255,255,255,0.7);
+            font-size: clamp(11px, 1.5vw, 16px);
+            font-weight: 600;
             opacity: 0;
             transform: scale(0.8);
         }
 
-        .price-from {
-            font-size: 32px;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 8px;
-        }
+        .pill .pill-icon { margin-right: 6px; }
 
-        .price-amount {
-            font-family: 'Playfair Display', serif;
-            font-size: 140px;
-            font-weight: 900;
-            color: white;
-            line-height: 1;
-        }
-
-        .price-amount span { color: var(--gold); }
-
-        .price-note {
-            font-size: 28px;
-            color: var(--gold);
-            margin-top: 16px;
-        }
-
-        .price-tiers {
-            display: flex;
-            gap: 32px;
-            margin-top: 48px;
-        }
-
-        .price-tier {
-            padding: 20px 32px;
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 12px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .price-tier .tier-price {
-            font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            color: white;
-            font-weight: 700;
-        }
-
-        .price-tier .tier-name {
-            font-size: 18px;
-            color: rgba(255,255,255,0.5);
-        }
-
-        /* ====== SCENE 8: CTA ====== */
-        .scene-8 {
+        /* ====== SCENE 6: CTA (48-60s) ====== */
+        .scene-6 {
             background: radial-gradient(ellipse at center, #2D1117 0%, var(--dark) 100%);
         }
 
-        .cta-logo {
+        .scene-6 .cta-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 80px;
+            font-size: clamp(36px, 7vw, 80px);
             font-weight: 900;
-            color: white;
+            color: #fff;
             opacity: 0;
-            margin-bottom: 24px;
         }
 
-        .cta-logo span { color: var(--gold); }
+        .scene-6 .cta-logo span { color: var(--gold); }
 
-        .cta-tagline {
-            font-size: 36px;
+        .scene-6 .cta-tagline {
+            font-size: clamp(18px, 3.5vw, 42px);
             color: rgba(255,255,255,0.6);
             font-weight: 300;
             opacity: 0;
-            margin-bottom: 48px;
+            margin: clamp(8px, 1.5vw, 20px) 0 clamp(20px, 3vw, 48px);
         }
 
-        .cta-badge {
+        .scene-6 .cta-badge {
             display: inline-block;
-            padding: 20px 48px;
+            padding: clamp(12px, 2vw, 20px) clamp(24px, 4vw, 48px);
             background: var(--crimson);
-            color: white;
-            font-size: 28px;
+            color: #fff;
+            font-size: clamp(14px, 2.5vw, 28px);
             font-weight: 800;
             border-radius: 60px;
             letter-spacing: 2px;
@@ -410,9 +357,9 @@
             box-shadow: 0 8px 40px rgba(196,30,58,0.5);
         }
 
-        .cta-url {
-            margin-top: 32px;
-            font-size: 24px;
+        .scene-6 .cta-url {
+            margin-top: clamp(12px, 2vw, 32px);
+            font-size: clamp(14px, 2vw, 24px);
             color: var(--gold);
             opacity: 0;
             letter-spacing: 1px;
@@ -421,8 +368,7 @@
         /* ====== PROGRESS BAR ====== */
         .progress-bar {
             position: fixed;
-            bottom: 0;
-            left: 0;
+            bottom: 0; left: 0;
             height: 4px;
             background: var(--crimson);
             z-index: 100;
@@ -430,28 +376,26 @@
             transition: width 0.1s linear;
         }
 
-        /* Hide controls and timer when embedded */
+        /* ====== CONTROLS (standalone only) ====== */
         body.embedded .controls,
         body.embedded .timer { display: none; }
 
-        /* ====== CONTROLS ====== */
         .controls {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 16px; right: 16px;
             z-index: 200;
             display: flex;
-            gap: 12px;
+            gap: 8px;
         }
 
         .ctrl-btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background: rgba(255,255,255,0.1);
-            color: white;
+            color: #fff;
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 8px;
             font-family: 'Nunito', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             backdrop-filter: blur(10px);
         }
@@ -461,121 +405,122 @@
 
         .timer {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            top: 16px; left: 16px;
             z-index: 200;
             font-family: 'Nunito', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             color: rgba(255,255,255,0.3);
             font-variant-numeric: tabular-nums;
+        }
+
+        .chrome-note {
+            position: fixed;
+            bottom: 12px; right: 16px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.2);
+            z-index: 200;
         }
     </style>
 </head>
 <body>
 
-    <div class="particles" id="particles"></div>
-    <div class="progress-bar" id="progress"></div>
-    <div class="timer" id="timer">0:00</div>
+    <div class="promo-stage">
+        <div class="particles" id="particles"></div>
+        <div class="progress-bar" id="progress"></div>
+        <div class="timer" id="timer">0:00</div>
 
-    <div class="controls">
-        <button class="ctrl-btn" onclick="toggleSize()">9:16 / 16:9</button>
-        <button class="ctrl-btn" onclick="restartPromo()">Replay</button>
-        <button class="ctrl-btn" onclick="togglePause()">Pause</button>
-        <button class="ctrl-btn" id="muteBtn" onclick="toggleMute()">&#x1F50A; Audio</button>
-    </div>
+        <div class="controls">
+            <button class="ctrl-btn" onclick="restartPromo()">Replay</button>
+            <button class="ctrl-btn" onclick="togglePause()">Pause</button>
+            <button class="ctrl-btn" id="muteBtn" onclick="toggleMute()">&#x1F50A; Audio</button>
+        </div>
 
-    <!-- SCENE 1: HOOK (0-4s) -->
-    <div class="scene scene-1" id="scene-1">
-        <div class="question">What if your child could hear</div>
-        <h1>Your <span>Voice</span><br>Anytime</h1>
-        <div class="underline-anim"></div>
-    </div>
+        <!-- SCENE 1: THE LOSS (0-10s) -->
+        <div class="scene scene-1" id="scene-1">
+            <div class="amber-glow" id="amberGlow"></div>
+            <div class="phrase" id="loss-1">I lost my mom to cancer when I was <em>seventeen</em>.</div>
+            <div class="phrase" id="loss-2" style="margin-top: 20px;">I have maybe <em>ten memories</em> of her voice.</div>
+            <div class="phrase highlight" id="loss-3" style="margin-top: 30px;">Ten.</div>
+            <div class="phrase" id="loss-4" style="margin-top: 20px;">If I could have had something that kept her voice alive...</div>
+        </div>
 
-    <!-- SCENE 2: THE TOY (4-8s) -->
-    <div class="scene scene-2" id="scene-2">
-        <div class="toy-reveal">
-            <div class="toy-glow">
-                <span class="toy-emoji">&#x1F426;&#x200D;&#x2B1B;</span>
+        <!-- SCENE 2: THE NEPHEWS (10-18s) -->
+        <div class="scene scene-2" id="scene-2">
+            <div class="gold-particles" id="goldDots">
+                <div class="gold-dot"></div><div class="gold-dot"></div><div class="gold-dot"></div>
+                <div class="gold-dot"></div><div class="gold-dot"></div><div class="gold-dot"></div>
+                <div class="gold-dot"></div><div class="gold-dot"></div>
+            </div>
+            <div class="phrase" id="nephew-1">So I cloned my voice for my nephews.</div>
+            <div class="phrase" id="nephew-2" style="margin-top: 16px;"><em>Liam</em> and <em>Logan</em>.</div>
+            <div class="phrase" id="nephew-3" style="margin-top: 16px;">Uncle Pete reading stories, even when I was miles away.</div>
+            <div class="silhouettes">
+                <div class="silhouette" id="sil-1"></div>
+                <div class="silhouette" id="sil-2"></div>
             </div>
         </div>
-        <h2>Casa Companion</h2>
-        <div class="tagline">AI that speaks in your voice</div>
-    </div>
 
-    <!-- SCENE 3: VOICE CLONE (8-12s) -->
-    <div class="scene scene-3" id="scene-3">
-        <div class="voice-wave" id="voiceWave"></div>
-        <h2>Record <em>12 phrases</em>.<br>Clone your voice.</h2>
-        <div class="detail">Stories. Lullabies. Languages. In your voice.</div>
-    </div>
+        <!-- SCENE 3: GL (18-26s) -->
+        <div class="scene scene-3" id="scene-3">
+            <div class="life-burst" id="lifeBurst"></div>
+            <div class="phrase" id="gl-1">Then my <em>son</em> was born.</div>
+            <div class="phrase" id="gl-2" style="margin-top: 16px;">And I built more.</div>
+            <div class="phrase" id="gl-3" style="margin-top: 16px;">Stories in <em>Italian</em>, because heritage disappears in one generation if you let it.</div>
+            <div class="phrase" id="gl-4" style="margin-top: 16px;">Music. Games. A whole world in a voice he trusts.</div>
+            <div class="heritage-bar" id="heritageBar">
+                <div class="bar-green"></div>
+                <div class="bar-white"></div>
+                <div class="bar-red"></div>
+            </div>
+        </div>
 
-    <!-- SCENE 4: FEATURES (12-18s) -->
-    <div class="scene scene-4" id="scene-4">
-        <div class="feature-flash">
-            <div class="ff-item"><span class="ff-icon">&#x1F30D;</span><span class="ff-text"><span>3</span> languages built in</span></div>
-            <div class="ff-item"><span class="ff-icon">&#x1F4F8;</span><span class="ff-text">Squeeze to <span>snap photos</span></span></div>
-            <div class="ff-item"><span class="ff-icon">&#x2600;&#xFE0F;</span><span class="ff-text"><span>Solar</span> charging nest</span></div>
-            <div class="ff-item"><span class="ff-icon">&#x1F50A;</span><span class="ff-text">Plug into <span>any speaker</span></span></div>
-            <div class="ff-item"><span class="ff-icon">&#x1F6C1;</span><span class="ff-text"><span>Machine</span> washable</span></div>
-            <div class="ff-item"><span class="ff-icon">&#x1F331;</span><span class="ff-text">Grows with <span>your child</span></span></div>
+        <!-- SCENE 4: THE REFERENCE (26-34s) -->
+        <div class="scene scene-4" id="scene-4">
+            <div class="toy-name" id="toy-teddy" style="top: 25%; left: 15%;">Teddy Ruxpin</div>
+            <div class="toy-name" id="toy-cabbage" style="top: 45%; right: 10%;">Cabbage Patch</div>
+            <div class="toy-name" id="toy-furby" style="bottom: 30%; left: 20%;">Furby</div>
+            <div class="crow-reveal" id="crowReveal">&#x1F426;&#x200D;&#x2B1B;</div>
+            <div class="subtext" id="refSubtext">But <em style="color: var(--gold); font-style: italic;">yours</em>. Your voice. Your family's stories.</div>
+        </div>
+
+        <!-- SCENE 5: THE PRODUCT (34-48s) -->
+        <div class="scene scene-5" id="scene-5">
+            <div class="product-title" id="prodTitle">Casa <span>Companion</span></div>
+            <div class="heroes-parade" id="heroesParade">
+                <div class="hero-animal" id="hero-0"><span class="hero-emoji">&#x1F426;&#x200D;&#x2B1B;</span><div class="hero-name">Crow</div><div class="hero-italian">Corvo</div></div>
+                <div class="hero-animal" id="hero-1"><span class="hero-emoji">&#x1F989;</span><div class="hero-name">Owl</div><div class="hero-italian">Gufo</div></div>
+                <div class="hero-animal" id="hero-2"><span class="hero-emoji">&#x1F43B;</span><div class="hero-name">Bear</div><div class="hero-italian">Orsetto</div></div>
+                <div class="hero-animal" id="hero-3"><span class="hero-emoji">&#x1F98A;</span><div class="hero-name">Fox</div><div class="hero-italian">Volpe</div></div>
+                <div class="hero-animal" id="hero-4"><span class="hero-emoji">&#x1F430;</span><div class="hero-name">Bunny</div><div class="hero-italian">Coniglio</div></div>
+            </div>
+            <div class="feature-pills" id="featurePills">
+                <div class="pill"><span class="pill-icon">&#x1F30D;</span>3 Languages</div>
+                <div class="pill"><span class="pill-icon">&#x1F3A4;</span>12 Phrases</div>
+                <div class="pill"><span class="pill-icon">&#x1F50A;</span>Your Voice</div>
+                <div class="pill"><span class="pill-icon">&#x1F4F4;</span>No Screen</div>
+                <div class="pill"><span class="pill-icon">&#x1F6C1;</span>Washable</div>
+                <div class="pill"><span class="pill-icon">&#x2600;&#xFE0F;</span>Solar Charge</div>
+            </div>
+        </div>
+
+        <!-- SCENE 6: CTA (48-60s) -->
+        <div class="scene scene-6" id="scene-6">
+            <div class="cta-logo" id="ctaLogo">Casa <span>Companion</span></div>
+            <div class="cta-tagline" id="ctaTagline">Your voice. Their companion.</div>
+            <div class="cta-badge" id="ctaBadge">Coming to Kickstarter 2026</div>
+            <div class="cta-url" id="ctaUrl">casacompanion.com</div>
         </div>
     </div>
 
-    <!-- SCENE 5: ANIMALS (18-22s) -->
-    <div class="scene scene-5" id="scene-5">
-        <h2>Five friends. One family.</h2>
-        <div class="animal-parade">
-            <div class="parade-animal"><span class="parade-emoji">&#x1F426;&#x200D;&#x2B1B;</span><div class="parade-name">Crow</div><div class="parade-italian">Corvo</div></div>
-            <div class="parade-animal"><span class="parade-emoji">&#x1F989;</span><div class="parade-name">Owl</div><div class="parade-italian">Gufo</div></div>
-            <div class="parade-animal"><span class="parade-emoji">&#x1F43B;</span><div class="parade-name">Bear</div><div class="parade-italian">Orsetto</div></div>
-            <div class="parade-animal"><span class="parade-emoji">&#x1F98A;</span><div class="parade-name">Fox</div><div class="parade-italian">Volpe</div></div>
-            <div class="parade-animal"><span class="parade-emoji">&#x1F430;</span><div class="parade-name">Bunny</div><div class="parade-italian">Coniglio</div></div>
-        </div>
-    </div>
-
-    <!-- SCENE 6: LED EYES (22-25s) -->
-    <div class="scene scene-6" id="scene-6">
-        <div class="led-showcase">
-            <div class="led-orb" style="background: #4A9EFF; box-shadow: 0 0 60px #4A9EFF;"></div>
-            <div class="led-orb" style="background: #FFB347; box-shadow: 0 0 60px #FFB347;"></div>
-            <div class="led-orb" style="background: #FFD700; box-shadow: 0 0 60px #FFD700;"></div>
-            <div class="led-orb" style="background: #50C878; box-shadow: 0 0 60px #50C878;"></div>
-            <div class="led-orb" style="background: #9B59B6; box-shadow: 0 0 60px #9B59B6;"></div>
-        </div>
-        <h2>Eyes that feel alive</h2>
-        <p>Listening. Thinking. Speaking. Dreaming.</p>
-    </div>
-
-    <!-- SCENE 7: PRICING (25-28s) -->
-    <div class="scene scene-7" id="scene-7">
-        <div class="price-hero">
-            <div class="price-from">Starting at</div>
-            <div class="price-amount">$<span>79</span></div>
-            <div class="price-note">Kickstarter Early Bird</div>
-        </div>
-        <div class="price-tiers">
-            <div class="price-tier"><div class="tier-price">$79</div><div class="tier-name">Basic</div></div>
-            <div class="price-tier" style="border-color: var(--crimson);"><div class="tier-price">$119</div><div class="tier-name">Premium</div></div>
-            <div class="price-tier"><div class="tier-price">$159</div><div class="tier-name">Gift Edition</div></div>
-        </div>
-    </div>
-
-    <!-- SCENE 8: CTA (28-30s) -->
-    <div class="scene scene-8" id="scene-8">
-        <div class="cta-logo">Casa <span>Companion</span></div>
-        <div class="cta-tagline">Your voice. Their companion.</div>
-        <div class="cta-badge">Coming to Kickstarter 2026</div>
-        <div class="cta-url">casacompanion.com</div>
-    </div>
+    <div class="chrome-note">Best in Chrome</div>
 
     <script>
         // ====== NARRATION AUDIO ======
-        const SCENE_COUNT = 8;
+        const SCENE_COUNT = 6;
         let narrationAudio = [];
         let audioMuted = false;
         let currentNarration = null;
 
-        // Preload all narration audio files
         function preloadNarration() {
             for (let i = 1; i <= SCENE_COUNT; i++) {
                 const audio = new Audio(`audio/narration-${i}.mp3`);
@@ -585,7 +530,6 @@
         }
 
         function playNarration(sceneIndex) {
-            // Stop any currently playing narration
             if (currentNarration) {
                 currentNarration.pause();
                 currentNarration.currentTime = 0;
@@ -609,7 +553,7 @@
             if (audioMuted) {
                 btn.innerHTML = '&#x1F507; Muted';
                 btn.classList.add('muted');
-                if (currentNarration) { currentNarration.pause(); }
+                if (currentNarration) currentNarration.pause();
             } else {
                 btn.innerHTML = '&#x1F50A; Audio';
                 btn.classList.remove('muted');
@@ -617,88 +561,79 @@
         }
 
         // ====== TIMELINE ENGINE ======
-        const TOTAL_DURATION = 30000; // 30 seconds
+        const TOTAL_DURATION = 60000; // 60 seconds
         let startTime = 0;
         let paused = false;
         let pauseTime = 0;
         let animFrame;
 
         const timeline = [
-            // [timeMs, action]
-            // Scene 1: Hook (0-4s)
+            // Scene 1: The Loss (0-10s)
             [0,    () => { showScene(1); playNarration(0); }],
-            [200,  () => animateIn('#scene-1 .question', 600)],
-            [800,  () => animateIn('#scene-1 h1', 800)],
-            [1600, () => { const u = document.querySelector('#scene-1 .underline-anim'); u.style.transition = 'width 1s ease'; u.style.width = '200px'; }],
+            [300,  () => fadeIn('#loss-1', 800)],
+            [2500, () => fadeIn('#loss-2', 800)],
+            [5000, () => fadeIn('#loss-3', 500)],
+            [6500, () => fadeIn('#loss-4', 1000)],
+            [4000, () => { const g = document.getElementById('amberGlow'); g.style.transition = 'opacity 4s ease'; g.style.opacity = '1'; }],
 
-            // Scene 2: Toy Reveal (4-8s)
-            [4000, () => { showScene(2); playNarration(1); }],
-            [4200, () => { const g = document.querySelector('.toy-glow'); g.style.transition = 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)'; g.style.opacity = '1'; g.style.transform = 'scale(1)'; }],
-            [5000, () => animateIn('#scene-2 h2', 600)],
-            [5600, () => animateIn('#scene-2 .tagline', 500)],
+            // Scene 2: The Nephews (10-18s)
+            [10000, () => { showScene(2); playNarration(1); }],
+            [10300, () => fadeIn('#nephew-1', 700)],
+            [12000, () => fadeIn('#nephew-2', 600)],
+            [13500, () => fadeIn('#nephew-3', 700)],
+            [10500, () => animateGoldDots()],
+            [14500, () => { const s = document.getElementById('sil-1'); s.style.transition = 'opacity 0.8s ease'; s.style.opacity = '0.6'; }],
+            [15000, () => { const s = document.getElementById('sil-2'); s.style.transition = 'opacity 0.8s ease'; s.style.opacity = '0.6'; }],
 
-            // Scene 3: Voice Clone (8-12s)
-            [8000, () => { showScene(3); playNarration(2); }],
-            [8200, () => animateWave()],
-            [9000, () => animateIn('#scene-3 h2', 700)],
-            [10000, () => animateIn('#scene-3 .detail', 500)],
+            // Scene 3: GL (18-26s)
+            [18000, () => { showScene(3); playNarration(2); }],
+            [18300, () => fadeIn('#gl-1', 700)],
+            [19500, () => fadeIn('#gl-2', 600)],
+            [20500, () => fadeIn('#gl-3', 800)],
+            [23000, () => fadeIn('#gl-4', 700)],
+            [21000, () => { const h = document.getElementById('heritageBar'); h.style.transition = 'opacity 1s ease'; h.style.opacity = '1'; }],
+            [18500, () => { const b = document.getElementById('lifeBurst'); b.style.transition = 'opacity 3s ease'; b.style.opacity = '1'; }],
 
-            // Scene 4: Features Rapid (12-18s)
-            [12000, () => { showScene(4); playNarration(3); }],
-            [12200, () => flashFeature(0)],
-            [13000, () => flashFeature(1)],
-            [13800, () => flashFeature(2)],
-            [14600, () => flashFeature(3)],
-            [15400, () => flashFeature(4)],
-            [16200, () => flashFeature(5)],
+            // Scene 4: The Reference (26-34s)
+            [26000, () => { showScene(4); playNarration(3); }],
+            [26200, () => flashToyName('toy-teddy')],
+            [28000, () => flashToyName('toy-cabbage')],
+            [29800, () => flashToyName('toy-furby')],
+            [31500, () => dissolveToyNames()],
+            [32000, () => { const c = document.getElementById('crowReveal'); c.style.transition = 'opacity 1s ease, transform 1s cubic-bezier(0.34,1.56,0.64,1)'; c.style.opacity = '1'; c.style.transform = 'scale(1)'; }],
+            [32500, () => fadeIn('#refSubtext', 700)],
 
-            // Scene 5: Animals (18-22s)
-            [18000, () => { showScene(5); playNarration(4); }],
-            [18200, () => animateIn('#scene-5 h2', 500)],
-            [18600, () => paradeAnimal(0)],
-            [19000, () => paradeAnimal(1)],
-            [19400, () => paradeAnimal(2)],
-            [19800, () => paradeAnimal(3)],
-            [20200, () => paradeAnimal(4)],
+            // Scene 5: The Product (34-48s)
+            [34000, () => { showScene(5); playNarration(4); }],
+            [34200, () => fadeIn('#prodTitle', 600)],
+            [35500, () => revealHero(0)],
+            [36500, () => revealHero(1)],
+            [37500, () => revealHero(2)],
+            [38500, () => revealHero(3)],
+            [39500, () => revealHero(4)],
+            [41000, () => flashPills()],
 
-            // Scene 6: LED Eyes (22-25s)
-            [22000, () => { showScene(6); playNarration(5); }],
-            [22200, () => showLed(0)],
-            [22500, () => showLed(1)],
-            [22800, () => showLed(2)],
-            [23100, () => showLed(3)],
-            [23400, () => showLed(4)],
-            [23800, () => animateIn('#scene-6 h2', 500)],
-            [24200, () => animateIn('#scene-6 p', 400)],
-
-            // Scene 7: Pricing (25-28s)
-            [25000, () => { showScene(7); playNarration(6); }],
-            [25200, () => { const p = document.querySelector('.price-hero'); p.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'; p.style.opacity = '1'; p.style.transform = 'scale(1)'; }],
-            [26000, () => showTier(0)],
-            [26300, () => showTier(1)],
-            [26600, () => showTier(2)],
-
-            // Scene 8: CTA (28-30s)
-            [28000, () => { showScene(8); playNarration(7); }],
-            [28200, () => animateIn('.cta-logo', 600)],
-            [28600, () => animateIn('.cta-tagline', 500)],
-            [29000, () => { const b = document.querySelector('.cta-badge'); b.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
-            [29400, () => animateIn('.cta-url', 400)],
+            // Scene 6: CTA (48-60s)
+            [48000, () => { showScene(6); playNarration(5); }],
+            [48300, () => fadeIn('#ctaLogo', 700)],
+            [49500, () => fadeIn('#ctaTagline', 600)],
+            [51000, () => { const b = document.getElementById('ctaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
+            [52500, () => fadeIn('#ctaUrl', 500)],
         ];
 
         let executed = new Set();
 
         function showScene(n) {
             document.querySelectorAll('.scene').forEach(s => {
+                s.style.transition = 'opacity 0.5s ease';
                 s.classList.remove('active');
-                s.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
             });
             const scene = document.getElementById(`scene-${n}`);
-            scene.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            scene.style.transition = 'opacity 0.8s ease';
             scene.classList.add('active');
         }
 
-        function animateIn(selector, dur) {
+        function fadeIn(selector, dur) {
             const el = document.querySelector(selector);
             if (!el) return;
             el.style.transition = `opacity ${dur}ms ease, transform ${dur}ms ease`;
@@ -706,60 +641,52 @@
             el.style.transform = 'translateY(0)';
         }
 
-        function animateWave() {
-            const bars = document.querySelectorAll('.wave-bar');
-            bars.forEach((bar, i) => {
+        function animateGoldDots() {
+            document.querySelectorAll('.gold-dot').forEach((dot, i) => {
                 setTimeout(() => {
-                    bar.style.transition = 'all 0.3s ease';
-                    bar.style.opacity = '1';
-                    const h = 20 + Math.random() * 80;
-                    bar.style.height = h + 'px';
-                    // Animate bars
-                    setInterval(() => {
-                        if (!paused) bar.style.height = (20 + Math.random() * 80) + 'px';
-                    }, 200 + Math.random() * 200);
-                }, i * 30);
+                    dot.style.transition = 'all 0.4s ease';
+                    dot.style.opacity = '1';
+                    dot.style.transform = 'scale(1)';
+                }, i * 100);
             });
         }
 
-        function flashFeature(i) {
-            const items = document.querySelectorAll('.ff-item');
-            if (items[i]) {
-                items[i].style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                items[i].style.opacity = '1';
-                items[i].style.transform = 'translateX(0)';
+        function flashToyName(id) {
+            const el = document.getElementById(id);
+            el.style.transition = 'all 0.6s ease';
+            el.style.opacity = '1';
+            el.classList.add('flash');
+            setTimeout(() => {
+                el.style.transition = 'all 0.8s ease';
+                el.classList.remove('flash');
+                el.style.color = 'rgba(255,255,255,0.1)';
+            }, 1400);
+        }
+
+        function dissolveToyNames() {
+            document.querySelectorAll('.toy-name').forEach(el => {
+                el.style.transition = 'opacity 0.8s ease';
+                el.style.opacity = '0';
+            });
+        }
+
+        function revealHero(i) {
+            const hero = document.getElementById(`hero-${i}`);
+            if (hero) {
+                hero.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)';
+                hero.style.opacity = '1';
+                hero.style.transform = 'translateY(0)';
             }
         }
 
-        function paradeAnimal(i) {
-            const animals = document.querySelectorAll('.parade-animal');
-            if (animals[i]) {
-                animals[i].style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                animals[i].style.opacity = '1';
-                animals[i].style.transform = 'translateY(0)';
-            }
-        }
-
-        function showLed(i) {
-            const orbs = document.querySelectorAll('.led-orb');
-            if (orbs[i]) {
-                orbs[i].style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                orbs[i].style.opacity = '1';
-                orbs[i].style.transform = 'scale(1)';
-                // Pulse
+        function flashPills() {
+            document.querySelectorAll('.pill').forEach((pill, i) => {
                 setTimeout(() => {
-                    orbs[i].style.animation = 'ledPulseAnim 2s ease-in-out infinite';
-                }, 500);
-            }
-        }
-
-        function showTier(i) {
-            const tiers = document.querySelectorAll('.price-tier');
-            if (tiers[i]) {
-                tiers[i].style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                tiers[i].style.opacity = '1';
-                tiers[i].style.transform = 'translateY(0)';
-            }
+                    pill.style.transition = 'all 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+                    pill.style.opacity = '1';
+                    pill.style.transform = 'scale(1)';
+                }, i * 200);
+            });
         }
 
         // ====== MAIN LOOP ======
@@ -770,12 +697,11 @@
             const progress = Math.min(elapsed / TOTAL_DURATION * 100, 100);
             document.getElementById('progress').style.width = progress + '%';
 
-            // Timer display
-            const secs = Math.floor(elapsed / 1000);
-            const ms = Math.floor((elapsed % 1000) / 10);
-            document.getElementById('timer').textContent = `0:${secs.toString().padStart(2,'0')}`;
+            const totalSecs = Math.floor(elapsed / 1000);
+            const mins = Math.floor(totalSecs / 60);
+            const secs = totalSecs % 60;
+            document.getElementById('timer').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
 
-            // Execute timeline events
             timeline.forEach(([time, action], idx) => {
                 if (elapsed >= time && !executed.has(idx)) {
                     executed.add(idx);
@@ -796,25 +722,16 @@
                 p.className = 'particle';
                 p.style.left = Math.random() * 100 + '%';
                 p.style.top = Math.random() * 100 + '%';
-                p.style.width = (2 + Math.random() * 4) + 'px';
-                p.style.height = p.style.width;
-                p.style.background = Math.random() > 0.5 ? 'rgba(212,160,23,0.3)' : 'rgba(196,30,58,0.3)';
+                const size = (2 + Math.random() * 4) + 'px';
+                p.style.width = size;
+                p.style.height = size;
+                p.style.background = Math.random() > 0.5 ? 'rgba(212,160,23,0.3)' : 'rgba(196,30,58,0.2)';
                 p.style.animationDelay = (Math.random() * 6) + 's';
                 p.style.animationDuration = (4 + Math.random() * 4) + 's';
                 container.appendChild(p);
             }
         }
 
-        function initWaveBars() {
-            const wave = document.getElementById('voiceWave');
-            for (let i = 0; i < 32; i++) {
-                const bar = document.createElement('div');
-                bar.className = 'wave-bar';
-                wave.appendChild(bar);
-            }
-        }
-
-        // Set initial states
         function resetAll() {
             executed.clear();
             stopAllNarration();
@@ -823,27 +740,24 @@
                 s.classList.remove('active');
                 s.style.transition = 'none';
                 s.style.opacity = '0';
-                s.style.transform = 'scale(0.95)';
             });
 
             // Reset all animated elements
-            document.querySelectorAll('.question, #scene-1 h1, #scene-2 h2, .tagline, #scene-3 h2, .detail, #scene-5 h2, #scene-6 h2, #scene-6 p, .cta-logo, .cta-tagline, .cta-url').forEach(el => {
+            document.querySelectorAll('.phrase, .silhouette, .gold-dot, .hero-animal, .pill, .toy-name, .crow-reveal, .subtext, .product-title, .cta-logo, .cta-tagline, .cta-url').forEach(el => {
                 el.style.transition = 'none';
                 el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
+                el.style.transform = '';
             });
 
-            document.querySelector('.underline-anim').style.width = '0';
-            document.querySelector('.toy-glow').style.cssText = 'opacity:0; transform:scale(0.5);';
-            document.querySelector('.price-hero').style.cssText = 'opacity:0; transform:scale(0.8);';
-            document.querySelector('.cta-badge').style.cssText = 'opacity:0; transform:scale(0.8);';
+            document.querySelectorAll('.hero-animal').forEach(el => { el.style.transform = 'translateY(40px)'; });
+            document.querySelectorAll('.pill').forEach(el => { el.style.transform = 'scale(0.8)'; });
+            document.querySelectorAll('.toy-name').forEach(el => { el.classList.remove('flash'); el.style.color = ''; });
 
-            document.querySelectorAll('.wave-bar').forEach(b => { b.style.opacity = '0'; b.style.height = '20px'; });
-            document.querySelectorAll('.ff-item').forEach(f => { f.style.opacity = '0'; f.style.transform = 'translateX(-40px)'; });
-            document.querySelectorAll('.parade-animal').forEach(a => { a.style.opacity = '0'; a.style.transform = 'translateY(60px)'; });
-            document.querySelectorAll('.led-orb').forEach(o => { o.style.opacity = '0'; o.style.transform = 'scale(0)'; o.style.animation = 'none'; });
-            document.querySelectorAll('.price-tier').forEach(t => { t.style.opacity = '0'; t.style.transform = 'translateY(20px)'; });
-
+            document.getElementById('amberGlow').style.opacity = '0';
+            document.getElementById('lifeBurst').style.opacity = '0';
+            document.getElementById('heritageBar').style.opacity = '0';
+            document.getElementById('crowReveal').style.transform = 'scale(0.5)';
+            document.getElementById('ctaBadge').style.cssText = 'opacity:0; transform:scale(0.8);';
             document.getElementById('progress').style.width = '0%';
         }
 
@@ -871,38 +785,9 @@
             }
         }
 
-        function toggleSize() {
-            document.body.classList.toggle('landscape');
-        }
-
-        // Add LED pulse keyframe
-        const style = document.createElement('style');
-        style.textContent = `@keyframes ledPulseAnim { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 1; } }`;
-        document.head.appendChild(style);
-
-        // ====== EMBED SCALING ======
-        function setupEmbed() {
-            const isEmbed = window.self !== window.top || new URLSearchParams(window.location.search).has('embed');
-            if (!isEmbed) return;
-
-            document.body.classList.add('embedded');
-
-            function scaleToFit() {
-                const scaleX = window.innerWidth / 1920;
-                const scaleY = window.innerHeight / 1080;
-                const scale = Math.min(scaleX, scaleY);
-                document.body.style.transform = `scale(${scale})`;
-            }
-
-            scaleToFit();
-            window.addEventListener('resize', scaleToFit);
-        }
-
         // Boot
-        setupEmbed();
         preloadNarration();
         initParticles();
-        initWaveBars();
         startPromo();
     </script>
 </body>
