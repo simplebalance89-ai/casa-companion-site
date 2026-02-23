@@ -1220,7 +1220,7 @@
 
     function preloadPromoAudio() {
         for (let i = 1; i <= PROMO_CLIP_COUNT; i++) {
-            const a = new Audio('audio/narration-' + i + '.mp3?v=40');
+            const a = new Audio('audio/narration-' + i + '.mp3?v=50');
             a.preload = 'auto';
             promoAudio.push(a);
         }
@@ -1266,9 +1266,9 @@
     }
 
     function runPromoSequence() {
-        const slides = [
-            { slide: 'ps-1', clip: 0 },
-            { slide: 'ps-2', clip: 1 },
+        // 10 clips, 1:1 mapping. No gaps. No empty clips.
+        // Clip 1=ps-1, 2=ps-2, 3=ps-heroes, 4=ps-5, 5=ps-6, 6=ps-7, 7=ps-8, 8=ps-9, 9=ps-10, 10=ps-11
+        const afterHeroSlides = [
             { slide: 'ps-5', clip: 3 },
             { slide: 'ps-6', clip: 4 },
             { slide: 'ps-7', clip: 5 },
@@ -1278,7 +1278,7 @@
             { slide: 'ps-11', clip: 9 },
         ];
 
-        const totalSteps = slides.length + 2;
+        const totalSteps = 2 + 1 + afterHeroSlides.length + 1; // intro slides + heroes + rest + cta
         let currentStep = 0;
 
         function updateProgress() {
@@ -1296,13 +1296,17 @@
             });
         }
 
-        playSlideChain(slides.slice(0, 2), 0, () => {
+        // Sequence: ps-1 (clip 0) → ps-2 (clip 1) → ps-heroes (clip 2) → ps-5..ps-11 (clips 3-9) → CTA
+        playNarratedSlide('ps-1', 0, () => {
             updateProgress();
-            playClip3WithHeroes(() => {
+            playNarratedSlide('ps-2', 1, () => {
                 updateProgress();
-                playSlideChain(slides.slice(2), 0, () => {
-                    showCTA();
-                    promoRunning = false;
+                playClip3WithHeroes(() => {
+                    updateProgress();
+                    playSlideChain(afterHeroSlides, 0, () => {
+                        showCTA();
+                        promoRunning = false;
+                    });
                 });
             });
         });
