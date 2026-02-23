@@ -20,38 +20,52 @@ TTS_DEPLOYMENT = "gpt-4o-mini-tts"
 TTS_API_VERSION = "2025-04-01-preview"
 
 # 10 clips, 1:1 with 10 slides. NO gaps. NO empty clips.
-# V2 — tighter copy, faster delivery
+# V3 — full rewrite, Peter's story
 NARRATION = [
-    # Clip 1 → ps-1 (scene1-father)
-    "I build AI for business. My son was born. Nothing existed for him. So I built one.",
+    # Clip 1 → ps-1 (the founder)
+    "Half my life in music. The other half building enterprise software for some of the biggest "
+    "companies in the country. When my son was born, I combined everything I knew. AI was transforming "
+    "my business and my life. But for my child? Nothing. No real companion. Nothing to hold, learn from, "
+    "bond with away from a screen. So I built one.",
 
-    # Clip 2 → ps-2 (life-boy-crow)
-    "My nephews tried it. Two and four years old. Wouldn't put it down. That's when I knew.",
+    # Clip 2 → ps-2 (florida test)
+    "Took it to Florida for my nephews. They wouldn't put it down. Mom and dad chimed in. "
+    "The whole family bonded over one toy. That's when I knew.",
 
     # Clip 3 → ps-heroes (character grid)
     "Ten companions. Each with their own personality. "
     "Corvo, Gufo, Orsetto, Coniglio, Tartaruga, Elefante, Leone, Delfino, Drago, and Xolo.",
 
-    # Clip 4 → ps-5 (heritage)
-    "Seventy-five percent of heritage languages are lost by the third generation. We're fixing that.",
+    # Clip 4 → ps-5 (heritage/grandparents)
+    "Seventy-five percent of heritage languages disappear by the third generation. "
+    "This is a toy that connects grandparents to grandchildren. A bridge across distance, language, and time.",
 
-    # Clip 5 → ps-6 (grandparents/distance)
-    "Record twelve phrases. Five minutes. Grandma reads bedtime stories from a thousand miles away.",
+    # Clip 5 → ps-6 (daddy away/homework)
+    "Dad's on a business trip. But tonight, he's still helping with homework. "
+    "Still reading the bedtime story. Not through a screen. Through a companion that carries his voice.",
 
-    # Clip 6 → ps-7 (voice cloning/legacy)
-    "We cloned my mother's voice so my son could hear her. That's not a feature. That's a legacy.",
+    # Clip 6 → ps-7 (mother's voice/legacy)
+    "I lost my mother at an early age. I haven't been able to clone her voice yet. "
+    "I only have about ten memories of it. But if we find enough, my son will hear her. "
+    "That's not a feature. That's a legacy.",
 
     # Clip 7 → ps-8 (this generation)
-    "Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. This generation gets Capo AI.",
+    "Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. "
+    "This is what this generation deserves. Built with Capo AI.",
 
-    # Clip 8 → ps-9 (engineering)
-    "One pod. Ten shells. Magnetic dock. Machine washable. No camera. No screen. No microtransactions.",
+    # Clip 8 → ps-9 (engineering + features)
+    "One pod. Ten shells. Magnetic dock. Machine washable. Bluetooth sync. "
+    "Parent mode. Teaching mode. No camera. No screen. No microtransactions.",
 
-    # Clip 9 → ps-10 (features)
-    "Bluetooth sync. Parent mode. Teaching mode. Built for real kids and real parents.",
+    # Clip 9 → ps-10 (growth/future)
+    "Right now, Capo AI is built for ages one through five. But this is software. It updates. "
+    "It grows with your child. Memories, homework, bedtime stories, all synced to your phone. "
+    "Think Alexa and Siri, but done right. Parent models coming soon. We're just getting started.",
 
     # Clip 10 → ps-11 (capisce closer)
-    "Casa Companion. Kickstarter May fifth. Everyone else announced it. We built it. Capisce.",
+    "Casa Companion. Working with families. US made and built. "
+    "Taking back childhood the way I was raised and the way a new generation will be. "
+    "Kickstarter May fifth. Capisce.",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "audio")
