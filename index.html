@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="2.1">
+    <meta name="version" content="2.2">
     <title>Casa Companion — Your Voice. Their Companion.</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -179,31 +179,35 @@
         .ps-10 { background-image: url('images/banner-crow-cinematic.png'); }
 
         /* Hero parade slides (10 heroes) */
-        .ps-h0  { background-image: url('images/hero-crow.png'); background-color: #f5f5f5; }
-        .ps-h1  { background-image: url('images/hero-owl.png'); background-color: #f5f5f5; }
-        .ps-h2  { background-image: url('images/hero-bear.png'); background-color: #f5f5f5; }
-        .ps-h3  { background-image: url('images/hero-bunny.png'); background-color: #f5f5f5; }
-        .ps-h4  { background-image: url('images/hero-turtle.png'); background-color: #f5f5f5; }
-        .ps-h5  { background-image: url('images/hero-elephant.png'); background-color: #f5f5f5; }
-        .ps-h6  { background-image: url('images/hero-lion.png'); background-color: #f5f5f5; }
-        .ps-h7  { background-image: url('images/hero-dolphin.png'); background-color: #f5f5f5; }
-        .ps-h8  { background-image: url('images/hero-dragon.png'); background-color: #f5f5f5; }
-        .ps-h9  { background-image: url('images/hero-xolo.png'); background-color: #f5f5f5; }
-        /* Hero slides: contain (not crop), centered, no gradient overlay */
-        [class*="ps-h"] { background-size: contain !important; background-repeat: no-repeat; }
-        [class*="ps-h"]::before { background: none !important; }
+        /* Hero group slide */
+        .ps-heroes { background-color: #f5f5f5; }
+        .ps-heroes::before { background: none !important; }
+        .hero-grid {
+            position: relative; z-index: 2;
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(4px, 1vw, 12px);
+            padding: clamp(8px, 2vw, 24px); width: 100%; height: 100%;
+            align-content: center; justify-items: center;
+        }
+        .hero-grid-item {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+        }
+        .hero-grid-item img {
+            width: clamp(40px, 10vw, 100px); height: clamp(40px, 10vw, 100px);
+            object-fit: contain; border-radius: 50%;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+        }
+        .hero-grid-item .hg-name {
+            font-family: 'Playfair Display', serif; font-size: clamp(8px, 1.3vw, 16px);
+            font-weight: 900; color: var(--dark); margin-top: 4px;
+        }
+        .hero-grid-item .hg-animal {
+            font-size: clamp(6px, 1vw, 12px); color: var(--gold); font-style: italic;
+        }
 
         /* CTA slide */
         .ps-cta { background-image: url('images/scene6-banner.png'); justify-content: center !important; }
 
-        .p-hero-name-overlay {
-            position: relative; z-index: 2; font-family: 'Playfair Display', serif;
-            font-size: clamp(18px, 3.5vw, 42px); color: var(--dark); font-weight: 900;
-            text-align: center; opacity: 0;
-        }
-        .p-hero-name-overlay .p-hero-italian {
-            font-size: clamp(12px, 2vw, 24px); color: var(--gold); font-style: italic; font-weight: 400;
-        }
+        /* (hero name overlay removed — heroes now shown as group grid) */
 
         .p-text-box {
             position: relative; z-index: 2; padding: clamp(12px, 2vw, 28px) clamp(12px, 3vw, 32px);
@@ -521,17 +525,21 @@
                     </div>
                 </div>
 
-                <!-- Hero Parade: 10 heroes, visual-only, ~3s each -->
-                <div class="promo-slide ps-h0" id="ps-h0"><div class="p-hero-name-overlay" id="phn-0">Corvo<br><span class="p-hero-italian">the Crow</span></div></div>
-                <div class="promo-slide ps-h1" id="ps-h1"><div class="p-hero-name-overlay" id="phn-1">Gufo<br><span class="p-hero-italian">the Owl</span></div></div>
-                <div class="promo-slide ps-h2" id="ps-h2"><div class="p-hero-name-overlay" id="phn-2">Orsetto<br><span class="p-hero-italian">the Bear</span></div></div>
-                <div class="promo-slide ps-h3" id="ps-h3"><div class="p-hero-name-overlay" id="phn-3">Coniglio<br><span class="p-hero-italian">the Bunny</span></div></div>
-                <div class="promo-slide ps-h4" id="ps-h4"><div class="p-hero-name-overlay" id="phn-4">Tartaruga<br><span class="p-hero-italian">the Sea Turtle</span></div></div>
-                <div class="promo-slide ps-h5" id="ps-h5"><div class="p-hero-name-overlay" id="phn-5">Elefante<br><span class="p-hero-italian">the Elephant</span></div></div>
-                <div class="promo-slide ps-h6" id="ps-h6"><div class="p-hero-name-overlay" id="phn-6">Leone<br><span class="p-hero-italian">the Lion</span></div></div>
-                <div class="promo-slide ps-h7" id="ps-h7"><div class="p-hero-name-overlay" id="phn-7">Delfino<br><span class="p-hero-italian">the Dolphin</span></div></div>
-                <div class="promo-slide ps-h8" id="ps-h8"><div class="p-hero-name-overlay" id="phn-8">Drago<br><span class="p-hero-italian">the Dragon</span></div></div>
-                <div class="promo-slide ps-h9" id="ps-h9"><div class="p-hero-name-overlay" id="phn-9">Xolo<br><span class="p-hero-italian">Xolo</span></div></div>
+                <!-- Hero Group: All 10 on one slide -->
+                <div class="promo-slide ps-heroes" id="ps-heroes">
+                    <div class="hero-grid">
+                        <div class="hero-grid-item"><img src="images/hero-crow.png" alt="Corvo"><div class="hg-name">Corvo</div><div class="hg-animal">the Crow</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-owl.png" alt="Gufo"><div class="hg-name">Gufo</div><div class="hg-animal">the Owl</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-bear.png" alt="Orsetto"><div class="hg-name">Orsetto</div><div class="hg-animal">the Bear</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-bunny.png" alt="Coniglio"><div class="hg-name">Coniglio</div><div class="hg-animal">the Bunny</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-turtle.png" alt="Tartaruga"><div class="hg-name">Tartaruga</div><div class="hg-animal">the Sea Turtle</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-elephant.png" alt="Elefante"><div class="hg-name">Elefante</div><div class="hg-animal">the Elephant</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-lion.png" alt="Leone"><div class="hg-name">Leone</div><div class="hg-animal">the Lion</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-dolphin.png" alt="Delfino"><div class="hg-name">Delfino</div><div class="hg-animal">the Dolphin</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-dragon.png" alt="Drago"><div class="hg-name">Drago</div><div class="hg-animal">the Dragon</div></div>
+                        <div class="hero-grid-item"><img src="images/hero-xolo.png" alt="Xolo"><div class="hg-name">Xolo</div><div class="hg-animal">the Xolo</div></div>
+                    </div>
+                </div>
 
                 <!-- Slide 8: Engineering -->
                 <div class="promo-slide ps-8" id="ps-8">
@@ -1320,31 +1328,18 @@
         audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
     }
 
-    // Clip 3 special: show intro slide, then parade 10 heroes at 2s while voice names them
+    // Clip 3: show intro slide, then show all heroes on one group slide
     function playClip3WithHeroes(onDone) {
         showSlide('ps-3'); // "So I built it the right way..."
         const audio = promoAudio[2];
         if (!audio) { if (onDone) onDone(); return; }
         audio.currentTime = 0;
-        audio.onended = () => {
-            if (promoHeroInterval) { clearInterval(promoHeroInterval); promoHeroInterval = null; }
-            if (onDone) onDone();
-        };
+        audio.onended = () => { if (onDone) onDone(); };
         audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
 
-        // After ~8s intro, start cycling heroes every 4s as voice names them
+        // After ~8s intro text, show the hero group slide
         setTimeout(() => {
-            let heroIdx = 0;
-            showSlide('ps-h0');
-            promoHeroInterval = setInterval(() => {
-                heroIdx++;
-                if (heroIdx >= 10) {
-                    clearInterval(promoHeroInterval);
-                    promoHeroInterval = null;
-                } else {
-                    showSlide(`ps-h${heroIdx}`);
-                }
-            }, 3000);
+            showSlide('ps-heroes');
         }, 8000);
     }
 
