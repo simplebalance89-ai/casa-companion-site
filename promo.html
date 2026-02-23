@@ -19,15 +19,23 @@
 
         .scene {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
+            display: none; flex-direction: column; justify-content: flex-end; align-items: center;
             text-align: center; padding: clamp(20px, 5vw, 60px); z-index: 1;
+            background-size: cover; background-position: center;
+        }
+        .scene::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.85) 100%);
+            z-index: 1;
         }
         .scene.active { display: flex; z-index: 2; }
+        .scene > * { position: relative; z-index: 2; }
 
         .phrase {
             font-family: 'Playfair Display', serif;
             font-size: clamp(20px, 4vw, 48px);
             color: rgba(255,255,255,0.8); line-height: 1.5; max-width: 800px; opacity: 0;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.8);
         }
         .phrase em { color: var(--gold); font-style: italic; }
         .phrase.big { font-size: clamp(24px, 5vw, 56px); color: #fff; font-weight: 700; }
@@ -105,14 +113,14 @@
         </div>
 
         <!-- Scene 1: The Builder (0-10s) -->
-        <div class="scene" id="s1" style="background: radial-gradient(ellipse at center, #1A1A2E, var(--dark));">
+        <div class="scene" id="s1" style="background-image: url('images/scene1-father.png');">
             <div class="phrase" id="s1a">I build <em>AI tools</em> for a living.</div>
             <div class="phrase" id="s1b">When my first son was born, I wanted something that would actually get him <em>playing, learning</em>, and off a screen.</div>
             <div class="phrase big" id="s1c">Nothing existed. So I built one.</div>
         </div>
 
         <!-- Scene 2: The Prototype (10-20s) -->
-        <div class="scene" id="s2" style="background: radial-gradient(ellipse at center, #1A1520, var(--dark));">
+        <div class="scene" id="s2" style="background-image: url('images/scene2-kids.png');">
             <div class="phrase" id="s2a">Started as a <em>custom GPT</em> on a stuffed crow.</div>
             <div class="phrase" id="s2b">Then I flew to Florida and let my nephews try it. <em>Two and four years old.</em></div>
             <div class="phrase big" id="s2c">They wouldn't put it down.</div>
@@ -120,7 +128,7 @@
         </div>
 
         <!-- Scene 3: The Heroes (20-28s) -->
-        <div class="scene" id="s3" style="background: radial-gradient(ellipse at center, #1A1A2E, var(--dark));">
+        <div class="scene" id="s3" style="background-image: url('images/scene3-heroes.png');">
             <div class="phrase" id="s3a">So I built it <em>the right way</em>. The way I build for work.</div>
             <div class="heroes" id="heroParade">
                 <div class="hero" id="h0"><span class="hero-emoji">&#x1F426;&#x200D;&#x2B1B;</span><div class="hero-name">Crow</div><div class="hero-it">Corvo</div></div>
@@ -133,7 +141,7 @@
         </div>
 
         <!-- Scene 4: What It Does (28-40s) -->
-        <div class="scene" id="s4" style="background: radial-gradient(ellipse at 40% 50%, rgba(0,104,71,0.06), var(--dark));">
+        <div class="scene" id="s4" style="background-image: url('images/scene4-grandma.png');">
             <div class="phrase" id="s4a"><em>Stories. Languages. Homework help.</em></div>
             <div class="phrase" id="s4b">Grandparents connecting over <em>FaceTime</em> from across the country.</div>
             <div class="phrase" id="s4c">It grows with your kid.</div>
@@ -149,16 +157,16 @@
         </div>
 
         <!-- Scene 5: The Vision (40-50s) -->
-        <div class="scene" id="s5" style="background: var(--dark);">
+        <div class="scene" id="s5" style="background-image: url('images/scene5-crow.png');">
             <div class="ref-name" id="ref-teddy" style="top: 20%; left: 12%;">Teddy Ruxpin</div>
             <div class="ref-name" id="ref-cabbage" style="top: 45%; right: 8%;">Cabbage Patch</div>
             <div class="ref-name" id="ref-furby" style="bottom: 25%; left: 15%;">Furby</div>
-            <div class="phrase big" id="s5a" style="position:relative; z-index:3;">This is what this generation <em>deserves</em>.</div>
-            <div class="phrase" id="s5b" style="position:relative; z-index:3;">Built with real AI. And built to <em>last</em>.</div>
+            <div class="phrase big" id="s5a">This is what this generation <em>deserves</em>.</div>
+            <div class="phrase" id="s5b">Built with real AI. And built to <em>last</em>.</div>
         </div>
 
         <!-- Scene 6: CTA (50-60s) -->
-        <div class="scene" id="s6" style="background: radial-gradient(ellipse at center, #2D1117, var(--dark));">
+        <div class="scene" id="s6" style="background-image: url('images/scene6-banner.png'); justify-content: center;">
             <div class="cta-logo" id="ctaLogo">Casa <span>Companion</span></div>
             <div class="cta-tagline" id="ctaTag">Everyone else announced it. We built it.</div>
             <div class="cta-badge" id="ctaBadge">Coming to Kickstarter 2026</div>
