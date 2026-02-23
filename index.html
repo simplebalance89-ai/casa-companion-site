@@ -154,6 +154,12 @@
             background-size: cover; background-position: center;
         }
         .promo-scene.active { display: flex; z-index: 2; }
+        .ps-1 { background-image: url('images/scene1-father.png'); }
+        .ps-2 { background-image: url('images/scene2-kids.png'); }
+        .ps-3 { background-image: url('images/scene3-heroes.png'); }
+        .ps-4 { background-image: url('images/scene4-grandma.png'); }
+        .ps-5 { background-image: url('images/scene5-crow.png'); }
+        .ps-6 { background-image: url('images/scene6-banner.png'); }
         .promo-scene::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.85) 100%);
@@ -413,7 +419,7 @@
                 </div>
 
                 <!-- Scene 1: The Builder — father + son on couch -->
-                <div class="promo-scene ps-1" id="ps-1" style="background-image: url('images/scene1-father.png');">
+                <div class="promo-scene ps-1" id="ps-1">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p1a">I build <em>AI tools</em> for a living.</div>
                         <div class="p-phrase" id="p1b">When my first son was born, I wanted something that would get him <em>playing, learning</em>, and off a screen.</div>
@@ -422,7 +428,7 @@
                 </div>
 
                 <!-- Scene 2: The Prototype — two kids in playroom -->
-                <div class="promo-scene ps-2" id="ps-2" style="background-image: url('images/scene2-kids.png');">
+                <div class="promo-scene ps-2" id="ps-2">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p2a">Started as a <em>custom GPT</em> on a stuffed crow.</div>
                         <div class="p-phrase" id="p2b">Then I flew to Florida and let my nephews try it. <em>Two and four years old.</em></div>
@@ -432,7 +438,7 @@
                 </div>
 
                 <!-- Scene 3: The Heroes — all 5 plush toys -->
-                <div class="promo-scene ps-3" id="ps-3" style="background-image: url('images/scene3-heroes.png');">
+                <div class="promo-scene ps-3" id="ps-3">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p3a">So I built it <em>the right way</em>.</div>
                         <div class="p-phrase" id="p3b">Five animals. Each with their own <em>personality</em>.</div>
@@ -440,7 +446,7 @@
                 </div>
 
                 <!-- Scene 4: What It Does — grandma FaceTime -->
-                <div class="promo-scene ps-4" id="ps-4" style="background-image: url('images/scene4-grandma.png');">
+                <div class="promo-scene ps-4" id="ps-4">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p4a"><em>Stories. Languages. Homework help.</em></div>
                         <div class="p-phrase" id="p4b">Grandparents connecting over <em>FaceTime</em> from across the country.</div>
@@ -458,7 +464,7 @@
                 </div>
 
                 <!-- Scene 5: The Vision — crow hero shot -->
-                <div class="promo-scene ps-5" id="ps-5" style="background-image: url('images/scene5-crow.png');">
+                <div class="promo-scene ps-5" id="ps-5">
                     <div class="p-toy-name" id="pt-teddy" style="top:15%; left:8%;">Teddy Ruxpin</div>
                     <div class="p-toy-name" id="pt-cabbage" style="top:40%; right:6%;">Cabbage Patch</div>
                     <div class="p-toy-name" id="pt-furby" style="bottom:30%; left:10%;">Furby</div>
@@ -469,7 +475,7 @@
                 </div>
 
                 <!-- Scene 6: CTA — kickstarter banner -->
-                <div class="promo-scene ps-6" id="ps-6" style="background-image: url('images/scene6-banner.png'); justify-content: center;">
+                <div class="promo-scene ps-6" id="ps-6" style="justify-content: center;">
                     <div class="p-cta-logo" id="pCtaLogo">Casa <span>Companion</span></div>
                     <div class="p-cta-tagline" id="pCtaTag">Everyone else announced it. We built it.</div>
                     <div class="p-cta-badge" id="pCtaBadge">Coming to Kickstarter 2026</div>
