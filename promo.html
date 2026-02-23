@@ -75,6 +75,8 @@
             opacity: 0; transform: scale(0.8); box-shadow: 0 8px 40px rgba(196,30,58,0.5);
         }
         .cta-url { margin-top: clamp(12px, 2vw, 32px); font-size: clamp(14px, 2vw, 24px); color: var(--gold); opacity: 0; }
+        .cta-credit { font-size: clamp(11px, 1.5vw, 16px); color: rgba(255,255,255,0.5); opacity: 0; margin-top: 8px; font-weight: 300; letter-spacing: 1px; }
+        .cta-credit em { color: var(--gold); font-style: italic; font-weight: 600; }
 
         /* Progress */
         .progress { position: fixed; bottom: 0; left: 0; height: 4px; background: var(--crimson); z-index: 100; width: 0%; }
@@ -171,6 +173,8 @@
             <div class="cta-tagline" id="ctaTag">Everyone else announced it. We built it.</div>
             <div class="cta-badge" id="ctaBadge">Coming to Kickstarter 2026</div>
             <div class="cta-url" id="ctaUrl">casacompanion.com</div>
+            <div class="cta-credit" id="ctaPowered">Powered by <em>Capo AI</em></div>
+            <div class="cta-credit" id="ctaArch">Architected by <em>Sinton.ia</em></div>
         </div>
     </div>
     <div class="chrome-note">Best in Chrome</div>
@@ -183,7 +187,7 @@
         function stopAudio() { narrationAudio.forEach(a => { a.pause(); a.currentTime = 0; }); currentNarration = null; }
         function toggleMute() { audioMuted = !audioMuted; const b = document.getElementById('muteBtn'); if (audioMuted) { b.innerHTML = '&#x1F507; Muted'; b.classList.add('muted'); if (currentNarration) currentNarration.pause(); } else { b.innerHTML = '&#x1F50A; Audio'; b.classList.remove('muted'); } }
 
-        const DURATION = 60000;
+        const DURATION = 90000;
         let startTime = 0, paused = false, pauseTime = 0, animFrame, executed = new Set();
 
         function show(n) { document.querySelectorAll('.scene').forEach(s => s.classList.remove('active')); document.getElementById(`s${n}`).classList.add('active'); }
@@ -193,46 +197,54 @@
         function flashPills() { document.querySelectorAll('#pills4 .pill').forEach((p, i) => { setTimeout(() => { p.style.transition = 'all 0.4s cubic-bezier(0.34,1.56,0.64,1)'; p.style.opacity = '1'; p.style.transform = 'scale(1)'; }, i * 180); }); }
 
         const timeline = [
+            // Scene 1: The Builder (0-15s)
             [0,     () => { show(1); playNarr(0); }],
             [300,   () => fi('#s1a', 800)],
-            [2500,  () => fi('#s1b', 900)],
-            [6000,  () => fi('#s1c', 600)],
+            [4000,  () => fi('#s1b', 900)],
+            [10000, () => fi('#s1c', 600)],
 
-            [10000, () => { show(2); playNarr(1); }],
-            [10300, () => fi('#s2a', 700)],
-            [12500, () => fi('#s2b', 800)],
-            [16000, () => fi('#s2c', 500)],
-            [17000, () => fi('#s2d', 700)],
+            // Scene 2: The Prototype (15-30s)
+            [15000, () => { show(2); playNarr(1); }],
+            [15300, () => fi('#s2a', 700)],
+            [18500, () => fi('#s2b', 800)],
+            [23000, () => fi('#s2c', 500)],
+            [25000, () => fi('#s2d', 700)],
 
-            [20000, () => { show(3); playNarr(2); }],
-            [20300, () => fi('#s3a', 700)],
-            [22000, () => revealHero(0)],
-            [22500, () => revealHero(1)],
-            [23000, () => revealHero(2)],
-            [23500, () => revealHero(3)],
-            [24000, () => revealHero(4)],
-            [25500, () => fi('#s3b', 700)],
+            // Scene 3: The Heroes (30-44s)
+            [30000, () => { show(3); playNarr(2); }],
+            [30300, () => fi('#s3a', 700)],
+            [33000, () => revealHero(0)],
+            [34500, () => revealHero(1)],
+            [36000, () => revealHero(2)],
+            [37500, () => revealHero(3)],
+            [39000, () => revealHero(4)],
+            [41500, () => fi('#s3b', 700)],
 
-            [28000, () => { show(4); playNarr(3); }],
-            [28300, () => fi('#s4a', 700)],
-            [30000, () => fi('#s4b', 800)],
-            [33000, () => fi('#s4c', 600)],
-            [34500, () => fi('#s4d', 900)],
-            [37000, () => flashPills()],
+            // Scene 4: What It Does (44-58s)
+            [44000, () => { show(4); playNarr(3); }],
+            [44300, () => fi('#s4a', 700)],
+            [47000, () => fi('#s4b', 800)],
+            [50000, () => fi('#s4c', 600)],
+            [52000, () => fi('#s4d', 900)],
+            [55000, () => flashPills()],
 
-            [40000, () => { show(5); playNarr(4); }],
-            [40200, () => flashRef('ref-teddy')],
-            [42000, () => flashRef('ref-cabbage')],
-            [43800, () => flashRef('ref-furby')],
-            [45500, () => { document.querySelectorAll('.ref-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
-            [46000, () => fi('#s5a', 700)],
-            [47500, () => fi('#s5b', 600)],
+            // Scene 5: The Vision (58-72s)
+            [58000, () => { show(5); playNarr(4); }],
+            [58200, () => flashRef('ref-teddy')],
+            [61000, () => flashRef('ref-cabbage')],
+            [63800, () => flashRef('ref-furby')],
+            [66000, () => { document.querySelectorAll('.ref-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
+            [66500, () => fi('#s5a', 700)],
+            [68500, () => fi('#s5b', 600)],
 
-            [50000, () => { show(6); playNarr(5); }],
-            [50300, () => fi('#ctaLogo', 700)],
-            [51500, () => fi('#ctaTag', 600)],
-            [53000, () => { const b = document.getElementById('ctaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
-            [54500, () => fi('#ctaUrl', 500)],
+            // Scene 6: CTA (72-90s)
+            [72000, () => { show(6); playNarr(5); }],
+            [72300, () => fi('#ctaLogo', 700)],
+            [74000, () => fi('#ctaTag', 600)],
+            [76500, () => { const b = document.getElementById('ctaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
+            [78500, () => fi('#ctaUrl', 500)],
+            [81000, () => fi('#ctaPowered', 600)],
+            [83000, () => fi('#ctaArch', 600)],
         ];
 
         function tick() {
@@ -247,7 +259,7 @@
         function resetAll() {
             executed.clear(); stopAudio();
             document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.phrase, .hero, .pill, .ref-name, .cta-logo, .cta-tagline, .cta-url, .cta-badge').forEach(el => { el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = ''; });
+            document.querySelectorAll('.phrase, .hero, .pill, .ref-name, .cta-logo, .cta-tagline, .cta-url, .cta-badge, .cta-credit').forEach(el => { el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = ''; });
             document.querySelectorAll('.hero').forEach(el => { el.style.transform = 'translateY(40px)'; });
             document.querySelectorAll('.pill').forEach(el => { el.style.transform = 'scale(0.8)'; });
             document.querySelectorAll('.ref-name').forEach(el => { el.classList.remove('flash'); el.style.color = ''; });

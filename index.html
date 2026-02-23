@@ -209,6 +209,10 @@
             position: relative; z-index: 2;
         }
         .p-cta-url { margin-top: 8px; font-size: clamp(10px, 1.3vw, 16px); color: var(--gold); opacity: 0; position: relative; z-index: 2; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+        .p-cta-credit { font-size: clamp(9px, 1.1vw, 14px); color: rgba(255,255,255,0.5); opacity: 0; position: relative; z-index: 2; margin-top: 6px; font-weight: 300; letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+        .p-cta-credit em { color: var(--gold); font-style: italic; font-weight: 600; }
+        .p-cta-demo { font-size: clamp(10px, 1.2vw, 15px); color: rgba(255,255,255,0.7); opacity: 0; position: relative; z-index: 2; margin-top: 14px; font-weight: 600; letter-spacing: 0.5px; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+        .p-cta-demo em { color: var(--crimson); font-style: normal; font-weight: 800; }
 
         /* Progress bar */
         .promo-progress {
@@ -480,6 +484,9 @@
                     <div class="p-cta-tagline" id="pCtaTag">Everyone else announced it. We built it.</div>
                     <div class="p-cta-badge" id="pCtaBadge">Coming to Kickstarter 2026</div>
                     <div class="p-cta-url" id="pCtaUrl">casacompanion.com</div>
+                    <div class="p-cta-credit" id="pCtaPowered">Powered by <em>Capo AI</em></div>
+                    <div class="p-cta-credit" id="pCtaArch">Architected by <em>Sinton.ia</em></div>
+                    <div class="p-cta-demo" id="pCtaDemo">Click on the <em>Companion Demo</em> to try it yourself</div>
                 </div>
 
                 <div class="promo-progress" id="promoProgress"></div>
@@ -1175,7 +1182,7 @@
     }
 
     // ====== INLINE PROMO ENGINE (60s founder story) ======
-    const PROMO_DURATION = 60000;
+    const PROMO_DURATION = 90000;
     let promoAudio = [];
     let promoMuted = false;
     let promoCurrentAudio = null;
@@ -1222,52 +1229,55 @@
     }
 
     const promoTimeline = [
-        // Scene 1: The Builder (0-10s)
+        // Scene 1: The Builder (0-15s)
         [0,     () => { showPromoScene(1); playPromoNarration(0); }],
         [300,   () => pFadeIn('#p1a', 800)],
-        [2500,  () => pFadeIn('#p1b', 900)],
-        [6000,  () => pFadeIn('#p1c', 600)],
+        [4000,  () => pFadeIn('#p1b', 900)],
+        [10000, () => pFadeIn('#p1c', 600)],
 
-        // Scene 2: The Prototype (10-20s)
-        [10000, () => { showPromoScene(2); playPromoNarration(1); }],
-        [10300, () => pFadeIn('#p2a', 700)],
-        [12500, () => pFadeIn('#p2b', 800)],
-        [16000, () => pFadeIn('#p2c', 500)],
-        [17000, () => pFadeIn('#p2d', 700)],
+        // Scene 2: The Prototype (15-30s)
+        [15000, () => { showPromoScene(2); playPromoNarration(1); }],
+        [15300, () => pFadeIn('#p2a', 700)],
+        [18500, () => pFadeIn('#p2b', 800)],
+        [23000, () => pFadeIn('#p2c', 500)],
+        [25000, () => pFadeIn('#p2d', 700)],
 
-        // Scene 3: The Heroes (20-28s)
-        [20000, () => { showPromoScene(3); playPromoNarration(2); }],
-        [20300, () => pFadeIn('#p3a', 700)],
-        [22000, () => pRevealHero(0)],
-        [22500, () => pRevealHero(1)],
-        [23000, () => pRevealHero(2)],
-        [23500, () => pRevealHero(3)],
-        [24000, () => pRevealHero(4)],
-        [25500, () => pFadeIn('#p3b', 700)],
+        // Scene 3: The Heroes (30-44s) — let the parade breathe
+        [30000, () => { showPromoScene(3); playPromoNarration(2); }],
+        [30300, () => pFadeIn('#p3a', 700)],
+        [33000, () => pRevealHero(0)],
+        [34500, () => pRevealHero(1)],
+        [36000, () => pRevealHero(2)],
+        [37500, () => pRevealHero(3)],
+        [39000, () => pRevealHero(4)],
+        [41500, () => pFadeIn('#p3b', 700)],
 
-        // Scene 4: What It Does (28-40s)
-        [28000, () => { showPromoScene(4); playPromoNarration(3); }],
-        [28300, () => pFadeIn('#p4a', 700)],
-        [30000, () => pFadeIn('#p4b', 800)],
-        [33000, () => pFadeIn('#p4c', 600)],
-        [34500, () => pFadeIn('#p4d', 900)],
-        [37000, () => pFlashPills()],
+        // Scene 4: What It Does (44-58s)
+        [44000, () => { showPromoScene(4); playPromoNarration(3); }],
+        [44300, () => pFadeIn('#p4a', 700)],
+        [47000, () => pFadeIn('#p4b', 800)],
+        [50000, () => pFadeIn('#p4c', 600)],
+        [52000, () => pFadeIn('#p4d', 900)],
+        [55000, () => pFlashPills()],
 
-        // Scene 5: The Vision (40-50s)
-        [40000, () => { showPromoScene(5); playPromoNarration(4); }],
-        [40200, () => pFlashToy('pt-teddy')],
-        [42000, () => pFlashToy('pt-cabbage')],
-        [43800, () => pFlashToy('pt-furby')],
-        [45500, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
-        [46000, () => pFadeIn('#p5a', 700)],
-        [47500, () => pFadeIn('#p5b', 600)],
+        // Scene 5: The Vision (58-72s)
+        [58000, () => { showPromoScene(5); playPromoNarration(4); }],
+        [58200, () => pFlashToy('pt-teddy')],
+        [61000, () => pFlashToy('pt-cabbage')],
+        [63800, () => pFlashToy('pt-furby')],
+        [66000, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
+        [66500, () => pFadeIn('#p5a', 700)],
+        [68500, () => pFadeIn('#p5b', 600)],
 
-        // Scene 6: CTA (50-60s)
-        [50000, () => { showPromoScene(6); playPromoNarration(5); }],
-        [50300, () => pFadeIn('#pCtaLogo', 700)],
-        [51500, () => pFadeIn('#pCtaTag', 600)],
-        [53000, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
-        [54500, () => pFadeIn('#pCtaUrl', 500)],
+        // Scene 6: CTA (72-90s)
+        [72000, () => { showPromoScene(6); playPromoNarration(5); }],
+        [72300, () => pFadeIn('#pCtaLogo', 700)],
+        [74000, () => pFadeIn('#pCtaTag', 600)],
+        [76500, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
+        [78500, () => pFadeIn('#pCtaUrl', 500)],
+        [81000, () => pFadeIn('#pCtaPowered', 600)],
+        [83000, () => pFadeIn('#pCtaArch', 600)],
+        [85500, () => pFadeIn('#pCtaDemo', 700)],
     ];
 
     function pRevealHero(i) {
@@ -1286,7 +1296,7 @@
         promoAudio.forEach(a => { a.pause(); a.currentTime = 0; });
         promoCurrentAudio = null;
         document.querySelectorAll('.promo-scene').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.p-phrase, .p-hero, .p-pill, .p-toy-name, .p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-badge').forEach(el => {
+        document.querySelectorAll('.p-phrase, .p-hero, .p-pill, .p-toy-name, .p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-badge, .p-cta-credit, .p-cta-demo').forEach(el => {
             el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = '';
         });
         document.querySelectorAll('.p-hero').forEach(el => { el.style.transform = 'translateY(20px)'; });
