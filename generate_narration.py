@@ -33,11 +33,16 @@ NARRATION = [
     "Started as a custom GPT on my phone. Just ChatGPT. "
     "I saw the potential, but I saw the limitations. "
     "Flew to Florida and let my nephews try it. Two and four years old. "
-    "They wouldn't put it down. Their parents loved it. That's when I knew.",
+    "They wouldn't put it down. We were in the car and all five of us wouldn't put it down. "
+    "Mom and dad jumped in. My first prototype. All of us laughing, bonding, communicating. No screen. "
+    "That's when I knew.",
 
     # Clip 3 — scene3-heroes.png
     "So I built it the right way. The way I build for work. "
-    "Fifteen companions. Each with their own personality.",
+    "Ten companions. Each with their own personality. "
+    "Corvo the Crow. Gufo the Owl. Orsetto the Bear. Coniglio the Bunny. "
+    "Tartaruga the Sea Turtle. Elefante the Elephant. Leone the Lion. "
+    "Delfino the Dolphin. Drago the Dragon. And Xolo.",
 
     # Clip 4 — life-nonna-kitchen.png
     "Stories in Italian, because heritage disappears in one generation if you let it. "
@@ -54,7 +59,10 @@ NARRATION = [
     "Not through a screen. Through a companion the child holds and falls asleep with.",
 
     # Clip 6 — banner-father-recording.png
-    "And here's the part nobody talks about. People die. Grandparents get sick. Parents deploy overseas. "
+    "This was born from losing my mother at a very early age. "
+    "Her spirit lives with my son and me. "
+    "So we cloned her voice so my son could hear her. And you can too. "
+    "For all family generations. "
     "When a grandparent records their voice in Casa Companion, that voice doesn't expire. "
     "It doesn't require a subscription. "
     "Your child can hear Nonna say buonanotte ten years from now. Twenty years from now. "
