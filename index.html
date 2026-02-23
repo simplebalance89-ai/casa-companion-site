@@ -1181,17 +1181,24 @@
     }
 
     function showPromoScene(n) {
-        document.querySelectorAll('.promo-scene').forEach(s => { s.style.transition = 'opacity 0.5s ease'; s.classList.remove('active'); });
+        document.querySelectorAll('.promo-scene').forEach(s => {
+            s.style.transition = 'opacity 0.5s ease';
+            s.style.opacity = '0';
+            s.classList.remove('active');
+        });
         const s = document.getElementById(`ps-${n}`);
-        if (s) { s.style.transition = 'opacity 0.8s ease'; s.classList.add('active'); }
+        if (s) {
+            s.style.transition = 'opacity 0.8s ease';
+            s.style.opacity = '1';
+            s.classList.add('active');
+        }
     }
 
     function pFadeIn(sel, dur) {
         const el = document.querySelector(sel);
-        if (!el) return;
-        el.style.transition = `opacity ${dur}ms ease, transform ${dur}ms ease`;
+        if (!el) { console.warn('pFadeIn: not found', sel); return; }
+        el.style.transition = `opacity ${dur}ms ease`;
         el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
     }
 
     function pFlashToy(id) {
@@ -1291,9 +1298,11 @@
     function launchPromo() {
         document.getElementById('promoOverlay').classList.add('hidden');
         resetPromoState();
+        // Force reflow so opacity:0 (from reset) is committed before we start animating
+        document.getElementById('promoStage').offsetHeight;
         promoStart = Date.now();
         promoRunning = true;
-        promoTick();
+        requestAnimationFrame(() => promoTick());
     }
 
     // Preload on page load
