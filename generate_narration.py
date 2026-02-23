@@ -75,7 +75,7 @@ NARRATION = [
     "No screen. Just your voice.",
 
     # Clip 8 — eng-exploded.png
-    "One electronics pod. Fifteen plush shells. Magnetic charging dock. Machine washable. "
+    "One electronics pod. Ten plush shells. Magnetic charging dock. Machine washable. "
     "Volume capped at eighty-five decibels. No camera. No screen. No microtransactions. Ever. "
     "Built for real kids. Built for real parents.",
 
