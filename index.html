@@ -477,7 +477,7 @@
                 <!-- Slide 4: Heritage -->
                 <div class="promo-slide ps-4" id="ps-4">
                     <div class="p-text-box">
-                        <div class="p-phrase">Stories in Italian, because heritage disappears in <em>one generation</em> if you let it.</div>
+                        <div class="p-phrase">Stories in <em>any language</em>. Or yours.</div>
                         <div class="p-phrase" style="margin-top:8px;">Your grandmother's Italian. Your grandfather's Spanish. Their lullabies. <em>Gone.</em></div>
                         <div class="p-phrase" style="margin-top:8px;">Unless you build something to <em>keep them</em>.</div>
                     </div>
@@ -506,8 +506,16 @@
                 <div class="promo-slide ps-7" id="ps-7">
                     <div class="p-text-box">
                         <div class="p-phrase">Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. <em>Furby gave it personality.</em></div>
-                        <div class="p-phrase" style="margin-top:8px;">This is what this generation deserves. <em>Built with real AI.</em></div>
+                        <div class="p-phrase" style="margin-top:8px;">This is what this generation deserves. <em>Built by Capo AI.</em></div>
                         <div class="p-phrase" style="margin-top:8px;">Stories. Languages. Sign language. Music. Brain games. Milestones. <em>No screen. Just your voice.</em></div>
+                        <div class="p-phrase" style="margin-top:12px; font-size: clamp(14px, 2.5vw, 28px); line-height: 1.8;">
+                            Screencast / FaceTime with your iPhone<br>
+                            Bluetooth connectivity<br>
+                            Parent daily scripts to learn and control<br>
+                            On the go<br>
+                            Secret monitoring<br>
+                            Grow and love technology responsibly
+                        </div>
                     </div>
                 </div>
 
@@ -1270,7 +1278,7 @@
     // Preload 10 narration MP3s (v4 = cache bust)
     function preloadPromoAudio() {
         for (let i = 1; i <= PROMO_CLIP_COUNT; i++) {
-            const a = new Audio(`audio/narration-${i}.mp3?v=6`);
+            const a = new Audio(`audio/narration-${i}.mp3?v=7`);
             a.preload = 'auto';
             promoAudio.push(a);
         }
