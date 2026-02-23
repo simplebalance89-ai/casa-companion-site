@@ -154,12 +154,47 @@
             background-size: cover; background-position: center;
         }
         .promo-scene.active { display: flex; z-index: 2; }
-        .ps-1 { background-image: url('images/scene1-father.png'); }
-        .ps-2 { background-image: url('images/scene2-kids.png'); }
-        .ps-3 { background-image: url('images/scene3-heroes.png'); }
-        .ps-4 { background-image: url('images/scene4-grandma.png'); }
-        .ps-5 { background-image: url('images/scene5-crow.png'); }
-        .ps-6 { background-image: url('images/scene6-banner.png'); }
+        .ps-1  { background-image: url('images/scene1-father.png'); }
+        .ps-2  { background-image: url('images/life-boy-crow.png'); }
+        .ps-3  { background-image: url('images/life-toddler-rug.png'); }
+        .ps-4  { background-image: url('images/banner-father-recording.png'); }
+        .ps-5  { background-image: url('images/life-two-kids.png'); }
+        .ps-6  { background-image: url('images/scene2-kids.png'); }
+        .ps-7  { background-image: url('images/scene3-heroes.png'); }
+        .ps-8  { background-image: url('images/packaging-shelf.png'); }
+        .ps-9  { background-image: url('images/life-nonna-kitchen.png'); }
+        .ps-10 { background-image: url('images/scene4-grandma.png'); }
+        .ps-11 { background-image: url('images/life-grandparent-distance.png'); }
+        .ps-12 { background-image: url('images/banner-crow-cinematic.png'); }
+        .ps-13 { background-image: url('images/life-bunny-glow.png'); }
+        .ps-14 { background-image: url('images/scene6-banner.png'); }
+        /* Individual hero parade slides */
+        .ps-h0  { background-image: url('images/hero-crow.png'); background-color: #f5f5f5; }
+        .ps-h1  { background-image: url('images/hero-owl.png'); background-color: #f5f5f5; }
+        .ps-h2  { background-image: url('images/hero-bear.png'); background-color: #f5f5f5; }
+        .ps-h3  { background-image: url('images/hero-fox.png'); background-color: #f5f5f5; }
+        .ps-h4  { background-image: url('images/hero-bunny.png'); background-color: #f5f5f5; }
+        .ps-h5  { background-image: url('images/hero-turtle.png'); background-color: #f5f5f5; }
+        .ps-h6  { background-image: url('images/hero-elephant.png'); background-color: #f5f5f5; }
+        .ps-h7  { background-image: url('images/hero-wolf.png'); background-color: #f5f5f5; }
+        .ps-h8  { background-image: url('images/hero-otter.png'); background-color: #f5f5f5; }
+        .ps-h9  { background-image: url('images/hero-lion.png'); background-color: #f5f5f5; }
+        .ps-h10 { background-image: url('images/hero-dolphin.png'); background-color: #f5f5f5; }
+        .ps-h11 { background-image: url('images/hero-dragon.png'); background-color: #f5f5f5; }
+        .ps-h12 { background-image: url('images/hero-deer.png'); background-color: #f5f5f5; }
+        .ps-h13 { background-image: url('images/hero-alebrije.png'); background-color: #f5f5f5; }
+        .ps-h14 { background-image: url('images/hero-xolo.png'); background-color: #f5f5f5; }
+        /* Hero parade slides: contain (not crop), centered */
+        [class*="ps-h"] { background-size: contain !important; background-repeat: no-repeat; }
+        [class*="ps-h"]::before { background: none !important; }
+        .p-hero-name-overlay {
+            position: relative; z-index: 2; font-family: 'Playfair Display', serif;
+            font-size: clamp(18px, 3.5vw, 42px); color: var(--dark); font-weight: 900;
+            text-align: center; opacity: 0;
+        }
+        .p-hero-name-overlay .p-hero-italian {
+            font-size: clamp(12px, 2vw, 24px); color: var(--gold); font-style: italic; font-weight: 400;
+        }
         .promo-scene::before {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 40%;
             background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%);
@@ -446,77 +481,114 @@
                     <div class="promo-label">Watch the Founder Story</div>
                 </div>
 
-                <!-- Scene 1: The Builder — father + son on couch -->
+                <!-- S1: Father + toddler — "I build AI tools" -->
                 <div class="promo-scene ps-1" id="ps-1">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p1a">I build <em>AI tools</em> for business. ERP solutions. Enterprise software.</div>
+                    </div>
+                </div>
+
+                <!-- S2: Boy hugging crow — "When my first son was born" -->
+                <div class="promo-scene ps-2" id="ps-2">
+                    <div class="p-text-box">
                         <div class="p-phrase" id="p1b">When my first son was born, I wanted something that would get him <em>playing, learning</em>, and off a screen.</div>
+                    </div>
+                </div>
+
+                <!-- S3: Toddler on rug — "Nothing existed" -->
+                <div class="promo-scene ps-3" id="ps-3">
+                    <div class="p-text-box">
                         <div class="p-phrase p-highlight" id="p1c">Nothing existed. So I built one.</div>
                     </div>
                 </div>
 
-                <!-- Scene 2: The Prototype — two kids in playroom -->
-                <div class="promo-scene ps-2" id="ps-2">
+                <!-- S4: Banner father recording — "Started as a custom GPT" -->
+                <div class="promo-scene ps-4" id="ps-4">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p2a">Started as a <em>custom GPT</em> on my phone. Just ChatGPT.</div>
-                        <div class="p-phrase" id="p2b">I saw the potential, but I saw the limitations. Flew to Florida and let my nephews try it. <em>Two and four years old.</em></div>
-                        <div class="p-phrase p-highlight" id="p2c">They wouldn't put it down.</div>
-                        <div class="p-phrase" id="p2d">Their parents loved it. That's when I knew.</div>
+                        <div class="p-phrase" id="p2b">I saw the potential, but I saw the limitations.</div>
                     </div>
                 </div>
 
-                <!-- Scene 3: The Heroes — all 15 companions -->
-                <div class="promo-scene ps-3" id="ps-3">
-                    <div class="p-hero-grid" id="pHeroGrid">
-                        <div class="p-hero-card" id="ph-0"><img src="images/hero-crow.png" alt="Crow"><span>Corvo</span></div>
-                        <div class="p-hero-card" id="ph-1"><img src="images/hero-owl.png" alt="Owl"><span>Gufo</span></div>
-                        <div class="p-hero-card" id="ph-2"><img src="images/hero-bear.png" alt="Bear"><span>Orsetto</span></div>
-                        <div class="p-hero-card" id="ph-3"><img src="images/hero-fox.png" alt="Fox"><span>Volpe</span></div>
-                        <div class="p-hero-card" id="ph-4"><img src="images/hero-bunny.png" alt="Bunny"><span>Coniglio</span></div>
-                        <div class="p-hero-card" id="ph-5"><img src="images/hero-turtle.png" alt="Sea Turtle"><span>Tartaruga</span></div>
-                        <div class="p-hero-card" id="ph-6"><img src="images/hero-elephant.png" alt="Elephant"><span>Elefante</span></div>
-                        <div class="p-hero-card" id="ph-7"><img src="images/hero-wolf.png" alt="Wolf"><span>Lupo</span></div>
-                        <div class="p-hero-card" id="ph-8"><img src="images/hero-otter.png" alt="Otter"><span>Lontra</span></div>
-                        <div class="p-hero-card" id="ph-9"><img src="images/hero-lion.png" alt="Lion"><span>Leone</span></div>
-                        <div class="p-hero-card" id="ph-10"><img src="images/hero-dolphin.png" alt="Dolphin"><span>Delfino</span></div>
-                        <div class="p-hero-card" id="ph-11"><img src="images/hero-dragon.png" alt="Dragon"><span>Drago</span></div>
-                        <div class="p-hero-card" id="ph-12"><img src="images/hero-deer.png" alt="Deer"><span>Cervo</span></div>
-                        <div class="p-hero-card" id="ph-13"><img src="images/hero-alebrije.png" alt="Alebrije"><span>Alebrije</span></div>
-                        <div class="p-hero-card" id="ph-14"><img src="images/hero-xolo.png" alt="Xolo"><span>Xolo</span></div>
+                <!-- S5: Two kids playing — "Flew to Florida" -->
+                <div class="promo-scene ps-5" id="ps-5">
+                    <div class="p-text-box">
+                        <div class="p-phrase" id="p2c">Flew to Florida and let my nephews try it. <em>Two and four years old.</em></div>
+                        <div class="p-phrase p-highlight" id="p2d">They wouldn't put it down.</div>
                     </div>
+                </div>
+
+                <!-- S6: Two kids closeup — "Their parents loved it" -->
+                <div class="promo-scene ps-6" id="ps-6">
+                    <div class="p-text-box">
+                        <div class="p-phrase" id="p2e">Their parents loved it. That's when I knew.</div>
+                    </div>
+                </div>
+
+                <!-- S7: Heroes lineup text intro -->
+                <div class="promo-scene ps-7" id="ps-7">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p3a">So I built it <em>the right way</em>.</div>
                         <div class="p-phrase" id="p3b">Fifteen companions. Each with their own <em>personality</em>.</div>
                     </div>
                 </div>
 
-                <!-- Scene 3b: Packaging -->
-                <div class="promo-scene ps-3b" id="ps-3b">
+                <!-- Hero Parade: 15 individual full-screen hero slides -->
+                <div class="promo-scene ps-h0" id="ps-h0"><div class="p-hero-name-overlay" id="phn-0">Crow<br><span class="p-hero-italian">Corvo</span></div></div>
+                <div class="promo-scene ps-h1" id="ps-h1"><div class="p-hero-name-overlay" id="phn-1">Owl<br><span class="p-hero-italian">Gufo</span></div></div>
+                <div class="promo-scene ps-h2" id="ps-h2"><div class="p-hero-name-overlay" id="phn-2">Bear Cub<br><span class="p-hero-italian">Orsetto</span></div></div>
+                <div class="promo-scene ps-h3" id="ps-h3"><div class="p-hero-name-overlay" id="phn-3">Fox<br><span class="p-hero-italian">Volpe</span></div></div>
+                <div class="promo-scene ps-h4" id="ps-h4"><div class="p-hero-name-overlay" id="phn-4">Bunny<br><span class="p-hero-italian">Coniglio</span></div></div>
+                <div class="promo-scene ps-h5" id="ps-h5"><div class="p-hero-name-overlay" id="phn-5">Sea Turtle<br><span class="p-hero-italian">Tartaruga</span></div></div>
+                <div class="promo-scene ps-h6" id="ps-h6"><div class="p-hero-name-overlay" id="phn-6">Elephant<br><span class="p-hero-italian">Elefante</span></div></div>
+                <div class="promo-scene ps-h7" id="ps-h7"><div class="p-hero-name-overlay" id="phn-7">Wolf Pup<br><span class="p-hero-italian">Lupo</span></div></div>
+                <div class="promo-scene ps-h8" id="ps-h8"><div class="p-hero-name-overlay" id="phn-8">Otter<br><span class="p-hero-italian">Lontra</span></div></div>
+                <div class="promo-scene ps-h9" id="ps-h9"><div class="p-hero-name-overlay" id="phn-9">Lion Cub<br><span class="p-hero-italian">Leone</span></div></div>
+                <div class="promo-scene ps-h10" id="ps-h10"><div class="p-hero-name-overlay" id="phn-10">Dolphin<br><span class="p-hero-italian">Delfino</span></div></div>
+                <div class="promo-scene ps-h11" id="ps-h11"><div class="p-hero-name-overlay" id="phn-11">Dragon<br><span class="p-hero-italian">Drago</span></div></div>
+                <div class="promo-scene ps-h12" id="ps-h12"><div class="p-hero-name-overlay" id="phn-12">Deer<br><span class="p-hero-italian">Cervo</span></div></div>
+                <div class="promo-scene ps-h13" id="ps-h13"><div class="p-hero-name-overlay" id="phn-13">Alebrije<br><span class="p-hero-italian">Alebrije</span></div></div>
+                <div class="promo-scene ps-h14" id="ps-h14"><div class="p-hero-name-overlay" id="phn-14">Xolo<br><span class="p-hero-italian">Xoloitzcuintli</span></div></div>
+
+                <!-- S8: Packaging shelf — "Premium packaging" -->
+                <div class="promo-scene ps-8" id="ps-8">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p3c">Premium packaging. <em>Gift-ready</em> from day one.</div>
                     </div>
                 </div>
 
-                <!-- Scene 4: What It Does — grandma FaceTime -->
-                <div class="promo-scene ps-4" id="ps-4">
+                <!-- S9: Nonna in kitchen — "Stories. Languages." -->
+                <div class="promo-scene ps-9" id="ps-9">
                     <div class="p-text-box">
                         <div class="p-phrase" id="p4a"><em>Stories. Languages. Homework help.</em></div>
+                    </div>
+                </div>
+
+                <!-- S10: Grandma FaceTime — "Grandparents connecting" -->
+                <div class="promo-scene ps-10" id="ps-10">
+                    <div class="p-text-box">
                         <div class="p-phrase" id="p4b">Grandparents connecting over <em>FaceTime</em> from across the country.</div>
+                    </div>
+                </div>
+
+                <!-- S11: Grandparent distance — "It grows with your kid" -->
+                <div class="promo-scene ps-11" id="ps-11">
+                    <div class="p-text-box">
                         <div class="p-phrase" id="p4c">It grows with your kid.</div>
                         <div class="p-phrase" id="p4d">And if you want, you can <em>clone your voice</em> so your child hears you, even when you're not there.</div>
                     </div>
                     <div class="p-pills" id="pPills">
-                        <div class="p-pill">&#x1F4DA; Stories</div>
-                        <div class="p-pill">&#x1F30D; 3 Languages</div>
-                        <div class="p-pill">&#x1F4DD; Homework</div>
-                        <div class="p-pill">&#x1F4F1; FaceTime</div>
-                        <div class="p-pill">&#x1F3A4; Voice Clone</div>
-                        <div class="p-pill">&#x1F331; Grows With Them</div>
+                        <div class="p-pill">Stories</div>
+                        <div class="p-pill">3 Languages</div>
+                        <div class="p-pill">Homework</div>
+                        <div class="p-pill">FaceTime</div>
+                        <div class="p-pill">Voice Clone</div>
+                        <div class="p-pill">Grows With Them</div>
                     </div>
                 </div>
 
-                <!-- Scene 5: The Vision — crow hero shot -->
-                <div class="promo-scene ps-5" id="ps-5">
+                <!-- S12: Crow cinematic — Teddy Ruxpin / Cabbage Patch / Furby -->
+                <div class="promo-scene ps-12" id="ps-12">
                     <div class="p-toy-name" id="pt-teddy" style="top:15%; left:8%;">Teddy Ruxpin</div>
                     <div class="p-toy-name" id="pt-cabbage" style="top:40%; right:6%;">Cabbage Patch</div>
                     <div class="p-toy-name" id="pt-furby" style="bottom:30%; left:10%;">Furby</div>
@@ -526,15 +598,22 @@
                     </div>
                 </div>
 
-                <!-- Scene 6: CTA — kickstarter banner -->
-                <div class="promo-scene ps-6" id="ps-6" style="justify-content: center;">
+                <!-- S13: Bunny glow — engineering beauty shot transition -->
+                <div class="promo-scene ps-13" id="ps-13">
+                    <div class="p-text-box">
+                        <div class="p-phrase" id="p5c">No screen. Just <em>your voice</em>.</div>
+                    </div>
+                </div>
+
+                <!-- S14: CTA — kickstarter banner -->
+                <div class="promo-scene ps-14" id="ps-14" style="justify-content: center;">
                     <div class="p-cta-logo" id="pCtaLogo">Casa <span>Companion</span></div>
                     <div class="p-cta-tagline" id="pCtaTag">Everyone else announced it. We built it.</div>
                     <div class="p-cta-badge" id="pCtaBadge">Coming to Kickstarter 2026</div>
                     <div class="p-cta-url" id="pCtaUrl">casacompanion.com</div>
                     <div class="p-cta-credit" id="pCtaPowered">Powered by <em>Capo AI</em></div>
                     <div class="p-cta-credit" id="pCtaArch">Architected by <em>Sinton.ia</em></div>
-                    <div class="p-cta-demo" id="pCtaDemo">Click on the <em>Companion Demo</em> to try it yourself</div>
+                    <a href="https://casa-companion-demo.onrender.com" target="_blank" class="p-cta-demo" id="pCtaDemo" style="text-decoration:none; cursor:pointer;">Click on the <em>Companion Demo</em> to try it yourself</a>
                 </div>
 
                 <div class="promo-progress" id="promoProgress"></div>
@@ -1230,7 +1309,7 @@
     }
 
     // ====== INLINE PROMO ENGINE (60s founder story) ======
-    const PROMO_DURATION = 100000;
+    const PROMO_DURATION = 120000;
     let promoAudio = [];
     let promoMuted = false;
     let promoCurrentAudio = null;
@@ -1281,72 +1360,100 @@
         setTimeout(() => { el.style.transition = 'all 0.6s ease'; el.classList.remove('flash'); el.style.color = 'rgba(255,255,255,0.1)'; }, 1200);
     }
 
+    function showHeroSlide(i) {
+        showPromoScene(`h${i}`);
+        pFadeIn(`#phn-${i}`, 400);
+    }
+
     const promoTimeline = [
-        // Scene 1: The Builder (0-15s)
+        // S1: Father + toddler (0-5s) — "I build AI tools"
         [0,     () => { showPromoScene(1); playPromoNarration(0); }],
-        [300,   () => pFadeIn('#p1a', 800)],
-        [4000,  () => pFadeIn('#p1b', 900)],
-        [10000, () => pFadeIn('#p1c', 600)],
+        [300,   () => pFadeIn('#p1a', 700)],
 
-        // Scene 2: The Prototype (15-30s)
-        [15000, () => { showPromoScene(2); playPromoNarration(1); }],
-        [15300, () => pFadeIn('#p2a', 700)],
-        [18500, () => pFadeIn('#p2b', 800)],
-        [23000, () => pFadeIn('#p2c', 500)],
-        [25000, () => pFadeIn('#p2d', 700)],
+        // S2: Boy hugging crow (5-10s) — "When my first son was born"
+        [5000,  () => { showPromoScene(2); }],
+        [5300,  () => pFadeIn('#p1b', 700)],
 
-        // Scene 3: The Heroes (30-50s) — 15 heroes, let them breathe
-        [30000, () => { showPromoScene(3); playPromoNarration(2); }],
-        [30300, () => pFadeIn('#p3a', 700)],
-        // Original 5
-        [32000, () => pRevealHeroCard(0)],
-        [32600, () => pRevealHeroCard(1)],
-        [33200, () => pRevealHeroCard(2)],
-        [33800, () => pRevealHeroCard(3)],
-        [34400, () => pRevealHeroCard(4)],
-        // Expansion 10
-        [35500, () => pRevealHeroCard(5)],
-        [36100, () => pRevealHeroCard(6)],
-        [36700, () => pRevealHeroCard(7)],
-        [37300, () => pRevealHeroCard(8)],
-        [37900, () => pRevealHeroCard(9)],
-        [38500, () => pRevealHeroCard(10)],
-        [39100, () => pRevealHeroCard(11)],
-        [39700, () => pRevealHeroCard(12)],
-        [40300, () => pRevealHeroCard(13)],
-        [40900, () => pRevealHeroCard(14)],
-        [42500, () => pFadeIn('#p3b', 700)],
+        // S3: Toddler on rug (10-14s) — "Nothing existed"
+        [10000, () => { showPromoScene(3); }],
+        [10300, () => pFadeIn('#p1c', 500)],
 
-        // Scene 3b: Packaging (45-52s)
-        [45000, () => showPromoScene('3b')],
-        [45300, () => pFadeIn('#p3c', 700)],
+        // S4: Father recording (14-19s) — "Custom GPT"
+        [14000, () => { showPromoScene(4); playPromoNarration(1); }],
+        [14300, () => pFadeIn('#p2a', 700)],
+        [16500, () => pFadeIn('#p2b', 700)],
 
-        // Scene 4: What It Does (52-66s)
-        [52000, () => { showPromoScene(4); playPromoNarration(3); }],
-        [52300, () => pFadeIn('#p4a', 700)],
-        [54500, () => pFadeIn('#p4b', 800)],
-        [57500, () => pFadeIn('#p4c', 600)],
-        [59000, () => pFadeIn('#p4d', 900)],
-        [62000, () => pFlashPills()],
+        // S5: Two kids playing (19-24s) — "Flew to Florida"
+        [19000, () => { showPromoScene(5); }],
+        [19300, () => pFadeIn('#p2c', 700)],
+        [21500, () => pFadeIn('#p2d', 500)],
 
-        // Scene 5: The Vision (66-80s)
-        [66000, () => { showPromoScene(5); playPromoNarration(4); }],
-        [66200, () => pFlashToy('pt-teddy')],
-        [69000, () => pFlashToy('pt-cabbage')],
-        [71800, () => pFlashToy('pt-furby')],
-        [74000, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
-        [74500, () => pFadeIn('#p5a', 700)],
-        [76500, () => pFadeIn('#p5b', 600)],
+        // S6: Kids closeup (24-27s) — "That's when I knew"
+        [24000, () => { showPromoScene(6); }],
+        [24300, () => pFadeIn('#p2e', 600)],
 
-        // Scene 6: CTA (80-100s)
-        [80000, () => { showPromoScene(6); playPromoNarration(5); }],
-        [80300, () => pFadeIn('#pCtaLogo', 700)],
-        [82000, () => pFadeIn('#pCtaTag', 600)],
-        [84500, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
-        [86500, () => pFadeIn('#pCtaUrl', 500)],
-        [89000, () => pFadeIn('#pCtaPowered', 600)],
-        [91000, () => pFadeIn('#pCtaArch', 600)],
-        [93500, () => pFadeIn('#pCtaDemo', 700)],
+        // S7: Heroes intro text (27-30s)
+        [27000, () => { showPromoScene(7); playPromoNarration(2); }],
+        [27300, () => pFadeIn('#p3a', 700)],
+        [28500, () => pFadeIn('#p3b', 700)],
+
+        // === HERO PARADE (30-67.5s) — 2.5s each, 15 heroes ===
+        [30000,  () => showHeroSlide(0)],   // Crow
+        [32500,  () => showHeroSlide(1)],   // Owl
+        [35000,  () => showHeroSlide(2)],   // Bear
+        [37500,  () => showHeroSlide(3)],   // Fox
+        [40000,  () => showHeroSlide(4)],   // Bunny
+        [42500,  () => showHeroSlide(5)],   // Turtle
+        [45000,  () => showHeroSlide(6)],   // Elephant
+        [47500,  () => showHeroSlide(7)],   // Wolf
+        [50000,  () => showHeroSlide(8)],   // Otter
+        [52500,  () => showHeroSlide(9)],   // Lion
+        [55000,  () => showHeroSlide(10)],  // Dolphin
+        [57500,  () => showHeroSlide(11)],  // Dragon
+        [60000,  () => showHeroSlide(12)],  // Deer
+        [62500,  () => showHeroSlide(13)],  // Alebrije
+        [65000,  () => showHeroSlide(14)],  // Xolo
+
+        // S8: Packaging (67.5-72s)
+        [67500, () => { showPromoScene(8); }],
+        [67800, () => pFadeIn('#p3c', 700)],
+
+        // S9: Nonna kitchen (72-76s) — "Stories. Languages."
+        [72000, () => { showPromoScene(9); playPromoNarration(3); }],
+        [72300, () => pFadeIn('#p4a', 700)],
+
+        // S10: Grandma FaceTime (76-80s)
+        [76000, () => { showPromoScene(10); }],
+        [76300, () => pFadeIn('#p4b', 700)],
+
+        // S11: Grandparent distance (80-87s) — features + pills
+        [80000, () => { showPromoScene(11); }],
+        [80300, () => pFadeIn('#p4c', 600)],
+        [82000, () => pFadeIn('#p4d', 800)],
+        [84500, () => pFlashPills()],
+
+        // S12: Crow cinematic (87-97s) — Teddy/Cabbage/Furby
+        [87000, () => { showPromoScene(12); playPromoNarration(4); }],
+        [87200, () => pFlashToy('pt-teddy')],
+        [89500, () => pFlashToy('pt-cabbage')],
+        [91800, () => pFlashToy('pt-furby')],
+        [93500, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
+        [94000, () => pFadeIn('#p5a', 700)],
+        [95500, () => pFadeIn('#p5b', 600)],
+
+        // S13: Bunny glow (97-100s) — "No screen"
+        [97000, () => { showPromoScene(13); }],
+        [97300, () => pFadeIn('#p5c', 600)],
+
+        // S14: CTA (100-120s)
+        [100000, () => { showPromoScene(14); playPromoNarration(5); }],
+        [100300, () => pFadeIn('#pCtaLogo', 700)],
+        [102000, () => pFadeIn('#pCtaTag', 600)],
+        [104500, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
+        [106500, () => pFadeIn('#pCtaUrl', 500)],
+        [109000, () => pFadeIn('#pCtaPowered', 600)],
+        [111000, () => pFadeIn('#pCtaArch', 600)],
+        [113500, () => pFadeIn('#pCtaDemo', 700)],
     ];
 
     function pRevealHero(i) {
@@ -1365,7 +1472,7 @@
         promoAudio.forEach(a => { a.pause(); a.currentTime = 0; });
         promoCurrentAudio = null;
         document.querySelectorAll('.promo-scene').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.p-phrase, .p-hero, .p-hero-card, .p-pill, .p-toy-name, .p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-badge, .p-cta-credit, .p-cta-demo').forEach(el => {
+        document.querySelectorAll('.p-phrase, .p-hero, .p-hero-card, .p-hero-name-overlay, .p-pill, .p-toy-name, .p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-badge, .p-cta-credit, .p-cta-demo').forEach(el => {
             el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = '';
         });
         document.querySelectorAll('.p-hero').forEach(el => { el.style.transform = 'translateY(20px)'; });
