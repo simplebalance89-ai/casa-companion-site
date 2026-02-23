@@ -179,6 +179,30 @@
         .p-phrase.p-highlight { font-weight: 700; font-size: clamp(13px, 2.2vw, 28px); }
         .p-phrase + .p-phrase { margin-top: clamp(4px, 0.8vw, 10px); }
 
+        /* Hero grid (15 companions) */
+        .p-hero-grid {
+            position: relative; z-index: 2; display: flex; flex-wrap: wrap;
+            justify-content: center; gap: clamp(4px, 0.8vw, 10px);
+            padding: clamp(8px, 1.5vw, 16px); width: 100%;
+        }
+        .p-hero-card {
+            width: clamp(48px, 8vw, 90px); text-align: center;
+            opacity: 0; transform: scale(0.7) translateY(10px);
+        }
+        .p-hero-card img {
+            width: 100%; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .p-hero-card span {
+            display: block; font-family: 'Playfair Display', serif;
+            font-size: clamp(7px, 1vw, 12px); color: var(--gold);
+            font-style: italic; margin-top: 2px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Packaging scene */
+        .ps-3b { background-image: url('images/packaging-shelf.png'); }
+
         /* Pills */
         .p-pills { display: flex; flex-wrap: wrap; gap: clamp(4px, 0.6vw, 8px); justify-content: center; margin-top: clamp(6px, 1vw, 12px); position: relative; z-index: 2; }
         .p-pill {
@@ -441,11 +465,35 @@
                     </div>
                 </div>
 
-                <!-- Scene 3: The Heroes — all 5 plush toys -->
+                <!-- Scene 3: The Heroes — all 15 companions -->
                 <div class="promo-scene ps-3" id="ps-3">
+                    <div class="p-hero-grid" id="pHeroGrid">
+                        <div class="p-hero-card" id="ph-0"><img src="images/hero-crow.png" alt="Crow"><span>Corvo</span></div>
+                        <div class="p-hero-card" id="ph-1"><img src="images/hero-owl.png" alt="Owl"><span>Gufo</span></div>
+                        <div class="p-hero-card" id="ph-2"><img src="images/hero-bear.png" alt="Bear"><span>Orsetto</span></div>
+                        <div class="p-hero-card" id="ph-3"><img src="images/hero-fox.png" alt="Fox"><span>Volpe</span></div>
+                        <div class="p-hero-card" id="ph-4"><img src="images/hero-bunny.png" alt="Bunny"><span>Coniglio</span></div>
+                        <div class="p-hero-card" id="ph-5"><img src="images/hero-turtle.png" alt="Sea Turtle"><span>Tartaruga</span></div>
+                        <div class="p-hero-card" id="ph-6"><img src="images/hero-elephant.png" alt="Elephant"><span>Elefante</span></div>
+                        <div class="p-hero-card" id="ph-7"><img src="images/hero-wolf.png" alt="Wolf"><span>Lupo</span></div>
+                        <div class="p-hero-card" id="ph-8"><img src="images/hero-otter.png" alt="Otter"><span>Lontra</span></div>
+                        <div class="p-hero-card" id="ph-9"><img src="images/hero-lion.png" alt="Lion"><span>Leone</span></div>
+                        <div class="p-hero-card" id="ph-10"><img src="images/hero-dolphin.png" alt="Dolphin"><span>Delfino</span></div>
+                        <div class="p-hero-card" id="ph-11"><img src="images/hero-dragon.png" alt="Dragon"><span>Drago</span></div>
+                        <div class="p-hero-card" id="ph-12"><img src="images/hero-deer.png" alt="Deer"><span>Cervo</span></div>
+                        <div class="p-hero-card" id="ph-13"><img src="images/hero-alebrije.png" alt="Alebrije"><span>Alebrije</span></div>
+                        <div class="p-hero-card" id="ph-14"><img src="images/hero-xolo.png" alt="Xolo"><span>Xolo</span></div>
+                    </div>
                     <div class="p-text-box">
                         <div class="p-phrase" id="p3a">So I built it <em>the right way</em>.</div>
-                        <div class="p-phrase" id="p3b">Five animals. Each with their own <em>personality</em>.</div>
+                        <div class="p-phrase" id="p3b">Fifteen companions. Each with their own <em>personality</em>.</div>
+                    </div>
+                </div>
+
+                <!-- Scene 3b: Packaging -->
+                <div class="promo-scene ps-3b" id="ps-3b">
+                    <div class="p-text-box">
+                        <div class="p-phrase" id="p3c">Premium packaging. <em>Gift-ready</em> from day one.</div>
                     </div>
                 </div>
 
@@ -1182,7 +1230,7 @@
     }
 
     // ====== INLINE PROMO ENGINE (60s founder story) ======
-    const PROMO_DURATION = 90000;
+    const PROMO_DURATION = 100000;
     let promoAudio = [];
     let promoMuted = false;
     let promoCurrentAudio = null;
@@ -1210,6 +1258,11 @@
         document.querySelectorAll('.promo-scene').forEach(s => s.classList.remove('active'));
         const s = document.getElementById(`ps-${n}`);
         if (s) s.classList.add('active');
+    }
+
+    function pRevealHeroCard(i) {
+        const h = document.getElementById(`ph-${i}`);
+        if (h) { h.style.transition = 'all 0.4s cubic-bezier(0.34,1.56,0.64,1)'; h.style.opacity = '1'; h.style.transform = 'scale(1) translateY(0)'; }
     }
 
     function pFadeIn(sel, dur) {
@@ -1242,42 +1295,58 @@
         [23000, () => pFadeIn('#p2c', 500)],
         [25000, () => pFadeIn('#p2d', 700)],
 
-        // Scene 3: The Heroes (30-44s) — let the parade breathe
+        // Scene 3: The Heroes (30-50s) — 15 heroes, let them breathe
         [30000, () => { showPromoScene(3); playPromoNarration(2); }],
         [30300, () => pFadeIn('#p3a', 700)],
-        [33000, () => pRevealHero(0)],
-        [34500, () => pRevealHero(1)],
-        [36000, () => pRevealHero(2)],
-        [37500, () => pRevealHero(3)],
-        [39000, () => pRevealHero(4)],
-        [41500, () => pFadeIn('#p3b', 700)],
+        // Original 5
+        [32000, () => pRevealHeroCard(0)],
+        [32600, () => pRevealHeroCard(1)],
+        [33200, () => pRevealHeroCard(2)],
+        [33800, () => pRevealHeroCard(3)],
+        [34400, () => pRevealHeroCard(4)],
+        // Expansion 10
+        [35500, () => pRevealHeroCard(5)],
+        [36100, () => pRevealHeroCard(6)],
+        [36700, () => pRevealHeroCard(7)],
+        [37300, () => pRevealHeroCard(8)],
+        [37900, () => pRevealHeroCard(9)],
+        [38500, () => pRevealHeroCard(10)],
+        [39100, () => pRevealHeroCard(11)],
+        [39700, () => pRevealHeroCard(12)],
+        [40300, () => pRevealHeroCard(13)],
+        [40900, () => pRevealHeroCard(14)],
+        [42500, () => pFadeIn('#p3b', 700)],
 
-        // Scene 4: What It Does (44-58s)
-        [44000, () => { showPromoScene(4); playPromoNarration(3); }],
-        [44300, () => pFadeIn('#p4a', 700)],
-        [47000, () => pFadeIn('#p4b', 800)],
-        [50000, () => pFadeIn('#p4c', 600)],
-        [52000, () => pFadeIn('#p4d', 900)],
-        [55000, () => pFlashPills()],
+        // Scene 3b: Packaging (45-52s)
+        [45000, () => showPromoScene('3b')],
+        [45300, () => pFadeIn('#p3c', 700)],
 
-        // Scene 5: The Vision (58-72s)
-        [58000, () => { showPromoScene(5); playPromoNarration(4); }],
-        [58200, () => pFlashToy('pt-teddy')],
-        [61000, () => pFlashToy('pt-cabbage')],
-        [63800, () => pFlashToy('pt-furby')],
-        [66000, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
-        [66500, () => pFadeIn('#p5a', 700)],
-        [68500, () => pFadeIn('#p5b', 600)],
+        // Scene 4: What It Does (52-66s)
+        [52000, () => { showPromoScene(4); playPromoNarration(3); }],
+        [52300, () => pFadeIn('#p4a', 700)],
+        [54500, () => pFadeIn('#p4b', 800)],
+        [57500, () => pFadeIn('#p4c', 600)],
+        [59000, () => pFadeIn('#p4d', 900)],
+        [62000, () => pFlashPills()],
 
-        // Scene 6: CTA (72-90s)
-        [72000, () => { showPromoScene(6); playPromoNarration(5); }],
-        [72300, () => pFadeIn('#pCtaLogo', 700)],
-        [74000, () => pFadeIn('#pCtaTag', 600)],
-        [76500, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
-        [78500, () => pFadeIn('#pCtaUrl', 500)],
-        [81000, () => pFadeIn('#pCtaPowered', 600)],
-        [83000, () => pFadeIn('#pCtaArch', 600)],
-        [85500, () => pFadeIn('#pCtaDemo', 700)],
+        // Scene 5: The Vision (66-80s)
+        [66000, () => { showPromoScene(5); playPromoNarration(4); }],
+        [66200, () => pFlashToy('pt-teddy')],
+        [69000, () => pFlashToy('pt-cabbage')],
+        [71800, () => pFlashToy('pt-furby')],
+        [74000, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
+        [74500, () => pFadeIn('#p5a', 700)],
+        [76500, () => pFadeIn('#p5b', 600)],
+
+        // Scene 6: CTA (80-100s)
+        [80000, () => { showPromoScene(6); playPromoNarration(5); }],
+        [80300, () => pFadeIn('#pCtaLogo', 700)],
+        [82000, () => pFadeIn('#pCtaTag', 600)],
+        [84500, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
+        [86500, () => pFadeIn('#pCtaUrl', 500)],
+        [89000, () => pFadeIn('#pCtaPowered', 600)],
+        [91000, () => pFadeIn('#pCtaArch', 600)],
+        [93500, () => pFadeIn('#pCtaDemo', 700)],
     ];
 
     function pRevealHero(i) {
@@ -1296,10 +1365,11 @@
         promoAudio.forEach(a => { a.pause(); a.currentTime = 0; });
         promoCurrentAudio = null;
         document.querySelectorAll('.promo-scene').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.p-phrase, .p-hero, .p-pill, .p-toy-name, .p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-badge, .p-cta-credit, .p-cta-demo').forEach(el => {
+        document.querySelectorAll('.p-phrase, .p-hero, .p-hero-card, .p-pill, .p-toy-name, .p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-badge, .p-cta-credit, .p-cta-demo').forEach(el => {
             el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = '';
         });
         document.querySelectorAll('.p-hero').forEach(el => { el.style.transform = 'translateY(20px)'; });
+        document.querySelectorAll('.p-hero-card').forEach(el => { el.style.transform = 'scale(0.7) translateY(10px)'; });
         document.querySelectorAll('.p-pill').forEach(el => { el.style.transform = 'scale(0.8)'; });
         document.querySelectorAll('.p-toy-name').forEach(el => { el.classList.remove('flash'); el.style.color = ''; });
         const cb = document.getElementById('pCtaBadge'); if (cb) { cb.style.opacity = '0'; cb.style.transform = 'scale(0.8)'; }
