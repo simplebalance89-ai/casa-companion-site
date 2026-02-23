@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="2.4">
+    <meta name="version" content="2.5">
     <title>Casa Companion — Your Voice. Their Companion.</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -180,12 +180,13 @@
 
         /* Hero parade slides (10 heroes) */
         /* Hero group slide */
-        .ps-heroes { background-color: #f5f5f5; }
+        .ps-heroes { background-color: #0D0D1A; }
         .ps-heroes::before { background: none !important; }
         .hero-grid {
             position: relative; z-index: 2;
             display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(4px, 1vw, 12px);
-            padding: clamp(8px, 2vw, 24px); width: 100%; height: 100%;
+            padding: clamp(4px, 1vw, 16px) clamp(8px, 2vw, 24px) clamp(8px, 2vw, 24px);
+            width: 100%;
             align-content: center; justify-items: center;
         }
         .hero-grid-item {
@@ -198,7 +199,7 @@
         }
         .hero-grid-item .hg-name {
             font-family: 'Playfair Display', serif; font-size: clamp(8px, 1.3vw, 16px);
-            font-weight: 900; color: var(--dark); margin-top: 4px;
+            font-weight: 900; color: #fff; margin-top: 4px;
         }
         .hero-grid-item .hg-animal {
             font-size: clamp(6px, 1vw, 12px); color: var(--gold); font-style: italic;
@@ -525,9 +526,13 @@
                     </div>
                 </div>
 
-                <!-- Hero Group: All 10 on one slide -->
-                <div class="promo-slide ps-heroes" id="ps-heroes">
-                    <div class="hero-grid">
+                <!-- Hero Group: All 10 on one slide — shown immediately on clip 3 -->
+                <div class="promo-slide ps-heroes" id="ps-heroes" style="flex-direction:column; justify-content:flex-start; background:#0D0D1A;">
+                    <div style="position:relative; z-index:2; text-align:center; padding: clamp(8px,1.5vw,20px) clamp(8px,2vw,24px) 0;">
+                        <div class="p-phrase" style="font-size:clamp(10px,1.4vw,18px); color:rgba(255,255,255,0.7);">So I built it <em>the right way</em>.</div>
+                        <div class="p-phrase p-highlight" style="margin-top:4px; font-size:clamp(12px,1.8vw,22px);"><em>Ten companions.</em> Each with their own personality.</div>
+                    </div>
+                    <div class="hero-grid" style="flex:1;">
                         <div class="hero-grid-item"><img src="images/hero-crow.png" alt="Corvo"><div class="hg-name">Corvo</div><div class="hg-animal">the Crow</div></div>
                         <div class="hero-grid-item"><img src="images/hero-owl.png" alt="Gufo"><div class="hg-name">Gufo</div><div class="hg-animal">the Owl</div></div>
                         <div class="hero-grid-item"><img src="images/hero-bear.png" alt="Orsetto"><div class="hg-name">Orsetto</div><div class="hg-animal">the Bear</div></div>
@@ -1360,19 +1365,15 @@
         audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
     }
 
-    // Clip 3: show intro slide, then show all heroes on one group slide
+    // Clip 3: show heroes grid immediately, then show intro slide briefly at end
     function playClip3WithHeroes(onDone) {
-        showSlide('ps-3'); // "So I built it the right way..."
+        // Show heroes right away — get to the animals fast
+        showSlide('ps-heroes');
         const audio = promoAudio[2];
         if (!audio) { if (onDone) onDone(); return; }
         audio.currentTime = 0;
         audio.onended = () => { if (onDone) onDone(); };
         audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
-
-        // After ~8s intro text, show the hero group slide
-        setTimeout(() => {
-            showSlide('ps-heroes');
-        }, 8000);
     }
 
     // Show CTA slide with staggered reveals, then auto-open demo
@@ -1394,13 +1395,13 @@
         }, reveals.length * 400 + 1500);
     }
 
-    // Main sequence: clip1 → clip2 → clip3+heroes → clip4-10 → CTA
+    // Main sequence: clip1 → clip2 → clip3+heroes → clip5-10 → CTA
+    // Note: narration-4.mp3 does not exist — ps-4 is skipped
     function runPromoSequence() {
         const slides = [
             { slide: 'ps-1', clip: 0 },
             { slide: 'ps-2', clip: 1 },
-            // clip 3 handled specially (hero parade during audio)
-            { slide: 'ps-4', clip: 3 },
+            // clip 3 handled specially (heroes shown immediately during audio)
             { slide: 'ps-5', clip: 4 },
             { slide: 'ps-6', clip: 5 },
             { slide: 'ps-7', clip: 6 },
@@ -1447,9 +1448,11 @@
         if (promoHeroInterval) { clearInterval(promoHeroInterval); promoHeroInterval = null; }
         promoAudio.forEach(a => { a.pause(); a.currentTime = 0; a.onended = null; });
         document.querySelectorAll('.promo-slide').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.p-cta-logo, .p-cta-url, .p-cta-credit, .p-cta-demo').forEach(el => {
+        document.querySelectorAll('.p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-credit, .p-cta-demo').forEach(el => {
             el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = '';
         });
+        const pCtaDemo = document.getElementById('pCtaDemo');
+        if (pCtaDemo) { pCtaDemo.style.opacity = '0'; }
         document.getElementById('promoProgress').style.width = '0%';
     }
 
