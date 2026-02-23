@@ -110,7 +110,7 @@
             box-shadow: 0 8px 32px rgba(196,30,58,0.4); transition: transform 0.2s;
         }
         .hero-cta:hover { transform: scale(1.05); text-decoration: none; }
-        /* === PROMO (inline, image-driven) === */
+        /* === PROMO (inline, audio-driven) === */
         .promo-container {
             width: 100%; max-width: 800px; margin: 48px auto 0;
             position: relative; border-radius: 16px; overflow: hidden;
@@ -146,8 +146,8 @@
             text-transform: uppercase; letter-spacing: 2px; font-weight: 700;
         }
 
-        /* Promo scenes: full-bleed image + text overlay */
-        .promo-scene {
+        /* Promo slides: full-bleed image + text overlay */
+        .promo-slide {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
             text-align: center; z-index: 1;
@@ -155,22 +155,26 @@
             opacity: 0; transition: opacity 0.8s ease;
             pointer-events: none;
         }
-        .promo-scene.active { opacity: 1; z-index: 2; pointer-events: auto; }
+        .promo-slide.active { opacity: 1; z-index: 2; pointer-events: auto; }
+        .promo-slide::before {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 40%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%);
+            z-index: 1;
+        }
+
+        /* Narrated slide backgrounds */
         .ps-1  { background-image: url('images/scene1-father.png'); }
         .ps-2  { background-image: url('images/life-boy-crow.png'); }
-        .ps-3  { background-image: url('images/life-toddler-rug.png'); }
-        .ps-4  { background-image: url('images/banner-father-recording.png'); }
-        .ps-5  { background-image: url('images/life-two-kids.png'); }
-        .ps-6  { background-image: url('images/scene2-kids.png'); }
-        .ps-7  { background-image: url('images/scene3-heroes.png'); }
-        .ps-8  { background-image: url('images/packaging-shelf.png'); }
-        .ps-9  { background-image: url('images/life-nonna-kitchen.png'); }
-        .ps-10 { background-image: url('images/scene4-grandma.png'); }
-        .ps-11 { background-image: url('images/life-grandparent-distance.png'); }
-        .ps-12 { background-image: url('images/banner-crow-cinematic.png'); }
-        .ps-13 { background-image: url('images/life-bunny-glow.png'); }
-        .ps-14 { background-image: url('images/scene6-banner.png'); }
-        /* Individual hero parade slides */
+        .ps-3  { background-image: url('images/scene3-heroes.png'); }
+        .ps-4  { background-image: url('images/life-nonna-kitchen.png'); }
+        .ps-5  { background-image: url('images/life-grandparent-distance.png'); }
+        .ps-6  { background-image: url('images/banner-father-recording.png'); }
+        .ps-7  { background-image: url('images/scene5-crow.png'); }
+        .ps-8  { background-image: url('images/eng-exploded.png'); }
+        .ps-9  { background-image: url('images/packaging-unbox.png'); }
+        .ps-10 { background-image: url('images/banner-crow-cinematic.png'); }
+
+        /* Hero parade slides */
         .ps-h0  { background-image: url('images/hero-crow.png'); background-color: #f5f5f5; }
         .ps-h1  { background-image: url('images/hero-owl.png'); background-color: #f5f5f5; }
         .ps-h2  { background-image: url('images/hero-bear.png'); background-color: #f5f5f5; }
@@ -186,9 +190,13 @@
         .ps-h12 { background-image: url('images/hero-deer.png'); background-color: #f5f5f5; }
         .ps-h13 { background-image: url('images/hero-alebrije.png'); background-color: #f5f5f5; }
         .ps-h14 { background-image: url('images/hero-xolo.png'); background-color: #f5f5f5; }
-        /* Hero parade slides: contain (not crop), centered */
+        /* Hero slides: contain (not crop), centered, no gradient overlay */
         [class*="ps-h"] { background-size: contain !important; background-repeat: no-repeat; }
         [class*="ps-h"]::before { background: none !important; }
+
+        /* CTA slide */
+        .ps-cta { background-image: url('images/scene6-banner.png'); justify-content: center !important; }
+
         .p-hero-name-overlay {
             position: relative; z-index: 2; font-family: 'Playfair Display', serif;
             font-size: clamp(18px, 3.5vw, 42px); color: var(--dark); font-weight: 900;
@@ -197,11 +205,7 @@
         .p-hero-name-overlay .p-hero-italian {
             font-size: clamp(12px, 2vw, 24px); color: var(--gold); font-style: italic; font-weight: 400;
         }
-        .promo-scene::before {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 40%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%);
-            z-index: 1;
-        }
+
         .p-text-box {
             position: relative; z-index: 2; padding: clamp(12px, 2vw, 28px) clamp(12px, 3vw, 32px);
             width: 100%; margin-top: auto;
@@ -209,54 +213,11 @@
         .p-phrase {
             font-family: 'Playfair Display', serif;
             font-size: clamp(11px, 1.8vw, 22px);
-            color: rgba(255,255,255,0.9); line-height: 1.4; opacity: 0;
+            color: rgba(255,255,255,0.9); line-height: 1.4;
             text-shadow: 0 2px 8px rgba(0,0,0,0.9);
         }
         .p-phrase em { color: var(--gold); font-style: italic; }
         .p-phrase.p-highlight { font-weight: 700; font-size: clamp(13px, 2.2vw, 28px); }
-        .p-phrase + .p-phrase { margin-top: clamp(4px, 0.8vw, 10px); }
-
-        /* Hero grid (15 companions) */
-        .p-hero-grid {
-            position: relative; z-index: 2; display: flex; flex-wrap: wrap;
-            justify-content: center; gap: clamp(4px, 0.8vw, 10px);
-            padding: clamp(8px, 1.5vw, 16px); width: 100%;
-        }
-        .p-hero-card {
-            width: clamp(48px, 8vw, 90px); text-align: center;
-            opacity: 0; transform: scale(0.7) translateY(10px);
-        }
-        .p-hero-card img {
-            width: 100%; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-        }
-        .p-hero-card span {
-            display: block; font-family: 'Playfair Display', serif;
-            font-size: clamp(7px, 1vw, 12px); color: var(--gold);
-            font-style: italic; margin-top: 2px;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-        }
-
-        /* Packaging scene */
-        .ps-3b { background-image: url('images/packaging-shelf.png'); }
-
-        /* Pills */
-        .p-pills { display: flex; flex-wrap: wrap; gap: clamp(4px, 0.6vw, 8px); justify-content: center; margin-top: clamp(6px, 1vw, 12px); position: relative; z-index: 2; }
-        .p-pill {
-            padding: clamp(3px, 0.5vw, 6px) clamp(8px, 1vw, 14px);
-            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px;
-            color: #fff; font-size: clamp(9px, 1.1vw, 13px); font-weight: 600;
-            opacity: 0; transform: scale(0.8); text-shadow: none;
-        }
-
-        /* Toy ref names (scene 5) */
-        .p-toy-name {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(14px, 3vw, 40px); font-weight: 900;
-            color: rgba(255,255,255,0.2); opacity: 0; position: absolute; z-index: 2;
-            text-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-        .p-toy-name.flash { color: #fff; text-shadow: 0 0 40px rgba(255,255,255,0.4); }
 
         /* CTA elements */
         .p-cta-logo { font-family: 'Playfair Display', serif; font-size: clamp(20px, 4vw, 48px); font-weight: 900; color: #fff; opacity: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.8); position: relative; z-index: 2; }
@@ -272,13 +233,22 @@
         .p-cta-url { margin-top: 8px; font-size: clamp(10px, 1.3vw, 16px); color: var(--gold); opacity: 0; position: relative; z-index: 2; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
         .p-cta-credit { font-size: clamp(9px, 1.1vw, 14px); color: rgba(255,255,255,0.5); opacity: 0; position: relative; z-index: 2; margin-top: 6px; font-weight: 300; letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
         .p-cta-credit em { color: var(--gold); font-style: italic; font-weight: 600; }
-        .p-cta-demo { font-size: clamp(10px, 1.2vw, 15px); color: rgba(255,255,255,0.7); opacity: 0; position: relative; z-index: 2; margin-top: 14px; font-weight: 600; letter-spacing: 0.5px; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+        .p-cta-demo {
+            display: inline-block; font-size: clamp(10px, 1.2vw, 15px); color: rgba(255,255,255,0.9);
+            opacity: 0; position: relative; z-index: 2; margin-top: 14px; font-weight: 600;
+            letter-spacing: 0.5px; text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            padding: clamp(4px, 0.6vw, 8px) clamp(10px, 1.5vw, 20px);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 30px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .p-cta-demo:hover { background: rgba(196,30,58,0.3); border-color: var(--crimson); text-decoration: none; }
         .p-cta-demo em { color: var(--crimson); font-style: normal; font-weight: 800; }
 
         /* Progress bar */
         .promo-progress {
             position: absolute; bottom: 0; left: 0; height: 3px;
             background: var(--crimson); z-index: 20; width: 0%;
+            transition: width 0.3s linear;
         }
 
         .hero-stats {
@@ -473,7 +443,7 @@
         <p>The first AI plush toy that speaks in your voice. Stories, languages, milestones. Growing with your child from day one.</p>
         <a href="#" class="hero-cta" onclick="switchTab('kickstarter')">Get Early Access</a>
 
-        <!-- 60s Founder Story (inline, no iframe) -->
+        <!-- Founder Story Promo (audio-driven, 1 clip = 1 slide) -->
         <div class="promo-container" id="promoContainer">
             <div class="promo-stage" id="promoStage">
                 <div class="promo-overlay" id="promoOverlay" onclick="launchPromo()">
@@ -483,139 +453,82 @@
                     <div class="promo-label">Watch the Founder Story</div>
                 </div>
 
-                <!-- S1: Father + toddler — "I build AI tools" -->
-                <div class="promo-scene ps-1" id="ps-1">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p1a">I build <em>AI tools</em> for business. ERP solutions. Enterprise software.</div>
-                    </div>
+                <!-- Slide 1: "I build AI tools for business." -->
+                <div class="promo-slide ps-1" id="ps-1">
+                    <div class="p-text-box"><div class="p-phrase">I build <em>AI tools</em> for business.</div></div>
                 </div>
 
-                <!-- S2: Boy hugging crow — "When my first son was born" -->
-                <div class="promo-scene ps-2" id="ps-2">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p1b">When my first son was born, I wanted something that would get him <em>playing, learning</em>, and off a screen.</div>
-                    </div>
+                <!-- Slide 2: "Started as a custom GPT on my phone." -->
+                <div class="promo-slide ps-2" id="ps-2">
+                    <div class="p-text-box"><div class="p-phrase">Started as a <em>custom GPT</em> on my phone.</div></div>
                 </div>
 
-                <!-- S3: Toddler on rug — "Nothing existed" -->
-                <div class="promo-scene ps-3" id="ps-3">
-                    <div class="p-text-box">
-                        <div class="p-phrase p-highlight" id="p1c">Nothing existed. So I built one.</div>
-                    </div>
+                <!-- Slide 3: "So I built it the right way." -->
+                <div class="promo-slide ps-3" id="ps-3">
+                    <div class="p-text-box"><div class="p-phrase">So I built it <em>the right way</em>.</div></div>
                 </div>
 
-                <!-- S4: Banner father recording — "Started as a custom GPT" -->
-                <div class="promo-scene ps-4" id="ps-4">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p2a">Started as a <em>custom GPT</em> on my phone. Just ChatGPT.</div>
-                        <div class="p-phrase" id="p2b">I saw the potential, but I saw the limitations.</div>
-                    </div>
+                <!-- Slide 4: "Heritage disappears in one generation." -->
+                <div class="promo-slide ps-4" id="ps-4">
+                    <div class="p-text-box"><div class="p-phrase">Heritage disappears in <em>one generation</em>.</div></div>
                 </div>
 
-                <!-- S5: Two kids playing — "Flew to Florida" -->
-                <div class="promo-scene ps-5" id="ps-5">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p2c">Flew to Florida and let my nephews try it. <em>Two and four years old.</em></div>
-                        <div class="p-phrase p-highlight" id="p2d">They wouldn't put it down.</div>
-                    </div>
+                <!-- Slide 5: "70 million grandparents. 42% in another state." -->
+                <div class="promo-slide ps-5" id="ps-5">
+                    <div class="p-text-box"><div class="p-phrase"><em>70 million</em> grandparents. <em>42%</em> in another state.</div></div>
                 </div>
 
-                <!-- S6: Two kids closeup — "Their parents loved it" -->
-                <div class="promo-scene ps-6" id="ps-6">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p2e">Their parents loved it. That's when I knew.</div>
-                    </div>
+                <!-- Slide 6: "Clone your voice. 12 phrases. 5 minutes." -->
+                <div class="promo-slide ps-6" id="ps-6">
+                    <div class="p-text-box"><div class="p-phrase">Clone your voice. <em>12 phrases. 5 minutes.</em></div></div>
                 </div>
 
-                <!-- S7: Heroes lineup text intro -->
-                <div class="promo-scene ps-7" id="ps-7">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p3a">So I built it <em>the right way</em>.</div>
-                        <div class="p-phrase" id="p3b">Fifteen companions. Each with their own <em>personality</em>.</div>
-                    </div>
+                <!-- Slide 7: "Teddy Ruxpin's bond. Cabbage Patch's heart. Furby's soul." -->
+                <div class="promo-slide ps-7" id="ps-7">
+                    <div class="p-text-box"><div class="p-phrase">Teddy Ruxpin's bond. Cabbage Patch's heart. <em>Furby's soul.</em></div></div>
                 </div>
 
-                <!-- Hero Parade: 15 individual full-screen hero slides -->
-                <div class="promo-scene ps-h0" id="ps-h0"><div class="p-hero-name-overlay" id="phn-0">Crow<br><span class="p-hero-italian">Corvo</span></div></div>
-                <div class="promo-scene ps-h1" id="ps-h1"><div class="p-hero-name-overlay" id="phn-1">Owl<br><span class="p-hero-italian">Gufo</span></div></div>
-                <div class="promo-scene ps-h2" id="ps-h2"><div class="p-hero-name-overlay" id="phn-2">Bear Cub<br><span class="p-hero-italian">Orsetto</span></div></div>
-                <div class="promo-scene ps-h3" id="ps-h3"><div class="p-hero-name-overlay" id="phn-3">Fox<br><span class="p-hero-italian">Volpe</span></div></div>
-                <div class="promo-scene ps-h4" id="ps-h4"><div class="p-hero-name-overlay" id="phn-4">Bunny<br><span class="p-hero-italian">Coniglio</span></div></div>
-                <div class="promo-scene ps-h5" id="ps-h5"><div class="p-hero-name-overlay" id="phn-5">Sea Turtle<br><span class="p-hero-italian">Tartaruga</span></div></div>
-                <div class="promo-scene ps-h6" id="ps-h6"><div class="p-hero-name-overlay" id="phn-6">Elephant<br><span class="p-hero-italian">Elefante</span></div></div>
-                <div class="promo-scene ps-h7" id="ps-h7"><div class="p-hero-name-overlay" id="phn-7">Wolf Pup<br><span class="p-hero-italian">Lupo</span></div></div>
-                <div class="promo-scene ps-h8" id="ps-h8"><div class="p-hero-name-overlay" id="phn-8">Otter<br><span class="p-hero-italian">Lontra</span></div></div>
-                <div class="promo-scene ps-h9" id="ps-h9"><div class="p-hero-name-overlay" id="phn-9">Lion Cub<br><span class="p-hero-italian">Leone</span></div></div>
-                <div class="promo-scene ps-h10" id="ps-h10"><div class="p-hero-name-overlay" id="phn-10">Dolphin<br><span class="p-hero-italian">Delfino</span></div></div>
-                <div class="promo-scene ps-h11" id="ps-h11"><div class="p-hero-name-overlay" id="phn-11">Dragon<br><span class="p-hero-italian">Drago</span></div></div>
-                <div class="promo-scene ps-h12" id="ps-h12"><div class="p-hero-name-overlay" id="phn-12">Deer<br><span class="p-hero-italian">Cervo</span></div></div>
-                <div class="promo-scene ps-h13" id="ps-h13"><div class="p-hero-name-overlay" id="phn-13">Alebrije<br><span class="p-hero-italian">Alebrije</span></div></div>
-                <div class="promo-scene ps-h14" id="ps-h14"><div class="p-hero-name-overlay" id="phn-14">Xolo<br><span class="p-hero-italian">Xoloitzcuintli</span></div></div>
+                <!-- Hero Parade: 15 heroes, visual-only, ~3s each -->
+                <div class="promo-slide ps-h0" id="ps-h0"><div class="p-hero-name-overlay" id="phn-0">Corvo<br><span class="p-hero-italian">the Crow</span></div></div>
+                <div class="promo-slide ps-h1" id="ps-h1"><div class="p-hero-name-overlay" id="phn-1">Gufo<br><span class="p-hero-italian">the Owl</span></div></div>
+                <div class="promo-slide ps-h2" id="ps-h2"><div class="p-hero-name-overlay" id="phn-2">Orsetto<br><span class="p-hero-italian">the Bear</span></div></div>
+                <div class="promo-slide ps-h3" id="ps-h3"><div class="p-hero-name-overlay" id="phn-3">Volpe<br><span class="p-hero-italian">the Fox</span></div></div>
+                <div class="promo-slide ps-h4" id="ps-h4"><div class="p-hero-name-overlay" id="phn-4">Coniglio<br><span class="p-hero-italian">the Bunny</span></div></div>
+                <div class="promo-slide ps-h5" id="ps-h5"><div class="p-hero-name-overlay" id="phn-5">Tartaruga<br><span class="p-hero-italian">the Sea Turtle</span></div></div>
+                <div class="promo-slide ps-h6" id="ps-h6"><div class="p-hero-name-overlay" id="phn-6">Elefante<br><span class="p-hero-italian">the Elephant</span></div></div>
+                <div class="promo-slide ps-h7" id="ps-h7"><div class="p-hero-name-overlay" id="phn-7">Lupo<br><span class="p-hero-italian">the Wolf</span></div></div>
+                <div class="promo-slide ps-h8" id="ps-h8"><div class="p-hero-name-overlay" id="phn-8">Lontra<br><span class="p-hero-italian">the Otter</span></div></div>
+                <div class="promo-slide ps-h9" id="ps-h9"><div class="p-hero-name-overlay" id="phn-9">Leone<br><span class="p-hero-italian">the Lion</span></div></div>
+                <div class="promo-slide ps-h10" id="ps-h10"><div class="p-hero-name-overlay" id="phn-10">Delfino<br><span class="p-hero-italian">the Dolphin</span></div></div>
+                <div class="promo-slide ps-h11" id="ps-h11"><div class="p-hero-name-overlay" id="phn-11">Drago<br><span class="p-hero-italian">the Dragon</span></div></div>
+                <div class="promo-slide ps-h12" id="ps-h12"><div class="p-hero-name-overlay" id="phn-12">Cervo<br><span class="p-hero-italian">the Deer</span></div></div>
+                <div class="promo-slide ps-h13" id="ps-h13"><div class="p-hero-name-overlay" id="phn-13">Alebrije<br><span class="p-hero-italian">Alebrije</span></div></div>
+                <div class="promo-slide ps-h14" id="ps-h14"><div class="p-hero-name-overlay" id="phn-14">Xolo<br><span class="p-hero-italian">Xolo</span></div></div>
 
-                <!-- S8: Packaging shelf — "Premium packaging" -->
-                <div class="promo-scene ps-8" id="ps-8">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p3c">Premium packaging. <em>Gift-ready</em> from day one.</div>
-                    </div>
+                <!-- Slide 8: "One pod. Fifteen shells. Machine washable." -->
+                <div class="promo-slide ps-8" id="ps-8">
+                    <div class="p-text-box"><div class="p-phrase">One pod. Fifteen shells. <em>Machine washable.</em></div></div>
                 </div>
 
-                <!-- S9: Nonna in kitchen — "Stories. Languages." -->
-                <div class="promo-scene ps-9" id="ps-9">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p4a"><em>Stories. Languages. Homework help.</em></div>
-                    </div>
+                <!-- Slide 9: "Gift-ready. Kickstarter May 5, 2026." -->
+                <div class="promo-slide ps-9" id="ps-9">
+                    <div class="p-text-box"><div class="p-phrase">Gift-ready. <em>Kickstarter May 5, 2026.</em></div></div>
                 </div>
 
-                <!-- S10: Grandma FaceTime — "Grandparents connecting" -->
-                <div class="promo-scene ps-10" id="ps-10">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p4b">Grandparents connecting over <em>FaceTime</em> from across the country.</div>
-                    </div>
+                <!-- Slide 10: "Everyone else announced it. We built it." -->
+                <div class="promo-slide ps-10" id="ps-10">
+                    <div class="p-text-box"><div class="p-phrase p-highlight">Everyone else announced it. <em>We built it.</em></div></div>
                 </div>
 
-                <!-- S11: Grandparent distance — "It grows with your kid" -->
-                <div class="promo-scene ps-11" id="ps-11">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p4c">It grows with your kid.</div>
-                        <div class="p-phrase" id="p4d">And if you want, you can <em>clone your voice</em> so your child hears you, even when you're not there.</div>
-                    </div>
-                    <div class="p-pills" id="pPills">
-                        <div class="p-pill">Stories</div>
-                        <div class="p-pill">3 Languages</div>
-                        <div class="p-pill">Homework</div>
-                        <div class="p-pill">FaceTime</div>
-                        <div class="p-pill">Voice Clone</div>
-                        <div class="p-pill">Grows With Them</div>
-                    </div>
-                </div>
-
-                <!-- S12: Crow cinematic — Teddy Ruxpin / Cabbage Patch / Furby -->
-                <div class="promo-scene ps-12" id="ps-12">
-                    <div class="p-toy-name" id="pt-teddy" style="top:15%; left:8%;">Teddy Ruxpin</div>
-                    <div class="p-toy-name" id="pt-cabbage" style="top:40%; right:6%;">Cabbage Patch</div>
-                    <div class="p-toy-name" id="pt-furby" style="bottom:30%; left:10%;">Furby</div>
-                    <div class="p-text-box">
-                        <div class="p-phrase p-highlight" id="p5a">This is what this generation <em>deserves</em>.</div>
-                        <div class="p-phrase" id="p5b">Built with real AI. And built to <em>last</em>.</div>
-                    </div>
-                </div>
-
-                <!-- S13: Bunny glow — engineering beauty shot transition -->
-                <div class="promo-scene ps-13" id="ps-13">
-                    <div class="p-text-box">
-                        <div class="p-phrase" id="p5c">No screen. Just <em>your voice</em>.</div>
-                    </div>
-                </div>
-
-                <!-- S14: CTA — kickstarter banner -->
-                <div class="promo-scene ps-14" id="ps-14" style="justify-content: center;">
+                <!-- CTA: stays on screen after promo ends -->
+                <div class="promo-slide ps-cta" id="ps-cta" style="justify-content: center;">
                     <div class="p-cta-logo" id="pCtaLogo">Casa <span>Companion</span></div>
-                    <div class="p-cta-tagline" id="pCtaTag">Everyone else announced it. We built it.</div>
-                    <div class="p-cta-badge" id="pCtaBadge">Coming to Kickstarter 2026</div>
+                    <div class="p-cta-tagline" id="pCtaTag">Your voice. Their companion.</div>
+                    <a href="https://casa-companion-demo.onrender.com" target="_blank" class="p-cta-demo" id="pCtaDemo" style="text-decoration:none; cursor:pointer;">Click the <em>Companion Demo</em> to try it yourself</a>
+                    <div class="p-cta-badge" id="pCtaBadge">Kickstarter May 5, 2026</div>
                     <div class="p-cta-url" id="pCtaUrl">casacompanion.com</div>
                     <div class="p-cta-credit" id="pCtaPowered">Powered by <em>Capo AI</em></div>
                     <div class="p-cta-credit" id="pCtaArch">Architected by <em>Sinton.ia</em></div>
-                    <a href="https://casa-companion-demo.onrender.com" target="_blank" class="p-cta-demo" id="pCtaDemo" style="text-decoration:none; cursor:pointer;">Click on the <em>Companion Demo</em> to try it yourself</a>
                 </div>
 
                 <div class="promo-progress" id="promoProgress"></div>
@@ -1310,203 +1223,173 @@
         hamburger.classList.toggle('open');
     }
 
-    // ====== INLINE PROMO ENGINE (60s founder story) ======
-    const PROMO_DURATION = 140000;
-    let promoAudio = [];
-    let promoMuted = false;
-    let promoCurrentAudio = null;
-    let promoStart = 0;
-    let promoRunning = false;
-    let promoExecuted = new Set();
-    let promoAnimFrame;
+    // ====== INLINE PROMO ENGINE (audio-driven, 1 clip = 1 slide) ======
+    // Architecture: Each narration clip maps to exactly one slide.
+    // Slide advances ONLY when the audio clip ends (onended event).
+    // Hero parade is visual-only (3s interval). No setTimeout drift.
 
-    // Preload 6 narration MP3s (v3 = cache bust)
+    const PROMO_CLIP_COUNT = 10;
+    let promoAudio = [];
+    let promoRunning = false;
+    let promoHeroInterval = null;
+    let promoCurrentSlide = null;
+
+    // Hero parade order (15 heroes, names match slide IDs ps-h0..ps-h14)
+    const HERO_NAMES = [
+        'Corvo the Crow', 'Gufo the Owl', 'Orsetto the Bear', 'Volpe the Fox',
+        'Coniglio the Bunny', 'Tartaruga the Sea Turtle', 'Elefante the Elephant',
+        'Lupo the Wolf', 'Lontra the Otter', 'Leone the Lion', 'Delfino the Dolphin',
+        'Drago the Dragon', 'Cervo the Deer', 'Alebrije', 'Xolo'
+    ];
+
+    // Preload 10 narration MP3s (v4 = cache bust)
     function preloadPromoAudio() {
-        for (let i = 1; i <= 6; i++) {
-            const a = new Audio(`audio/narration-${i}.mp3?v=3`);
+        for (let i = 1; i <= PROMO_CLIP_COUNT; i++) {
+            const a = new Audio(`audio/narration-${i}.mp3?v=4`);
             a.preload = 'auto';
             promoAudio.push(a);
         }
     }
 
-    function playPromoNarration(idx) {
-        if (promoCurrentAudio) { promoCurrentAudio.pause(); promoCurrentAudio.currentTime = 0; }
-        const a = promoAudio[idx];
-        if (a && !promoMuted) { a.currentTime = 0; promoCurrentAudio = a; a.play().catch(() => {}); }
-    }
-
-    function showPromoScene(n) {
-        document.querySelectorAll('.promo-scene').forEach(s => {
+    function showSlide(id) {
+        document.querySelectorAll('.promo-slide').forEach(s => {
             s.classList.remove('active');
-            // Reset text opacity on outgoing scenes
-            s.querySelectorAll('.p-phrase, .p-hero-name-overlay').forEach(el => {
-                el.style.transition = 'none'; el.style.opacity = '0';
-            });
         });
-        const s = document.getElementById(`ps-${n}`);
-        if (s) s.classList.add('active');
+        const s = document.getElementById(id);
+        if (s) {
+            s.classList.add('active');
+            promoCurrentSlide = id;
+            // Fade in hero name overlay after 300ms (for hero parade slides)
+            const nameEl = s.querySelector('.p-hero-name-overlay');
+            if (nameEl) {
+                nameEl.style.transition = 'none';
+                nameEl.style.opacity = '0';
+                setTimeout(() => {
+                    nameEl.style.transition = 'opacity 0.5s ease';
+                    nameEl.style.opacity = '1';
+                }, 300);
+            }
+        }
     }
 
-    function pRevealHeroCard(i) {
-        const h = document.getElementById(`ph-${i}`);
-        if (h) { h.style.transition = 'all 0.4s cubic-bezier(0.34,1.56,0.64,1)'; h.style.opacity = '1'; h.style.transform = 'scale(1) translateY(0)'; }
+    // Play a narrated slide: show slide, play audio, call onDone when audio ends
+    function playNarratedSlide(slideId, clipIndex, onDone) {
+        showSlide(slideId);
+        const audio = promoAudio[clipIndex];
+        if (!audio) { if (onDone) onDone(); return; }
+        audio.currentTime = 0;
+        audio.onended = () => { if (onDone) onDone(); };
+        audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
     }
 
-    function pFadeIn(sel, dur) {
-        const el = document.querySelector(sel);
-        if (!el) { console.warn('pFadeIn: not found', sel); return; }
-        el.style.transition = `opacity ${dur}ms ease`;
-        el.style.opacity = '1';
+    // Run the hero parade: 15 heroes, 3s each, visual-only, then call onDone
+    function runHeroParade(onDone) {
+        let heroIdx = 0;
+        showSlide('ps-h0');
+        promoHeroInterval = setInterval(() => {
+            heroIdx++;
+            if (heroIdx >= 15) {
+                clearInterval(promoHeroInterval);
+                promoHeroInterval = null;
+                if (onDone) onDone();
+            } else {
+                showSlide(`ps-h${heroIdx}`);
+            }
+        }, 3000);
     }
 
-    function pFlashToy(id) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.style.transition = 'all 0.5s ease';
-        el.style.opacity = '1';
-        el.classList.add('flash');
-        setTimeout(() => { el.style.transition = 'all 0.6s ease'; el.classList.remove('flash'); el.style.color = 'rgba(255,255,255,0.1)'; }, 1200);
+    // Show CTA slide with staggered reveals
+    function showCTA() {
+        showSlide('ps-cta');
+        const reveals = ['pCtaLogo', 'pCtaTag', 'pCtaDemo', 'pCtaBadge', 'pCtaUrl', 'pCtaPowered', 'pCtaArch'];
+        reveals.forEach((id, i) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            setTimeout(() => {
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                el.style.opacity = '1';
+                if (id === 'pCtaBadge') el.style.transform = 'scale(1)';
+            }, i * 400);
+        });
+        // Update progress bar to 100%
+        document.getElementById('promoProgress').style.width = '100%';
     }
 
-    function showHeroSlide(i) {
-        showPromoScene(`h${i}`);
-        setTimeout(() => pFadeIn(`#phn-${i}`, 500), 300);
-    }
+    // Main promo sequence: narrated slides → hero parade → narrated slides → CTA
+    // Clips 1-7 → hero parade → clips 8-10 → CTA
+    function runPromoSequence() {
+        // Define the full sequence
+        const preHeroSlides = [
+            { slide: 'ps-1', clip: 0 },
+            { slide: 'ps-2', clip: 1 },
+            { slide: 'ps-3', clip: 2 },
+            { slide: 'ps-4', clip: 3 },
+            { slide: 'ps-5', clip: 4 },
+            { slide: 'ps-6', clip: 5 },
+            { slide: 'ps-7', clip: 6 },
+        ];
+        const postHeroSlides = [
+            { slide: 'ps-8', clip: 7 },
+            { slide: 'ps-9', clip: 8 },
+            { slide: 'ps-10', clip: 9 },
+        ];
 
-    const promoTimeline = [
-        // S1: Father + toddler (0-7s) — Audio 1
-        [0,     () => { showPromoScene(1); playPromoNarration(0); }],
-        [500,   () => pFadeIn('#p1a', 800)],
+        let totalDuration = 0;
+        // Estimate total duration for progress bar (sum of audio durations + hero parade)
+        // We'll update progress dynamically based on sequence position
+        const totalSteps = preHeroSlides.length + 15 + postHeroSlides.length + 1; // +1 for CTA
+        let currentStep = 0;
 
-        // S2: Boy hugging crow (7-14s)
-        [7000,  () => showPromoScene(2)],
-        [7500,  () => pFadeIn('#p1b', 800)],
+        function updateProgress() {
+            currentStep++;
+            const pct = Math.min((currentStep / totalSteps) * 100, 98);
+            document.getElementById('promoProgress').style.width = pct + '%';
+        }
 
-        // S3: Toddler on rug (14-18s)
-        [14000, () => showPromoScene(3)],
-        [14500, () => pFadeIn('#p1c', 600)],
+        // Chain: play pre-hero slides sequentially
+        function playSlideChain(slides, idx, onAllDone) {
+            if (idx >= slides.length) { if (onAllDone) onAllDone(); return; }
+            const { slide, clip } = slides[idx];
+            playNarratedSlide(slide, clip, () => {
+                updateProgress();
+                playSlideChain(slides, idx + 1, onAllDone);
+            });
+        }
 
-        // S4: Father recording (18-26s) — Audio 2
-        [18000, () => { showPromoScene(4); playPromoNarration(1); }],
-        [18500, () => pFadeIn('#p2a', 800)],
-        [21000, () => pFadeIn('#p2b', 800)],
-
-        // S5: Two kids playing (26-33s)
-        [26000, () => showPromoScene(5)],
-        [26500, () => pFadeIn('#p2c', 800)],
-        [29000, () => pFadeIn('#p2d', 600)],
-
-        // S6: Kids closeup (33-37s)
-        [33000, () => showPromoScene(6)],
-        [33500, () => pFadeIn('#p2e', 700)],
-
-        // S7: Heroes intro text (37-42s) — Audio 3
-        [37000, () => { showPromoScene(7); playPromoNarration(2); }],
-        [37500, () => pFadeIn('#p3a', 800)],
-        [39500, () => pFadeIn('#p3b', 800)],
-
-        // === HERO PARADE (42-87s) — 3s each, 15 heroes ===
-        [42000,  () => showHeroSlide(0)],   // Crow
-        [45000,  () => showHeroSlide(1)],   // Owl
-        [48000,  () => showHeroSlide(2)],   // Bear
-        [51000,  () => showHeroSlide(3)],   // Fox
-        [54000,  () => showHeroSlide(4)],   // Bunny
-        [57000,  () => showHeroSlide(5)],   // Turtle
-        [60000,  () => showHeroSlide(6)],   // Elephant
-        [63000,  () => showHeroSlide(7)],   // Wolf
-        [66000,  () => showHeroSlide(8)],   // Otter
-        [69000,  () => showHeroSlide(9)],   // Lion
-        [72000,  () => showHeroSlide(10)],  // Dolphin
-        [75000,  () => showHeroSlide(11)],  // Dragon
-        [78000,  () => showHeroSlide(12)],  // Deer
-        [81000,  () => showHeroSlide(13)],  // Alebrije
-        [84000,  () => showHeroSlide(14)],  // Xolo
-
-        // S8: Packaging (87-93s)
-        [87000, () => showPromoScene(8)],
-        [87500, () => pFadeIn('#p3c', 800)],
-
-        // S9: Nonna kitchen (93-99s) — Audio 4
-        [93000, () => { showPromoScene(9); playPromoNarration(3); }],
-        [93500, () => pFadeIn('#p4a', 800)],
-
-        // S10: Grandma FaceTime (99-105s)
-        [99000, () => showPromoScene(10)],
-        [99500, () => pFadeIn('#p4b', 800)],
-
-        // S11: Grandparent distance (105-114s) — pills
-        [105000, () => showPromoScene(11)],
-        [105500, () => pFadeIn('#p4c', 700)],
-        [108000, () => pFadeIn('#p4d', 800)],
-        [111000, () => pFlashPills()],
-
-        // S12: Crow cinematic (114-126s) — Audio 5
-        [114000, () => { showPromoScene(12); playPromoNarration(4); }],
-        [114300, () => pFlashToy('pt-teddy')],
-        [117000, () => pFlashToy('pt-cabbage')],
-        [119700, () => pFlashToy('pt-furby')],
-        [122000, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
-        [122500, () => pFadeIn('#p5a', 700)],
-        [124000, () => pFadeIn('#p5b', 700)],
-
-        // S13: Bunny glow (126-130s)
-        [126000, () => showPromoScene(13)],
-        [126500, () => pFadeIn('#p5c', 700)],
-
-        // S14: CTA (130-145s) — Audio 6
-        [130000, () => { showPromoScene(14); playPromoNarration(5); }],
-        [130500, () => pFadeIn('#pCtaLogo', 800)],
-        [132500, () => pFadeIn('#pCtaTag', 700)],
-        [135000, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
-        [137000, () => pFadeIn('#pCtaUrl', 600)],
-        [139000, () => pFadeIn('#pCtaPowered', 600)],
-        [141000, () => pFadeIn('#pCtaArch', 600)],
-        [143000, () => pFadeIn('#pCtaDemo', 700)],
-    ];
-
-    function pRevealHero(i) {
-        const h = document.getElementById(`ph-${i}`);
-        if (h) { h.style.transition = 'all 0.5s cubic-bezier(0.34,1.56,0.64,1)'; h.style.opacity = '1'; h.style.transform = 'translateY(0)'; }
-    }
-
-    function pFlashPills() {
-        document.querySelectorAll('.p-pill').forEach((p, i) => {
-            setTimeout(() => { p.style.transition = 'all 0.4s cubic-bezier(0.34,1.56,0.64,1)'; p.style.opacity = '1'; p.style.transform = 'scale(1)'; }, i * 180);
+        // Start: pre-hero narrated slides
+        playSlideChain(preHeroSlides, 0, () => {
+            // Then: hero parade (visual-only)
+            runHeroParade(() => {
+                currentStep += 15;
+                const pct = Math.min((currentStep / totalSteps) * 100, 98);
+                document.getElementById('promoProgress').style.width = pct + '%';
+                // Then: post-hero narrated slides
+                playSlideChain(postHeroSlides, 0, () => {
+                    // Finally: CTA
+                    showCTA();
+                    promoRunning = false;
+                });
+            });
         });
     }
 
     function resetPromoState() {
-        promoExecuted.clear();
-        promoAudio.forEach(a => { a.pause(); a.currentTime = 0; });
-        promoCurrentAudio = null;
-        document.querySelectorAll('.promo-scene').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.p-phrase, .p-hero, .p-hero-card, .p-hero-name-overlay, .p-pill, .p-toy-name, .p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-badge, .p-cta-credit, .p-cta-demo').forEach(el => {
+        promoRunning = false;
+        if (promoHeroInterval) { clearInterval(promoHeroInterval); promoHeroInterval = null; }
+        promoAudio.forEach(a => { a.pause(); a.currentTime = 0; a.onended = null; });
+        document.querySelectorAll('.promo-slide').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.p-cta-logo, .p-cta-tagline, .p-cta-url, .p-cta-badge, .p-cta-credit, .p-cta-demo').forEach(el => {
             el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = '';
         });
-        document.querySelectorAll('.p-hero').forEach(el => { el.style.transform = 'translateY(20px)'; });
-        document.querySelectorAll('.p-hero-card').forEach(el => { el.style.transform = 'scale(0.7) translateY(10px)'; });
-        document.querySelectorAll('.p-pill').forEach(el => { el.style.transform = 'scale(0.8)'; });
-        document.querySelectorAll('.p-toy-name').forEach(el => { el.classList.remove('flash'); el.style.color = ''; });
-        const cb = document.getElementById('pCtaBadge'); if (cb) { cb.style.opacity = '0'; cb.style.transform = 'scale(0.8)'; }
+        const cb = document.getElementById('pCtaBadge'); if (cb) { cb.style.transform = 'scale(0.8)'; }
         document.getElementById('promoProgress').style.width = '0%';
-    }
-
-    function promoTick() {
-        if (!promoRunning) return;
-        const elapsed = Date.now() - promoStart;
-        document.getElementById('promoProgress').style.width = Math.min(elapsed / PROMO_DURATION * 100, 100) + '%';
-        promoTimeline.forEach(([time, action], idx) => {
-            if (elapsed >= time && !promoExecuted.has(idx)) { promoExecuted.add(idx); action(); }
-        });
-        if (elapsed < PROMO_DURATION + 2000) promoAnimFrame = requestAnimationFrame(promoTick);
     }
 
     function launchPromo() {
         document.getElementById('promoOverlay').classList.add('hidden');
         resetPromoState();
-        promoStart = Date.now();
         promoRunning = true;
-        promoTick();
+        runPromoSequence();
     }
 
     // Preload on page load

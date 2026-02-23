@@ -1,11 +1,10 @@
 """
-One-time script: Generate narration MP3s for the Casa Companion 60s founder story.
+One-time script: Generate 10 narration MP3s for the Casa Companion founder story promo.
 
-Supports two backends:
-  1. ElevenLabs TTS (Peter's cloned voice) — set USE_ELEVENLABS=1
-  2. Azure gpt-4o-mini-tts (nova voice) — default fallback
+Architecture: 1 audio clip = 1 slide. Each clip maps to exactly one visual slide.
+Audio-driven timeline: JS plays clip N, shows slide N, advances on clip.onended.
 
-Run once, commit the audio files, then delete this script if desired.
+Backend: Azure gpt-4o-mini-tts (nova voice).
 
 Usage:
     pip install httpx python-dotenv
@@ -16,61 +15,75 @@ import os
 import httpx
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load .env from demo/ directory (shared Azure credentials)
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", "demo", ".env"))
 
-# ====== ElevenLabs config (Peter's clone) ======
-ELEVEN_API_KEY = os.getenv("ELEVEN_API_KEY", "")
-ELEVEN_VOICE_ID = "Yg1LMMMKIZnepfULKjaF"  # Uncle Peter v2
-
-# ====== Azure TTS config (fallback) ======
 AZURE_API_KEY = os.getenv("AZURE_API_KEY", "")
 AZURE_BASE = "https://pwgcerp-9302-resource.openai.azure.com"
 TTS_DEPLOYMENT = "gpt-4o-mini-tts"
 TTS_API_VERSION = "2025-04-01-preview"
 
-USE_ELEVENLABS = os.getenv("USE_ELEVENLABS", "0") == "1"
-
 NARRATION = [
-    # Scene 1: The Builder (0-10s)
-    "I build AI tools for business. ERP solutions. Enterprise software. When my first son was born, I wanted something that would actually get him playing, learning, and off a screen. Nothing existed. So I built one.",
-    # Scene 2: The Prototype (10-20s)
-    "Started as a custom GPT on my phone. Just ChatGPT. I saw the potential, but I saw the limitations. Flew to Florida and let my nephews try it. Two and four years old. They wouldn't put it down. Their parents loved it. That's when I knew.",
-    # Scene 3: The Build (20-28s)
-    "So I built it the right way. The way I build for work. Five animals, each with their own personality. Corvo the Crow. Gufo the Owl. Orsetto the Bear. Volpe the Fox. Coniglio the Bunny.",
-    # Scene 4: What It Does (28-40s)
-    "Stories. Languages. Homework help. Grandparents connecting over FaceTime from across the country. It grows with your kid. And if you want, you can clone your voice so your child hears you, even when you're not there.",
-    # Scene 5: The Vision (40-50s)
-    "Teddy Ruxpin gave us a bond with a toy. Cabbage Patch made it personal. Furby gave it personality. This is what this generation deserves. But built with real AI. And built to last.",
-    # Scene 6: CTA (50-60s)
-    "Casa Companion. Everyone else announced it. We built it.",
+    # Clip 1 — scene1-father.png
+    "I build AI tools for business. ERP solutions. Enterprise software. "
+    "When my first son was born, I wanted something that would actually get him playing, learning, and off a screen. "
+    "Nothing existed. So I built one.",
+
+    # Clip 2 — life-boy-crow.png
+    "Started as a custom GPT on my phone. Just ChatGPT. "
+    "I saw the potential, but I saw the limitations. "
+    "Flew to Florida and let my nephews try it. Two and four years old. "
+    "They wouldn't put it down. Their parents loved it. That's when I knew.",
+
+    # Clip 3 — scene3-heroes.png
+    "So I built it the right way. The way I build for work. "
+    "Fifteen companions. Each with their own personality.",
+
+    # Clip 4 — life-nonna-kitchen.png
+    "Stories in Italian, because heritage disappears in one generation if you let it. "
+    "Seventy-five percent of heritage languages are lost by the third generation. "
+    "Your grandmother's Italian. Your grandfather's Spanish. Their lullabies. Gone. "
+    "Unless you build something to keep them.",
+
+    # Clip 5 — life-grandparent-distance.png
+    "Seventy million grandparents in America. "
+    "Forty-two percent live in a different state than their grandchildren. "
+    "They spend thousands every year. But what they really want to give can't be bought in a store. "
+    "Record twelve phrases. Five minutes. That voice lives inside the toy. "
+    "Grandma reads bedtime stories from a thousand miles away. "
+    "Not through a screen. Through a companion the child holds and falls asleep with.",
+
+    # Clip 6 — banner-father-recording.png
+    "And here's the part nobody talks about. People die. Grandparents get sick. Parents deploy overseas. "
+    "When a grandparent records their voice in Casa Companion, that voice doesn't expire. "
+    "It doesn't require a subscription. "
+    "Your child can hear Nonna say buonanotte ten years from now. Twenty years from now. "
+    "That's not a feature. That's a legacy.",
+
+    # Clip 7 — scene5-crow.png
+    "Teddy Ruxpin gave us a bond with a toy. Cabbage Patch made it personal. Furby gave it personality. "
+    "This is what this generation deserves. But built with real AI. "
+    "Seven agents built in. Stories. Languages. Sign language. Music. Brain games. Milestones. "
+    "No screen. Just your voice.",
+
+    # Clip 8 — eng-exploded.png
+    "One electronics pod. Fifteen plush shells. Magnetic charging dock. Machine washable. "
+    "Volume capped at eighty-five decibels. No camera. No screen. No microtransactions. Ever. "
+    "Built for real kids. Built for real parents.",
+
+    # Clip 9 — packaging-unbox.png → packaging-box.png → packaging-shelf.png
+    "Casa Companion. Coming to Kickstarter May fifth, twenty twenty-six. "
+    "Early bird pricing. Limited quantities. "
+    "Your voice. Their companion.",
+
+    # Clip 10 — banner-crow-cinematic.png
+    "Everyone else announced it. We built it.",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "audio")
 
 
-def generate_elevenlabs(text: str, filename: str):
-    url = f"https://api.elevenlabs.io/v1/text-to-speech/{ELEVEN_VOICE_ID}"
-    headers = {
-        "xi-api-key": ELEVEN_API_KEY,
-        "Content-Type": "application/json",
-        "Accept": "audio/mpeg",
-    }
-    payload = {
-        "text": text,
-        "model_id": "eleven_monolingual_v1",
-        "voice_settings": {
-            "stability": 0.65,
-            "similarity_boost": 0.85,
-            "style": 0.4,
-            "use_speaker_boost": True,
-        },
-    }
-    resp = httpx.post(url, json=payload, headers=headers, timeout=60.0)
-    resp.raise_for_status()
-    return resp.content
-
-
-def generate_azure(text: str, filename: str):
+def generate_azure(text: str, clip_num: int):
     url = f"{AZURE_BASE}/openai/deployments/{TTS_DEPLOYMENT}/audio/speech?api-version={TTS_API_VERSION}"
     headers = {
         "api-key": AZURE_API_KEY,
@@ -80,46 +93,43 @@ def generate_azure(text: str, filename: str):
         "model": "gpt-4o-mini-tts",
         "voice": "nova",
         "input": text,
-        "instructions": "Speak warmly and clearly, like a founder telling his personal story in a heartfelt product video. Moderate pace, genuine emotion, pauses between sentences.",
+        "instructions": (
+            "Speak warmly and clearly, like a founder telling his personal story "
+            "in a heartfelt product video. Moderate pace, genuine emotion, natural pauses "
+            "between sentences. Slightly slower on emotional moments."
+        ),
     }
-    resp = httpx.post(url, json=payload, headers=headers, timeout=60.0)
+    resp = httpx.post(url, json=payload, headers=headers, timeout=90.0)
     resp.raise_for_status()
     return resp.content
 
 
 def main():
-    backend = "ElevenLabs (Peter's clone)" if USE_ELEVENLABS else "Azure TTS (nova)"
-    print(f"Backend: {backend}\n")
-
-    if USE_ELEVENLABS and not ELEVEN_API_KEY:
-        print("ERROR: ELEVEN_API_KEY not set.")
-        return
-    if not USE_ELEVENLABS and not AZURE_API_KEY:
-        print("ERROR: AZURE_API_KEY not set.")
+    if not AZURE_API_KEY:
+        print("ERROR: AZURE_API_KEY not set. Check demo/.env")
         return
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    print("Generating narration audio files...\n")
+    # Clean old narration files
+    for f in os.listdir(OUTPUT_DIR):
+        if f.startswith("narration-") and f.endswith(".mp3"):
+            os.remove(os.path.join(OUTPUT_DIR, f))
+            print(f"  Removed old {f}")
+
+    print(f"\nGenerating {len(NARRATION)} narration clips (Azure TTS, nova voice)...\n")
+
     for i, text in enumerate(NARRATION, 1):
         filename = f"narration-{i}.mp3"
-        print(f"Scene {i}: {text[:60]}...")
-
-        if USE_ELEVENLABS:
-            content = generate_elevenlabs(text, filename)
-        else:
-            content = generate_azure(text, filename)
-
+        print(f"Clip {i}/{len(NARRATION)}: {text[:60]}...")
+        content = generate_azure(text, i)
         filepath = os.path.join(OUTPUT_DIR, filename)
         with open(filepath, "wb") as f:
             f.write(content)
-
         size_kb = len(content) / 1024
         print(f"  {filename}: {size_kb:.1f} KB")
 
     print(f"\nDone! {len(NARRATION)} files saved to {OUTPUT_DIR}/")
-    if not USE_ELEVENLABS:
-        print("\nNote: Using Azure TTS placeholder. Set USE_ELEVENLABS=1 when credits are available.")
 
 
 if __name__ == "__main__":
