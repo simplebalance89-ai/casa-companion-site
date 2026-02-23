@@ -1307,20 +1307,32 @@
         audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
     }
 
-    // Run the hero parade: 15 heroes, 3s each, visual-only, then call onDone
-    function runHeroParade(onDone) {
-        let heroIdx = 0;
-        showSlide('ps-h0');
-        promoHeroInterval = setInterval(() => {
-            heroIdx++;
-            if (heroIdx >= 10) {
-                clearInterval(promoHeroInterval);
-                promoHeroInterval = null;
-                if (onDone) onDone();
-            } else {
-                showSlide(`ps-h${heroIdx}`);
-            }
-        }, 3000);
+    // Clip 3 special: show intro slide, then parade 10 heroes at 2s while voice names them
+    function playClip3WithHeroes(onDone) {
+        showSlide('ps-3'); // "So I built it the right way..."
+        const audio = promoAudio[2];
+        if (!audio) { if (onDone) onDone(); return; }
+        audio.currentTime = 0;
+        audio.onended = () => {
+            if (promoHeroInterval) { clearInterval(promoHeroInterval); promoHeroInterval = null; }
+            if (onDone) onDone();
+        };
+        audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
+
+        // After ~4s intro text, start cycling heroes every 2s as voice names them
+        setTimeout(() => {
+            let heroIdx = 0;
+            showSlide('ps-h0');
+            promoHeroInterval = setInterval(() => {
+                heroIdx++;
+                if (heroIdx >= 10) {
+                    clearInterval(promoHeroInterval);
+                    promoHeroInterval = null;
+                } else {
+                    showSlide(`ps-h${heroIdx}`);
+                }
+            }, 2000);
+        }, 4000);
     }
 
     // Show CTA slide with staggered reveals, then auto-open demo
@@ -1335,7 +1347,6 @@
                 el.style.opacity = '1';
             }, i * 400);
         });
-        // Update progress bar to 100%
         document.getElementById('promoProgress').style.width = '100%';
         // Auto-open demo in new tab after CTA fully reveals
         setTimeout(() => {
@@ -1343,29 +1354,22 @@
         }, reveals.length * 400 + 1500);
     }
 
-    // Main promo sequence: narrated slides → hero parade → narrated slides → CTA
-    // Clips 1-7 → hero parade → clips 8-10 → CTA
+    // Main sequence: clip1 → clip2 → clip3+heroes → clip4-10 → CTA
     function runPromoSequence() {
-        // Define the full sequence
-        const preHeroSlides = [
+        const slides = [
             { slide: 'ps-1', clip: 0 },
             { slide: 'ps-2', clip: 1 },
-            { slide: 'ps-3', clip: 2 },
+            // clip 3 handled specially (hero parade during audio)
             { slide: 'ps-4', clip: 3 },
             { slide: 'ps-5', clip: 4 },
             { slide: 'ps-6', clip: 5 },
             { slide: 'ps-7', clip: 6 },
-        ];
-        const postHeroSlides = [
             { slide: 'ps-8', clip: 7 },
             { slide: 'ps-9', clip: 8 },
             { slide: 'ps-10', clip: 9 },
         ];
 
-        let totalDuration = 0;
-        // Estimate total duration for progress bar (sum of audio durations + hero parade)
-        // We'll update progress dynamically based on sequence position
-        const totalSteps = preHeroSlides.length + 10 + postHeroSlides.length + 1; // +1 for CTA
+        const totalSteps = slides.length + 2; // +1 for clip3+heroes, +1 for CTA
         let currentStep = 0;
 
         function updateProgress() {
@@ -1374,26 +1378,23 @@
             document.getElementById('promoProgress').style.width = pct + '%';
         }
 
-        // Chain: play pre-hero slides sequentially
-        function playSlideChain(slides, idx, onAllDone) {
-            if (idx >= slides.length) { if (onAllDone) onAllDone(); return; }
-            const { slide, clip } = slides[idx];
+        function playSlideChain(slideList, idx, onAllDone) {
+            if (idx >= slideList.length) { if (onAllDone) onAllDone(); return; }
+            const { slide, clip } = slideList[idx];
             playNarratedSlide(slide, clip, () => {
                 updateProgress();
-                playSlideChain(slides, idx + 1, onAllDone);
+                playSlideChain(slideList, idx + 1, onAllDone);
             });
         }
 
-        // Start: pre-hero narrated slides
-        playSlideChain(preHeroSlides, 0, () => {
-            // Then: hero parade (visual-only)
-            runHeroParade(() => {
-                currentStep += 10;
-                const pct = Math.min((currentStep / totalSteps) * 100, 98);
-                document.getElementById('promoProgress').style.width = pct + '%';
-                // Then: post-hero narrated slides
-                playSlideChain(postHeroSlides, 0, () => {
-                    // Finally: CTA
+        // Clips 1-2
+        playSlideChain(slides.slice(0, 2), 0, () => {
+            updateProgress();
+            // Clip 3 + hero parade
+            playClip3WithHeroes(() => {
+                updateProgress();
+                // Clips 4-10
+                playSlideChain(slides.slice(2), 0, () => {
                     showCTA();
                     promoRunning = false;
                 });
