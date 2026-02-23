@@ -20,46 +20,38 @@ TTS_DEPLOYMENT = "gpt-4o-mini-tts"
 TTS_API_VERSION = "2025-04-01-preview"
 
 # 10 clips, 1:1 with 10 slides. NO gaps. NO empty clips.
+# V2 — tighter copy, faster delivery
 NARRATION = [
     # Clip 1 → ps-1 (scene1-father)
-    "I build AI for business. When my son was born, I wanted something real. "
-    "Nothing existed. So I built one.",
+    "I build AI for business. My son was born. Nothing existed for him. So I built one.",
 
     # Clip 2 → ps-2 (life-boy-crow)
-    "Let my nephews try it. Two and four years old. "
-    "They wouldn't put it down. That's when I knew.",
+    "My nephews tried it. Two and four years old. Wouldn't put it down. That's when I knew.",
 
     # Clip 3 → ps-heroes (character grid)
     "Ten companions. Each with their own personality. "
     "Corvo, Gufo, Orsetto, Coniglio, Tartaruga, Elefante, Leone, Delfino, Drago, and Xolo.",
 
     # Clip 4 → ps-5 (heritage)
-    "Seventy-five percent of heritage languages are lost by the third generation. "
-    "Unless you build something to keep them.",
+    "Seventy-five percent of heritage languages are lost by the third generation. We're fixing that.",
 
     # Clip 5 → ps-6 (grandparents/distance)
-    "Record twelve phrases. Five minutes. "
-    "Grandma reads bedtime stories from a thousand miles away. Not through a screen.",
+    "Record twelve phrases. Five minutes. Grandma reads bedtime stories from a thousand miles away.",
 
     # Clip 6 → ps-7 (voice cloning/legacy)
-    "We cloned my mother's voice so my son could hear her. "
-    "That voice doesn't expire. That's not a feature. That's a legacy.",
+    "We cloned my mother's voice so my son could hear her. That's not a feature. That's a legacy.",
 
     # Clip 7 → ps-8 (this generation)
-    "Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. "
-    "This is what this generation deserves. Built with real AI.",
+    "Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. This generation gets Capo AI.",
 
     # Clip 8 → ps-9 (engineering)
-    "One electronics pod. Ten plush shells. Magnetic dock. Machine washable. "
-    "Volume capped. No camera. No screen. No microtransactions.",
+    "One pod. Ten shells. Magnetic dock. Machine washable. No camera. No screen. No microtransactions.",
 
     # Clip 9 → ps-10 (features)
-    "Bluetooth sync. Parent mode. Teaching mode. "
-    "Built for real kids. Built for real parents.",
+    "Bluetooth sync. Parent mode. Teaching mode. Built for real kids and real parents.",
 
     # Clip 10 → ps-11 (capisce closer)
-    "Casa Companion. Kickstarter May fifth. "
-    "Everyone else announced it. We built it. Capisce.",
+    "Casa Companion. Kickstarter May fifth. Everyone else announced it. We built it. Capisce.",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "audio")
@@ -76,10 +68,10 @@ def generate_azure(text: str, clip_num: int):
         "voice": "onyx",
         "input": text,
         "instructions": (
-            "Deep male voice. Slow, deliberate pace. New York confidence. "
-            "You're a 46-year-old founder telling your story to investors and parents. "
-            "Not salesy. Not rushing. Every sentence lands. Natural pauses between thoughts. "
-            "Warm but authoritative. The kind of voice that makes people stop and listen."
+            "Deep male voice. Brisk, confident pace. New York energy. "
+            "You're a founder pitching to investors. Keep it tight. No long pauses. "
+            "Sentences land fast. Move to the next line quickly. "
+            "Warm but punchy. Like a 60-second pitch, not a fireside chat."
         ),
     }
     resp = httpx.post(url, json=payload, headers=headers, timeout=90.0)
