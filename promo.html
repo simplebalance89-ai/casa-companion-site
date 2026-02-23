@@ -123,13 +123,13 @@
         </div>
 
         <!-- Narrated slides (1 clip = 1 slide) -->
-        <div class="slide s-1" id="s-1"><div class="phrase">I build <em>AI tools</em> for business.</div></div>
-        <div class="slide s-2" id="s-2"><div class="phrase">Started as a <em>custom GPT</em> on my phone.</div></div>
-        <div class="slide s-3" id="s-3"><div class="phrase">So I built it <em>the right way</em>.</div></div>
-        <div class="slide s-4" id="s-4"><div class="phrase">Heritage disappears in <em>one generation</em>.</div></div>
-        <div class="slide s-5" id="s-5"><div class="phrase"><em>70 million</em> grandparents. <em>42%</em> in another state.</div></div>
-        <div class="slide s-6" id="s-6"><div class="phrase">Her spirit lives with my son and me. <em>That's a legacy.</em></div></div>
-        <div class="slide s-7" id="s-7"><div class="phrase">Teddy Ruxpin's bond. Cabbage Patch's heart. <em>Furby's soul.</em></div></div>
+        <div class="slide s-1" id="s-1"><div class="phrase">I build <em>AI tools</em> for business. Nothing existed. <em>So I built one.</em></div></div>
+        <div class="slide s-2" id="s-2"><div class="phrase">All five of us in the car. Laughing, bonding, communicating. <em>No screen.</em></div></div>
+        <div class="slide s-3" id="s-3"><div class="phrase"><em>Ten companions.</em> Each with their own personality.</div></div>
+        <div class="slide s-4" id="s-4"><div class="phrase">Heritage disappears in <em>one generation</em> if you let it.</div></div>
+        <div class="slide s-5" id="s-5"><div class="phrase"><em>70 million</em> grandparents. <em>42%</em> in another state. Grandma reads bedtime stories from <em>a thousand miles away.</em></div></div>
+        <div class="slide s-6" id="s-6"><div class="phrase">Born from losing my mother. Her spirit lives with my son and me. <em>That's not a feature. That's a legacy.</em></div></div>
+        <div class="slide s-7" id="s-7"><div class="phrase">Teddy Ruxpin's bond. Cabbage Patch's heart. Furby's soul. <em>Built with real AI.</em></div></div>
 
         <!-- Hero Parade: 10 heroes, visual-only -->
         <div class="slide s-h0" id="s-h0"><div class="hero-name-overlay" id="hn-0">Corvo<br><span class="italian">the Crow</span></div></div>
@@ -144,16 +144,14 @@
         <div class="slide s-h9" id="s-h9"><div class="hero-name-overlay" id="hn-9">Xolo<br><span class="italian">Xolo</span></div></div>
 
         <!-- Post-hero narrated slides -->
-        <div class="slide s-8" id="s-8"><div class="phrase">One pod. Fifteen shells. <em>Machine washable.</em></div></div>
-        <div class="slide s-9" id="s-9"><div class="phrase">Gift-ready. <em>Kickstarter May 5, 2026.</em></div></div>
+        <div class="slide s-8" id="s-8"><div class="phrase">One pod. <em>Ten shells.</em> No camera. No screen. No microtransactions. <em>Ever.</em></div></div>
+        <div class="slide s-9" id="s-9"><div class="phrase"><em>Kickstarter May 5, 2026.</em> Your voice. Their companion.</div></div>
         <div class="slide s-10" id="s-10"><div class="phrase big">Everyone else announced it. <em>We built it.</em></div></div>
 
         <!-- CTA -->
         <div class="slide s-cta" id="s-cta" style="justify-content: center;">
             <div class="cta-logo" id="ctaLogo">Casa <span>Companion</span></div>
-            <div class="cta-tagline" id="ctaTag">Your voice. Their companion.</div>
-            <a href="https://casa-companion-demo.onrender.com" target="_blank" class="cta-demo" id="ctaDemo">Click the <em>Companion Demo</em> to try it yourself</a>
-            <div class="cta-badge" id="ctaBadge">Kickstarter May 5, 2026</div>
+            <a href="https://casa-companion-demo.onrender.com" target="_blank" class="cta-demo" id="ctaDemo"><em>Incontra il tuo compagno</em> — Meet Your Companion</a>
             <div class="cta-url" id="ctaUrl">casacompanion.com</div>
             <div class="cta-credit" id="ctaPowered">Powered by <em>Capo AI</em></div>
             <div class="cta-credit" id="ctaArch">Architected by <em>Sinton.ia</em></div>
@@ -217,17 +215,20 @@
 
         function showCTA() {
             showSlide('s-cta');
-            const reveals = ['ctaLogo', 'ctaTag', 'ctaDemo', 'ctaBadge', 'ctaUrl', 'ctaPowered', 'ctaArch'];
+            const reveals = ['ctaLogo', 'ctaDemo', 'ctaUrl', 'ctaPowered', 'ctaArch'];
             reveals.forEach((id, i) => {
                 const el = document.getElementById(id);
                 if (!el) return;
                 setTimeout(() => {
                     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                     el.style.opacity = '1';
-                    if (id === 'ctaBadge') el.style.transform = 'scale(1)';
                 }, i * 400);
             });
             document.getElementById('progress').style.width = '100%';
+            // Auto-open demo in new tab after CTA fully reveals
+            setTimeout(() => {
+                window.open('https://casa-companion-demo.onrender.com', '_blank');
+            }, reveals.length * 400 + 1500);
         }
 
         function runSequence() {
