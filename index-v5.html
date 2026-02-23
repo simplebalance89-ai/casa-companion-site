@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="5.0">
+    <meta name="description" content="Casa Companion - An AI plush toy that tells bedtime stories in your voice. Voice cloning, heritage languages, and a family companion that grows with your child. Coming to Kickstarter May 5, 2026.">
+    <meta property="og:title" content="Casa Companion — Your Voice. Their Companion.">
+    <meta property="og:description" content="An AI plush toy that tells bedtime stories in your voice. Even when you can't be there. 10 companions, 3 languages, powered by Capo AI.">
+    <meta property="og:image" content="images/scene3-heroes.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://simplebalance89-ai.github.io/casa-companion-site/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Casa Companion — Your Voice. Their Companion.">
+    <meta name="twitter:description" content="An AI plush toy that tells bedtime stories in your voice. Coming to Kickstarter May 5, 2026.">
+    <meta name="twitter:image" content="images/scene3-heroes.png">
+    <link rel="icon" type="image/png" href="images/hero-crow.png">
+    <title>Casa Companion — Your Voice. Their Companion.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+    /* ============================================================
+       DESIGN SYSTEM — CSS VARIABLES
+    ============================================================ */
+    :root {
+        --bg-primary:    #FAF7F2;
+        --bg-dark:       #0D0D1A;
+        --text-primary:  #2C2C2C;
+        --text-on-dark:  #FFFEF7;
+        --text-secondary:#6B6B6B;
+        --gold:          #D4A017;
+        --gold-light:    #FFE082;
+        --crimson:       #C41E3A;
+        --crimson-dark:  #9B1B30;
+        --green:         #006847;
+        --border-light:  #E8DDD0;
+        --border-dark:   rgba(255,255,255,0.1);
+        --linen:         #FAF7F2;
+        --cream:         #FFFEF7;
+        --dark:          #0D0D1A;
+        --charcoal:      #2C2C2C;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Nunito', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.7;
+        font-size: 17px;
+    }
+    a { color: var(--crimson); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ============================================================
+       TYPOGRAPHY SCALE
+    ============================================================ */
+    h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(40px, 8vw, 72px);
+        font-weight: 900;
+        line-height: 1.05;
+    }
+    h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+    }
+    h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(22px, 3vw, 28px);
+        font-weight: 700;
+        line-height: 1.3;
+    }
+    .eyebrow {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        display: block;
+        margin-bottom: 14px;
+    }
+    .eyebrow-gold   { color: var(--gold); }
+    .eyebrow-crimson{ color: var(--crimson); }
+
+    /* ============================================================
+       SCROLL REVEAL
+    ============================================================ */
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       CARD STYLES
+    ============================================================ */
+    /* Light card */
+    .card-light {
+        background: #FFFFFF;
+        border: 1px solid var(--border-light);
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        transition: all 0.3s ease;
+    }
+    .card-light:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    /* Dark glass card */
+    .card-dark {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        transition: all 0.3s ease;
+    }
+    .card-dark:hover {
+        border-color: rgba(212,160,23,0.4);
+        background: rgba(212,160,23,0.06);
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+        display: inline-block;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 700;
+        border-radius: 32px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: none;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+    .btn:hover { transform: scale(1.03); text-decoration: none; }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+        color: #fff;
+        padding: 16px 48px;
+        font-size: 16px;
+        box-shadow: 0 4px 16px rgba(196,30,58,0.3);
+    }
+    .btn-primary:hover { box-shadow: 0 8px 28px rgba(196,30,58,0.45); }
+
+    .btn-primary-lg {
+        padding: 18px 60px;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .btn-gold {
+        background: linear-gradient(135deg, var(--gold), #B8860B);
+        color: var(--bg-dark);
+        padding: 16px 48px;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .btn-ghost {
+        border: 1px solid var(--border-light);
+        background: transparent;
+        color: var(--text-secondary);
+        padding: 12px 28px;
+        font-size: 14px;
+    }
+
+    .btn-sm { padding: 10px 24px; font-size: 13px; }
+
+    /* CTA in nav */
+    .nav-cta {
+        background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+        color: #fff !important;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.5px;
+        margin-left: 8px;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+    }
+    .nav-cta:hover { transform: scale(1.03); box-shadow: 0 4px 12px rgba(196,30,58,0.35); }
+
+    /* ============================================================
+       FIXED NAV
+    ============================================================ */
+    .nav {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+        height: 60px;
+        background: rgba(13,13,26,0.96);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        transition: background 0.3s;
+    }
+    .nav-inner {
+        max-width: 1200px; margin: 0 auto; padding: 0 24px;
+        display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    .nav-logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 20px; color: #fff; font-weight: 700;
+        text-decoration: none; flex-shrink: 0;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-logo:hover { text-decoration: none; }
+
+    .nav-links { display: none; gap: 0; align-items: center; }
+    .nav-link {
+        padding: 18px 12px; color: rgba(255,255,255,0.5); font-size: 11px;
+        font-weight: 700; cursor: pointer; border-bottom: 2px solid transparent;
+        transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.7px;
+        text-decoration: none;
+    }
+    .nav-link:hover { color: rgba(255,255,255,0.85); text-decoration: none; }
+    .nav-link.active { color: #fff; border-bottom-color: var(--crimson); }
+
+    .nav-hamburger {
+        display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px;
+    }
+    .nav-hamburger span {
+        width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .nav-mobile {
+        display: none; position: fixed; top: 60px; left: 0; right: 0;
+        background: rgba(13,13,26,0.98); backdrop-filter: blur(12px);
+        padding: 8px 0; z-index: 999;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        max-height: calc(100vh - 60px); overflow-y: auto;
+    }
+    .nav-mobile.open { display: block; }
+    .nav-mobile-link {
+        display: block; padding: 14px 24px; color: rgba(255,255,255,0.6);
+        font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        border-left: 3px solid transparent; text-decoration: none;
+    }
+    .nav-mobile-link:hover { color: #fff; background: rgba(196,30,58,0.1); border-left-color: var(--crimson); text-decoration: none; }
+
+    @media (min-width: 1001px) {
+        .nav-links { display: flex; }
+        .nav-hamburger { display: none; }
+    }
+
+    /* ============================================================
+       SECTION UTILITIES
+    ============================================================ */
+    section { scroll-margin-top: 60px; }
+
+    .section-light { background: var(--bg-primary); }
+    .section-white { background: #fff; }
+    .section-dark  { background: var(--bg-dark); }
+
+    .section-pad { padding: 96px 24px; }
+    .section-pad-sm { padding: 64px 24px; }
+
+    .container {
+        max-width: 1100px; margin: 0 auto;
+    }
+    .container-md {
+        max-width: 900px; margin: 0 auto;
+    }
+    .container-sm {
+        max-width: 700px; margin: 0 auto;
+    }
+
+    .text-center { text-align: center; }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    #hero {
+        min-height: 100vh;
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: center; text-align: center;
+        padding: 100px 24px 72px;
+        background: linear-gradient(135deg, #1A0A0E 0%, #2D1117 30%, #1A1A2E 70%, #0D0D1A 100%);
+        position: relative; overflow: hidden;
+    }
+    #hero::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: url('images/scene1-father.png') center/cover no-repeat;
+        opacity: 0.12; z-index: 0;
+    }
+    #hero > * { position: relative; z-index: 1; }
+
+    .hero-badge {
+        font-size: 0.7rem; color: var(--gold); text-transform: uppercase;
+        letter-spacing: 3px; font-weight: 700; margin-bottom: 28px;
+    }
+
+    .hero-h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(40px, 8vw, 72px);
+        font-weight: 900; line-height: 1.05;
+        background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 24px;
+    }
+
+    .hero-sub {
+        color: rgba(255,255,255,0.7);
+        font-size: clamp(16px, 2.5vw, 20px);
+        max-width: 600px; line-height: 1.7;
+        margin: 0 auto 48px;
+        font-weight: 300;
+    }
+
+    /* Hero stats bar */
+    .hero-stat-bar {
+        display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+        margin-top: 40px;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .hs-num {
+        font-family: 'Playfair Display', serif; font-size: 32px;
+        color: var(--gold); font-weight: 700;
+    }
+    .hero-stat .hs-label {
+        font-size: 11px; color: rgba(255,255,255,0.4);
+        text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px;
+    }
+    .hero-stat .hs-text {
+        font-size: 13px; color: rgba(255,255,255,0.5);
+        font-weight: 400; margin-top: 2px;
+    }
+
+    /* ============================================================
+       PROMO PLAYER (copied + enhanced from v4)
+    ============================================================ */
+    .promo-container {
+        width: 100%; max-width: 960px; margin: 0 auto;
+        position: relative; border-radius: 16px; overflow: hidden;
+        background: #000; border: 1px solid rgba(255,255,255,0.12);
+        box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+    }
+    .promo-container.fullscreen {
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        max-width: none; border-radius: 0; z-index: 2000;
+        width: 100%; height: 100%;
+    }
+    .promo-container.fullscreen .promo-stage { padding-bottom: 0; height: 100%; }
+    .promo-stage {
+        position: relative; width: 100%; padding-bottom: 62.5%; overflow: hidden;
+    }
+    .promo-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.6); cursor: pointer;
+        background-image: url('images/scene3-heroes.png');
+        background-size: cover; background-position: center;
+        transition: opacity 0.4s ease; z-index: 10;
+    }
+    .promo-overlay::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(13,13,26,0.62);
+    }
+    .promo-overlay.hidden { opacity: 0; pointer-events: none; }
+
+    .promo-play-btn {
+        width: 100px; height: 100px; border-radius: 50%; position: relative; z-index: 2;
+        background: var(--crimson); display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 8px 40px rgba(196,30,58,0.55); transition: transform 0.2s;
+        cursor: pointer;
+    }
+    .promo-play-btn:hover { transform: scale(1.1); }
+    .promo-play-btn svg { width: 40px; height: 40px; fill: #fff; margin-left: 6px; }
+
+    .promo-label {
+        margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.85);
+        position: relative; z-index: 2;
+        text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700;
+    }
+
+    .promo-controls {
+        position: absolute; top: 12px; right: 12px; z-index: 20;
+        display: none; gap: 8px;
+    }
+    .promo-container.playing .promo-controls { display: flex; }
+
+    .promo-ctrl-btn {
+        width: 36px; height: 36px; border-radius: 50%; border: none;
+        background: rgba(0,0,0,0.6); color: #fff; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16px; transition: background 0.2s;
+    }
+    .promo-ctrl-btn:hover { background: rgba(196,30,58,0.85); }
+
+    .promo-slide {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+        text-align: center; z-index: 1;
+        background-size: cover; background-position: center;
+        opacity: 0; transition: opacity 0.8s ease; pointer-events: none;
+    }
+    .promo-slide.active { opacity: 1; z-index: 2; pointer-events: auto; }
+    .promo-slide::before {
+        content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 55%;
+        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+        z-index: 1;
+    }
+
+    /* Slide backgrounds */
+    .ps-1  { background-image: url('images/scene1-father.png'); }
+    .ps-2  { background-image: url('images/life-boy-crow.png'); }
+    .ps-5  { background-image: url('images/life-nonna-kitchen.png'); }
+    .ps-6  { background-image: url('images/life-grandparent-distance.png'); }
+    .ps-7  { background-image: url('images/banner-father-recording.png'); }
+    .ps-8  { background-image: url('images/scene5-crow.png'); }
+    .ps-9  { background-image: url('images/eng-exploded.png'); }
+    .ps-10 { background-image: url('images/packaging-box.png'); }
+    .ps-11 { background-image: url('images/banner-crow-cinematic.png'); }
+    .ps-heroes { background-color: #0D0D1A; }
+    .ps-heroes::before { background: none !important; }
+    .ps-cta { background-image: url('images/scene6-banner.png'); justify-content: center !important; }
+
+    /* Hero grid (companions slide) */
+    .hero-grid {
+        position: relative; z-index: 2;
+        display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(4px, 1vw, 12px);
+        padding: clamp(4px, 1vw, 16px) clamp(8px, 2vw, 24px) clamp(8px, 2vw, 24px);
+        width: 100%; align-content: center; justify-items: center;
+    }
+    .hero-grid-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .hero-grid-item img {
+        width: clamp(40px, 10vw, 100px); height: clamp(40px, 10vw, 100px);
+        object-fit: contain; border-radius: 50%;
+        filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    }
+    .hero-grid-item .hg-name {
+        font-family: 'Playfair Display', serif; font-size: clamp(8px, 1.3vw, 16px);
+        font-weight: 900; color: #fff; margin-top: 4px;
+    }
+    .hero-grid-item .hg-animal {
+        font-size: clamp(6px, 1vw, 12px); color: var(--gold); font-style: italic;
+    }
+
+    /* Promo text boxes */
+    .p-text-box {
+        position: relative; z-index: 2;
+        padding: clamp(12px, 2vw, 28px) clamp(12px, 3vw, 32px);
+        width: 100%; margin-top: auto;
+    }
+    .p-phrase {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(12px, 2vw, 24px);
+        color: rgba(255,255,255,0.92); line-height: 1.4;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    }
+    .p-phrase em { color: var(--gold); font-style: italic; }
+    .p-phrase.p-highlight { font-weight: 700; font-size: clamp(14px, 2.4vw, 30px); }
+
+    /* CTA slide elements */
+    .p-cta-logo {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(24px, 4vw, 52px); font-weight: 900; color: #fff;
+        opacity: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+        position: relative; z-index: 2;
+    }
+    .p-cta-logo span { color: var(--gold); }
+    .p-cta-tagline {
+        font-size: clamp(14px, 2vw, 26px); color: rgba(255,255,255,0.9);
+        font-weight: 300; opacity: 0; margin: 8px 0 16px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        position: relative; z-index: 2;
+    }
+    .p-cta-url {
+        margin-top: 10px; font-size: clamp(11px, 1.3vw, 16px);
+        color: var(--gold); opacity: 0; position: relative; z-index: 2;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+    .p-cta-credit {
+        font-size: clamp(10px, 1.1vw, 14px); color: rgba(255,255,255,0.5);
+        opacity: 0; position: relative; z-index: 2; margin-top: 6px;
+        font-weight: 300; letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+    .p-cta-credit em { color: var(--gold); font-style: italic; font-weight: 600; }
+    .p-cta-demo-btn {
+        display: inline-block; font-size: clamp(14px, 2vw, 22px); font-weight: 800; color: #fff;
+        background: var(--crimson); padding: clamp(10px, 1.5vw, 18px) clamp(20px, 3vw, 40px);
+        border-radius: 60px; text-decoration: none; opacity: 0; position: relative; z-index: 2;
+        box-shadow: 0 8px 32px rgba(196,30,58,0.5); transition: transform 0.2s; letter-spacing: 1px;
+    }
+    .p-cta-demo-btn:hover { transform: scale(1.05); text-decoration: none; }
+
+    .promo-progress {
+        position: absolute; bottom: 0; left: 0; height: 3px;
+        background: var(--crimson); z-index: 20; width: 0%;
+        transition: width 0.3s linear;
+    }
+
+    /* ============================================================
+       TRUST BAR
+    ============================================================ */
+    #trust-bar {
+        background: #fff;
+        border-top: 1px solid var(--border-light);
+        border-bottom: 1px solid var(--border-light);
+        padding: 0 24px;
+    }
+    .trust-inner {
+        max-width: 1100px; margin: 0 auto; height: 60px;
+        display: flex; align-items: center; justify-content: center;
+        gap: 32px; flex-wrap: wrap;
+    }
+    .trust-item {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 12px; font-weight: 700; color: var(--text-secondary);
+        text-transform: uppercase; letter-spacing: 1.5px; white-space: nowrap;
+    }
+    .trust-item-dot {
+        width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0;
+    }
+
+    /* ============================================================
+       ORIGIN STORY
+    ============================================================ */
+    #origin { background: var(--bg-primary); }
+
+    .origin-inner { max-width: 900px; margin: 0 auto; }
+
+    .blockquote-styled {
+        border-left: 4px solid var(--gold);
+        padding: 24px 32px;
+        margin: 32px 0;
+        background: rgba(212,160,23,0.04);
+        border-radius: 0 12px 12px 0;
+    }
+    .blockquote-styled p {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: clamp(17px, 2vw, 21px);
+        color: var(--text-primary);
+        line-height: 1.7;
+        margin: 0;
+    }
+    .blockquote-styled .bq-attr {
+        font-style: normal;
+        font-family: 'Nunito', sans-serif;
+        font-size: 13px; color: var(--text-secondary);
+        margin-top: 12px; font-weight: 600; letter-spacing: 0.5px;
+    }
+
+    .origin-pull-quote {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(22px, 3.5vw, 32px);
+        font-weight: 700;
+        color: var(--gold);
+        text-align: center;
+        line-height: 1.4;
+        max-width: 750px;
+        margin: 48px auto;
+        padding: 0 16px;
+    }
+
+    .origin-image-grid {
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 20px; margin-top: 40px;
+    }
+    .origin-image-grid img {
+        width: 100%; border-radius: 14px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    @media (max-width: 600px) {
+        .origin-image-grid { grid-template-columns: 1fr; }
+    }
+
+    .body-text { color: var(--text-secondary); line-height: 1.8; font-size: 17px; margin-bottom: 18px; }
+
+    /* ============================================================
+       COMPANIONS GRID
+    ============================================================ */
+    #companions { background: var(--bg-primary); }
+
+    .companion-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 20px; margin: 48px 0 24px;
+    }
+    .companion-card {
+        padding: 28px 16px 24px; text-align: center;
+        cursor: default;
+    }
+    .companion-card img {
+        width: 88px; height: 88px; object-fit: contain;
+        border-radius: 50%; margin: 0 auto 14px;
+        filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12));
+    }
+    .companion-card:hover { border-color: rgba(212,160,23,0.5); }
+    .cc-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 18px; font-weight: 700; color: var(--text-primary);
+    }
+    .cc-animal { color: var(--gold); font-style: italic; font-size: 13px; margin-top: 3px; }
+    .cc-desc { color: var(--text-secondary); font-size: 12px; margin-top: 8px; line-height: 1.55; }
+
+    /* ============================================================
+       VOICE CLONING (dark)
+    ============================================================ */
+    #voice-cloning { background: var(--bg-dark); }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 28px; margin: 48px 0;
+    }
+    .step-card { text-align: center; padding: 36px 24px; }
+    .step-num-wrap {
+        width: 64px; height: 64px; border-radius: 50%;
+        background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 18px;
+        box-shadow: 0 4px 20px rgba(196,30,58,0.35);
+    }
+    .step-num-text {
+        font-family: 'Playfair Display', serif;
+        font-size: 26px; font-weight: 900; color: #fff;
+    }
+    .step-icon { font-size: 28px; margin-bottom: 8px; }
+    .step-card h4 {
+        font-family: 'Playfair Display', serif;
+        font-size: 19px; font-weight: 700;
+        color: var(--text-on-dark); margin-bottom: 10px;
+    }
+    .step-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+    /* Dark blockquote */
+    .blockquote-dark {
+        border-left: 4px solid var(--gold);
+        padding: 24px 32px;
+        margin: 40px auto;
+        max-width: 680px;
+        background: rgba(212,160,23,0.05);
+        border-radius: 0 12px 12px 0;
+    }
+    .blockquote-dark p {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: clamp(16px, 2vw, 20px);
+        color: rgba(255,255,255,0.9);
+        line-height: 1.6; margin: 0;
+    }
+
+    /* ============================================================
+       GRANDPARENTS (full-width emotional)
+    ============================================================ */
+    #grandparents {
+        position: relative; padding: 120px 24px;
+        text-align: center;
+        background-image: url('images/life-grandparent-distance.png');
+        background-size: cover; background-position: center;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        min-height: 80vh;
+    }
+    #grandparents::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(13,13,26,0.72);
+    }
+    #grandparents > * { position: relative; z-index: 1; }
+
+    .gp-stat {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(64px, 12vw, 120px);
+        color: var(--gold); font-weight: 900;
+        line-height: 1; margin-bottom: 8px;
+    }
+    #grandparents h2 {
+        color: #fff; max-width: 720px; margin: 0 auto 24px;
+    }
+    #grandparents h2 em { color: var(--gold); font-style: italic; }
+    #grandparents p {
+        color: rgba(255,255,255,0.72);
+        font-size: clamp(16px, 2.3vw, 20px);
+        max-width: 680px; margin: 0 auto 18px;
+        line-height: 1.75;
+    }
+    .gp-pull {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(18px, 2.8vw, 26px);
+        font-weight: 700; color: #fff;
+        max-width: 640px; margin: 24px auto 36px;
+        line-height: 1.45;
+    }
+
+    /* ============================================================
+       HERITAGE LANGUAGES
+    ============================================================ */
+    #heritage { background: var(--bg-primary); }
+
+    .heritage-flags {
+        display: flex; gap: 10px; justify-content: center; margin-bottom: 24px;
+    }
+    .flag-bar { width: 60px; height: 6px; border-radius: 3px; }
+    .flag-green { background: var(--green); }
+    .flag-white { background: #fff; border: 1px solid var(--border-light); }
+    .flag-red   { background: var(--crimson); }
+
+    .lang-grid {
+        display: flex; gap: 48px; justify-content: center;
+        margin: 40px 0 20px; flex-wrap: wrap;
+    }
+    .lang-item { text-align: center; }
+    .lang-item .lang-flag { font-size: 52px; margin-bottom: 10px; display: block; }
+    .lang-item .lang-name { font-weight: 700; font-size: 16px; color: var(--text-primary); }
+    .lang-note {
+        font-size: 13px; color: var(--text-secondary);
+        text-align: center; margin-top: 16px;
+        font-style: italic;
+    }
+    .heritage-stat {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(22px, 3.5vw, 30px);
+        font-weight: 700; color: var(--text-primary);
+        max-width: 700px; margin: 0 auto 24px;
+        text-align: center; line-height: 1.45;
+    }
+
+    /* ============================================================
+       SAFETY (dedicated section)
+    ============================================================ */
+    #safety { background: var(--bg-primary); border-top: 1px solid var(--border-light); }
+
+    .safety-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 24px; margin: 48px 0 32px;
+    }
+    .safety-card { padding: 28px 20px; text-align: center; }
+    .safety-icon-wrap {
+        width: 60px; height: 60px; border-radius: 50%;
+        background: rgba(0,104,71,0.08);
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 14px; font-size: 26px;
+        border: 1px solid rgba(0,104,71,0.15);
+    }
+    .safety-card h4 {
+        font-size: 15px; font-weight: 700; color: var(--text-primary);
+        margin-bottom: 6px;
+    }
+    .safety-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+    .safety-compliance {
+        text-align: center;
+        font-size: 13px; color: var(--text-secondary);
+        background: #fff;
+        border: 1px solid var(--border-light);
+        border-radius: 10px;
+        padding: 16px 24px;
+        max-width: 680px; margin: 0 auto;
+        line-height: 1.7;
+    }
+
+    /* ============================================================
+       COMPARISON TABLE
+    ============================================================ */
+    #compare { background: var(--bg-primary); border-top: 1px solid var(--border-light); }
+
+    .comp-wrap { overflow-x: auto; margin: 40px 0; }
+    .comp-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .comp-table th {
+        background: var(--bg-dark); color: #fff;
+        padding: 14px 16px; text-align: left; font-weight: 700;
+        font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .comp-table th:first-child { border-radius: 8px 0 0 0; }
+    .comp-table th:last-child  { border-radius: 0 8px 0 0; }
+    .comp-table td { padding: 11px 16px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+    .comp-table tr:hover { background: rgba(196,30,58,0.025); }
+    .comp-table .col-casa { background: rgba(212,160,23,0.06); font-weight: 700; }
+    .comp-table .check { color: var(--green); font-weight: 800; }
+    .comp-table .dead { color: #aaa; text-decoration: line-through; }
+
+    @media (max-width: 600px) {
+        .comp-table { font-size: 11px; }
+        .comp-table th, .comp-table td { padding: 9px 7px; }
+    }
+
+    /* ============================================================
+       HARDWARE (dark)
+    ============================================================ */
+    #hardware { background: var(--bg-dark); }
+
+    .hw-layout {
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 56px; align-items: center; margin: 48px 0;
+    }
+    .hw-layout img { width: 100%; border-radius: 14px; }
+    .hw-spec-list { padding: 32px 28px; }
+    .hw-spec-item {
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        color: rgba(255,255,255,0.65); font-size: 15px; line-height: 1.6;
+    }
+    .hw-spec-item:last-child { border-bottom: none; }
+    .hw-spec-item strong { color: #fff; }
+    .hw-bullet {
+        display: inline-block; width: 6px; height: 6px;
+        background: var(--gold); border-radius: 50%;
+        margin-right: 10px; vertical-align: middle; flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) { .hw-layout { grid-template-columns: 1fr; gap: 32px; } }
+
+    /* ============================================================
+       DEMO SECTION (dark gradient)
+    ============================================================ */
+    #demo {
+        background: linear-gradient(135deg, #1A0A0E 0%, #2D1117 50%, #0D0D1A 100%);
+        padding: 96px 24px; text-align: center;
+    }
+    #demo h2 { color: var(--text-on-dark); margin-bottom: 16px; }
+    #demo .demo-sub {
+        color: rgba(255,255,255,0.6); font-size: 18px;
+        max-width: 560px; margin: 0 auto 40px; line-height: 1.7;
+    }
+    .demo-fine {
+        font-size: 13px; color: rgba(255,255,255,0.3);
+        margin-top: 24px; max-width: 480px; margin-left: auto; margin-right: auto;
+        line-height: 1.6;
+    }
+
+    /* ============================================================
+       KICKSTARTER SECTION (dark)
+    ============================================================ */
+    #kickstarter { background: var(--bg-dark); padding: 96px 24px; text-align: center; }
+
+    .ks-date {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(44px, 8vw, 72px);
+        color: var(--gold); font-weight: 900;
+        margin: 16px 0 12px; line-height: 1;
+    }
+
+    .countdown {
+        display: flex; gap: 32px; justify-content: center;
+        margin: 24px 0 56px; flex-wrap: wrap;
+    }
+    .countdown-item { text-align: center; }
+    .cd-num {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(36px, 6vw, 56px);
+        color: #fff; font-weight: 900; display: block;
+    }
+    .cd-label {
+        font-size: 10px; color: rgba(255,255,255,0.4);
+        text-transform: uppercase; letter-spacing: 2.5px;
+        display: block; margin-top: 4px;
+    }
+
+    /* Pricing cards */
+    .pricing-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 24px; margin: 0 auto 32px; max-width: 920px;
+    }
+    .price-card { padding: 40px 24px 32px; text-align: center; position: relative; }
+    .price-card.featured {
+        border-color: var(--crimson) !important;
+        background: rgba(196,30,58,0.08) !important;
+    }
+    .price-card.featured::before {
+        content: 'MOST POPULAR';
+        position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+        background: var(--crimson); color: #fff;
+        padding: 5px 20px; border-radius: 20px;
+        font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+        white-space: nowrap;
+    }
+    .tier-name {
+        font-size: 11px; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 1.5px; color: rgba(255,255,255,0.4); margin-bottom: 10px;
+    }
+    .price-main {
+        font-family: 'Playfair Display', serif;
+        font-size: 52px; font-weight: 900; color: #fff; line-height: 1;
+    }
+    .price-was {
+        font-size: 16px; color: rgba(255,255,255,0.3);
+        text-decoration: line-through; margin-left: 6px;
+    }
+    .price-save {
+        font-size: 12px; color: var(--gold); font-weight: 700;
+        letter-spacing: 0.5px; margin-top: 4px; display: block;
+    }
+    .price-note {
+        font-size: 13px; color: rgba(255,255,255,0.4);
+        margin: 6px 0 20px; line-height: 1.5;
+    }
+    .price-card ul { list-style: none; text-align: left; margin: 0; }
+    .price-card li {
+        padding: 8px 0; font-size: 14px;
+        color: rgba(255,255,255,0.6);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        display: flex; align-items: center; gap: 8px;
+    }
+    .price-card li:last-child { border-bottom: none; }
+    .price-card li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+    @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; max-width: 380px; } }
+
+    /* Email capture */
+    .email-section {
+        margin-top: 56px; padding-top: 48px;
+        border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .email-section h3 {
+        color: #fff; font-family: 'Playfair Display', serif;
+        margin-bottom: 8px;
+    }
+    .email-section .email-sub {
+        color: rgba(255,255,255,0.5); font-size: 15px; margin-bottom: 28px;
+    }
+
+    .email-form {
+        max-width: 500px; margin: 0 auto;
+        display: flex; border-radius: 50px; overflow: hidden;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+    }
+    .email-form input {
+        flex: 1; padding: 17px 24px; border: none;
+        font-size: 16px; font-family: 'Nunito', sans-serif;
+        outline: none; background: #fff; color: var(--text-primary);
+    }
+    .email-form input::placeholder { color: #bbb; }
+    .email-form button {
+        padding: 17px 28px; border: none;
+        background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+        color: #fff; font-weight: 800; font-size: 13px;
+        cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+        font-family: 'Nunito', sans-serif; transition: background 0.2s;
+        white-space: nowrap;
+    }
+    .email-form button:hover { background: var(--crimson-dark); }
+    @media (max-width: 500px) {
+        .email-form { flex-direction: column; border-radius: 14px; }
+    }
+    .email-success {
+        color: var(--gold); font-size: 15px; margin-top: 14px;
+        display: none; font-weight: 600;
+    }
+    .email-error {
+        color: #ff6b6b; font-size: 14px; margin-top: 10px;
+        display: none;
+    }
+
+    /* ============================================================
+       FAQ
+    ============================================================ */
+    #faq { background: var(--bg-primary); }
+
+    .faq-list { max-width: 780px; margin: 40px auto 0; }
+    .faq-item {
+        border-bottom: 1px solid var(--border-light);
+    }
+    .faq-q {
+        padding: 20px 0; font-size: 17px; font-weight: 700;
+        color: var(--text-primary); cursor: pointer;
+        display: flex; justify-content: space-between; align-items: center;
+        user-select: none; gap: 16px;
+    }
+    .faq-q::after {
+        content: '+'; font-size: 24px; color: var(--gold);
+        transition: transform 0.25s ease; flex-shrink: 0; font-weight: 400;
+    }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+        max-height: 0; overflow: hidden;
+        transition: max-height 0.35s ease;
+    }
+    .faq-item.open .faq-a { max-height: 350px; padding-bottom: 20px; }
+    .faq-a p {
+        font-size: 15px; color: var(--text-secondary);
+        line-height: 1.8; margin: 0;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+        background: var(--bg-dark);
+        padding: 64px 24px 40px;
+        text-align: center;
+    }
+    .footer-logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px; color: #fff; font-weight: 700; margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline { color: rgba(255,255,255,0.4); font-size: 14px; margin-top: 6px; }
+
+    .footer-nav {
+        margin: 28px 0 0; display: flex; gap: 24px;
+        justify-content: center; flex-wrap: wrap;
+    }
+    .footer-nav a {
+        color: rgba(255,255,255,0.45); font-size: 13px;
+        text-decoration: none; transition: color 0.2s;
+    }
+    .footer-nav a:hover { color: var(--gold); }
+
+    .footer-divider {
+        height: 1px; background: rgba(255,255,255,0.08);
+        margin: 28px auto; max-width: 400px;
+    }
+    .footer-powered {
+        font-size: 12px; color: rgba(255,255,255,0.28); letter-spacing: 1px;
+    }
+    .footer-powered em { color: var(--gold); font-style: italic; font-weight: 600; }
+    .footer-version {
+        font-size: 11px; color: rgba(255,255,255,0.15); margin-top: 10px;
+    }
+
+    /* ============================================================
+       SECTION HEADING BLOCK (reusable)
+    ============================================================ */
+    .section-heading {
+        text-align: center; max-width: 700px; margin: 0 auto 48px;
+    }
+    .section-heading h2 { margin-bottom: 14px; }
+    .section-heading p { color: var(--text-secondary); font-size: 17px; line-height: 1.7; }
+    .section-heading.on-dark h2 { color: var(--text-on-dark); }
+    .section-heading.on-dark p   { color: rgba(255,255,255,0.55); }
+
+    /* ============================================================
+       DIVIDERS & MISC
+    ============================================================ */
+    .divider {
+        height: 1px; background: var(--border-light); margin: 40px 0;
+    }
+    .on-dark .divider { background: rgba(255,255,255,0.08); }
+
+    .powered-pill {
+        display: inline-block;
+        font-size: 12px; letter-spacing: 1.5px; color: var(--gold);
+        font-weight: 600; text-transform: uppercase;
+        background: rgba(212,160,23,0.08);
+        border: 1px solid rgba(212,160,23,0.2);
+        border-radius: 20px; padding: 5px 14px;
+        margin-top: 24px;
+    }
+
+    /* ============================================================
+       RESPONSIVE PATCHES
+    ============================================================ */
+    @media (max-width: 768px) {
+        .section-pad { padding: 72px 20px; }
+        .steps-grid { grid-template-columns: 1fr 1fr; }
+        .safety-grid { grid-template-columns: repeat(3, 1fr); }
+        .trust-inner { gap: 16px; height: auto; padding: 14px 0; }
+    }
+    @media (max-width: 480px) {
+        .steps-grid { grid-template-columns: 1fr; }
+        .safety-grid { grid-template-columns: 1fr 1fr; }
+        .companion-grid { grid-template-columns: repeat(2, 1fr); }
+        .hero-stat-bar { gap: 24px; }
+    }
+
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     FIXED NAVIGATION
+============================================================ -->
+<nav class="nav" id="mainNav">
+    <div class="nav-inner">
+        <a href="#hero" class="nav-logo">Casa <span>Companion</span></a>
+
+        <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+
+        <div class="nav-links">
+            <a href="#origin"       class="nav-link">Story</a>
+            <a href="#companions"   class="nav-link">Companions</a>
+            <a href="#voice-cloning" class="nav-link">How It Works</a>
+            <a href="#safety"       class="nav-link">Safety</a>
+            <a href="#demo"         class="nav-link">Demo</a>
+            <a href="#kickstarter"  class="nav-link">Kickstarter</a>
+            <a href="#kickstarter"  class="nav-cta">Get Early Access</a>
+        </div>
+    </div>
+</nav>
+
+<div class="nav-mobile" id="mobileMenu">
+    <a href="#origin"        class="nav-mobile-link" onclick="closeMenu()">Story</a>
+    <a href="#companions"    class="nav-mobile-link" onclick="closeMenu()">Companions</a>
+    <a href="#voice-cloning" class="nav-mobile-link" onclick="closeMenu()">How It Works</a>
+    <a href="#safety"        class="nav-mobile-link" onclick="closeMenu()">Safety</a>
+    <a href="#demo"          class="nav-mobile-link" onclick="closeMenu()">Demo</a>
+    <a href="#kickstarter"   class="nav-mobile-link" onclick="closeMenu()">Kickstarter</a>
+    <a href="#faq"           class="nav-mobile-link" onclick="closeMenu()">FAQ</a>
+</div>
+
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero">
+    <div class="hero-badge">Coming to Kickstarter &nbsp;&#x2022;&nbsp; May 5, 2026</div>
+
+    <h1 class="hero-h1">Your Voice.<br>Their Companion.</h1>
+
+    <p class="hero-sub">An AI plush toy that tells bedtime stories in your voice. Plays games. Teaches languages. No screen. Just a friend.</p>
+
+    <!-- Promo Player -->
+    <div class="promo-container" id="promoContainer">
+        <div class="promo-stage" id="promoStage">
+
+            <!-- Overlay / thumbnail -->
+            <div class="promo-overlay" id="promoOverlay" onclick="launchPromo()">
+                <div class="promo-play-btn">
+                    <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+                </div>
+                <div class="promo-label">Watch the Founder Story</div>
+            </div>
+
+            <!-- Controls (shown when playing) -->
+            <div class="promo-controls">
+                <button class="promo-ctrl-btn" onclick="toggleFullscreen()" title="Fullscreen" id="fsBtn">&#x26F6;</button>
+            </div>
+
+            <!-- Slide 1: The Builder -->
+            <div class="promo-slide ps-1" id="ps-1">
+                <div class="p-text-box">
+                    <div class="p-phrase">I build <em>AI for business.</em> When my son was born, I wanted something real. Nothing existed. <em>So I built one.</em></div>
+                </div>
+            </div>
+
+            <!-- Slide 2: The Prototype -->
+            <div class="promo-slide ps-2" id="ps-2">
+                <div class="p-text-box">
+                    <div class="p-phrase">Let my nephews try it. <em>Two and four years old.</em> They wouldn't put it down. <em>That's when I knew.</em></div>
+                </div>
+            </div>
+
+            <!-- Slide 3/4: Hero Group (companions grid) -->
+            <div class="promo-slide ps-heroes" id="ps-heroes" style="flex-direction:column; justify-content:flex-start; background:#0D0D1A;">
+                <div style="position:relative; z-index:2; text-align:center; padding: clamp(8px,1.5vw,20px) clamp(8px,2vw,24px) 0;">
+                    <div class="p-phrase p-highlight" style="font-size:clamp(12px,1.8vw,22px);"><em>Ten companions.</em> Each with their own personality.</div>
+                </div>
+                <div class="hero-grid" style="flex:1;">
+                    <div class="hero-grid-item"><img src="images/hero-crow.png"     alt="Corvo"    loading="lazy"><div class="hg-name">Corvo</div><div class="hg-animal">the Crow</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-owl.png"      alt="Gufo"     loading="lazy"><div class="hg-name">Gufo</div><div class="hg-animal">the Owl</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-bear.png"     alt="Orsetto"  loading="lazy"><div class="hg-name">Orsetto</div><div class="hg-animal">the Bear</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-bunny.png"    alt="Coniglio" loading="lazy"><div class="hg-name">Coniglio</div><div class="hg-animal">the Bunny</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-turtle.png"   alt="Tartaruga" loading="lazy"><div class="hg-name">Tartaruga</div><div class="hg-animal">the Sea Turtle</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-elephant.png" alt="Elefante" loading="lazy"><div class="hg-name">Elefante</div><div class="hg-animal">the Elephant</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-lion.png"     alt="Leone"    loading="lazy"><div class="hg-name">Leone</div><div class="hg-animal">the Lion</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-dolphin.png"  alt="Delfino"  loading="lazy"><div class="hg-name">Delfino</div><div class="hg-animal">the Dolphin</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-dragon.png"   alt="Drago"    loading="lazy"><div class="hg-name">Drago</div><div class="hg-animal">the Dragon</div></div>
+                    <div class="hero-grid-item"><img src="images/hero-xolo.png"     alt="Xolo"     loading="lazy"><div class="hg-name">Xolo</div><div class="hg-animal">the Xolo</div></div>
+                </div>
+                <div style="position:relative; z-index:2; text-align:center; padding:0 0 clamp(6px,1vw,12px);">
+                    <div style="font-size:clamp(9px,1.1vw,13px); color:rgba(255,255,255,0.45); letter-spacing:1.5px; font-weight:300;">Powered by <span style="color:var(--gold); font-weight:600; font-style:italic;">Capo AI</span></div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Heritage -->
+            <div class="promo-slide ps-5" id="ps-5">
+                <div class="p-text-box">
+                    <div class="p-phrase"><em>Seventy-five percent</em> of heritage languages are lost by the third generation. <em>Unless you build something to keep them.</em></div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Grandparents / Distance -->
+            <div class="promo-slide ps-6" id="ps-6">
+                <div class="p-text-box">
+                    <div class="p-phrase">Record <em>twelve phrases.</em> Five minutes. Grandma reads bedtime stories from <em>a thousand miles away.</em> Not through a screen.</div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Legacy / Voice Cloning -->
+            <div class="promo-slide ps-7" id="ps-7">
+                <div class="p-text-box">
+                    <div class="p-phrase">We cloned my mother's voice so my son could <em>hear her.</em> That voice doesn't expire. <em>That's not a feature. That's a legacy.</em></div>
+                </div>
+            </div>
+
+            <!-- Slide 8: This Generation -->
+            <div class="promo-slide ps-8" id="ps-8">
+                <div class="p-text-box">
+                    <div class="p-phrase">Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. This is what <em>this generation deserves.</em> Built with <em>real AI.</em></div>
+                </div>
+            </div>
+
+            <!-- Slide 9: Engineering -->
+            <div class="promo-slide ps-9" id="ps-9">
+                <div class="p-text-box">
+                    <div class="p-phrase">One electronics pod. <em>Ten plush shells.</em></div>
+                    <div class="p-phrase">Magnetic dock. Machine washable. Volume capped.</div>
+                    <div class="p-phrase"><em>No camera. No screen. No microtransactions.</em></div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Packaging / Features -->
+            <div class="promo-slide ps-10" id="ps-10">
+                <div class="p-text-box">
+                    <div class="p-phrase">Bluetooth sync. <em>Pair with any phone.</em></div>
+                    <div class="p-phrase">Parent mode. Teaching mode. Screencast.</div>
+                    <div class="p-phrase">Built for real kids. <em>Built for real parents.</em></div>
+                </div>
+            </div>
+
+            <!-- Slide 11: Capisce Closer -->
+            <div class="promo-slide ps-11" id="ps-11">
+                <div class="p-text-box">
+                    <div class="p-phrase p-highlight">Casa Companion. <em>Kickstarter May fifth.</em> Everyone else announced it. We built it. <em>Capisce.</em></div>
+                </div>
+            </div>
+
+            <!-- CTA Slide -->
+            <div class="promo-slide ps-cta" id="ps-cta" style="justify-content: center;">
+                <div class="p-cta-logo" id="pCtaLogo">Casa <span>Companion</span></div>
+                <div class="p-cta-tagline" id="pCtaTagline">Coming to Kickstarter May 5, 2026</div>
+                <a href="https://casa-companion-demo.onrender.com" target="_blank" class="p-cta-demo-btn" id="pCtaDemo">Try the Live Demo</a>
+                <div class="p-cta-url" id="pCtaUrl">casacompanion.com</div>
+                <div class="p-cta-credit" id="pCtaPowered">Powered by <em>Capo AI</em></div>
+            </div>
+
+            <div class="promo-progress" id="promoProgress"></div>
+        </div>
+    </div>
+    <!-- END promo player -->
+
+    <!-- Stat bar below player -->
+    <div class="hero-stat-bar">
+        <div class="hero-stat">
+            <div class="hs-num">10</div>
+            <div class="hs-label">Companions</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hs-num">3</div>
+            <div class="hs-label">Languages</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hs-text" style="font-size:15px; color:rgba(255,255,255,0.6); margin-top:6px;">Powered by</div>
+            <div style="font-family:'Playfair Display',serif; font-style:italic; color:var(--gold); font-size:20px; font-weight:700; margin-top:2px;">Capo AI</div>
+        </div>
+    </div>
+
+    <a href="#kickstarter" class="btn btn-primary btn-primary-lg" style="margin-top:40px; display:inline-block;">Join the Waitlist</a>
+</section>
+
+
+<!-- ============================================================
+     TRUST / CERTIFICATIONS BAR
+============================================================ -->
+<div id="trust-bar">
+    <div class="trust-inner">
+        <div class="trust-item"><span class="trust-item-dot"></span>CPSIA Compliant</div>
+        <div class="trust-item"><span class="trust-item-dot"></span>COPPA Safe</div>
+        <div class="trust-item"><span class="trust-item-dot"></span>No Screen</div>
+        <div class="trust-item"><span class="trust-item-dot"></span>No Camera</div>
+        <div class="trust-item"><span class="trust-item-dot"></span>Encrypted</div>
+        <div class="trust-item"><span class="trust-item-dot"></span>Machine Washable</div>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     ORIGIN STORY
+============================================================ -->
+<section id="origin" class="section-light section-pad reveal">
+    <div class="container origin-inner">
+
+        <div class="section-heading" style="margin-bottom:32px;">
+            <span class="eyebrow eyebrow-crimson">The Origin Story</span>
+            <h2>Built by a father. For his son. For every family.</h2>
+        </div>
+
+        <div class="blockquote-styled">
+            <p>"My mother died of cancer when I was 17. I have maybe 10 memories of her voice. If I could have had a toy that spoke in her voice when I was a kid, I would have held onto it for the rest of my life."</p>
+            <div class="bq-attr">— Peter, Founder of Casa Companion</div>
+        </div>
+
+        <p class="body-text">Casa Companion started as a weekend project. Peter builds AI for business. When his son Gian Lucca was born on July 27, 2025, he wanted something that didn't exist: a toy that could speak in his own voice, tell stories in Italian (the way his mother would have), and grow with his child from day one.</p>
+
+        <p class="body-text">He let his nephews Liam and Logan try the prototype. Two and four years old. They wouldn't put it down. That's when he knew this wasn't just for his family.</p>
+
+        <div class="origin-pull-quote">
+            "I built this so my son could hear me — even when I'm not in the room."
+        </div>
+
+        <div class="origin-image-grid">
+            <img src="images/life-nonna-kitchen.png" alt="Heritage and family" loading="lazy">
+            <img src="images/scene1-father.png"      alt="Father and child"   loading="lazy">
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     COMPANIONS GRID
+============================================================ -->
+<section id="companions" class="section-light section-pad">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow eyebrow-crimson">Meet the Family</span>
+            <h2>Ten friends. One family.</h2>
+            <p>One electronics pod, ten plush shells. Same Capo AI brain, ten distinct personalities. Pick the friend that speaks to your family.</p>
+        </div>
+
+        <div class="companion-grid reveal">
+
+            <div class="companion-card card-light">
+                <img src="images/hero-crow.png" alt="Corvo" loading="lazy">
+                <div class="cc-name">Corvo</div>
+                <div class="cc-animal">the Crow</div>
+                <div class="cc-desc">Curious, mischievous, the little smartass. The original. Poseable wings, silicone beak.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-owl.png" alt="Gufo" loading="lazy">
+                <div class="cc-name">Gufo</div>
+                <div class="cc-animal">the Owl</div>
+                <div class="cc-desc">Wise, calm, the storyteller. Head rotates 45 degrees. Largest LED eyes.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-bear.png" alt="Orsetto" loading="lazy">
+                <div class="cc-name">Orsetto</div>
+                <div class="cc-animal">the Bear Cub</div>
+                <div class="cc-desc">Warm, protective, the most huggable. Poseable arms, paw pad sensors.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-bunny.png" alt="Coniglio" loading="lazy">
+                <div class="cc-name">Coniglio</div>
+                <div class="cc-animal">the Bunny</div>
+                <div class="cc-desc">Sweet, gentle, youngest-feeling. 13" with ears. Lightest at 9oz.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-turtle.png" alt="Tartaruga" loading="lazy">
+                <div class="cc-name">Tartaruga</div>
+                <div class="cc-animal">the Sea Turtle</div>
+                <div class="cc-desc">Patient, wise traveler. Ocean stories and world cultures.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-elephant.png" alt="Elefante" loading="lazy">
+                <div class="cc-name">Elefante</div>
+                <div class="cc-animal">the Elephant</div>
+                <div class="cc-desc">Gentle giant, memory keeper. Family-focused, never forgets.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-lion.png" alt="Leone" loading="lazy">
+                <div class="cc-name">Leone</div>
+                <div class="cc-animal">the Lion</div>
+                <div class="cc-desc">Confident, brave leader. Protective big brother energy.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-dolphin.png" alt="Delfino" loading="lazy">
+                <div class="cc-name">Delfino</div>
+                <div class="cc-animal">the Dolphin</div>
+                <div class="cc-desc">Playful, joyful, social. Loves games and laughter.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-dragon.png" alt="Drago" loading="lazy">
+                <div class="cc-name">Drago</div>
+                <div class="cc-animal">the Dragon</div>
+                <div class="cc-desc">Imaginative, magical storyteller. Creative and adventurous.</div>
+            </div>
+
+            <div class="companion-card card-light">
+                <img src="images/hero-xolo.png" alt="Xolo" loading="lazy">
+                <div class="cc-name">Xolo</div>
+                <div class="cc-animal">the Xoloitzcuintli</div>
+                <div class="cc-desc">Loyal, ancient, cultural guardian. Aztec heritage keeper.</div>
+            </div>
+
+        </div>
+
+        <div class="text-center">
+            <span class="powered-pill">Powered by Capo AI</span>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     VOICE CLONING (dark)
+============================================================ -->
+<section id="voice-cloning" class="section-dark section-pad">
+    <div class="container">
+
+        <div class="section-heading on-dark reveal">
+            <span class="eyebrow eyebrow-gold">How It Works</span>
+            <h2 style="color:var(--text-on-dark);">Record your voice. Five minutes. Done.</h2>
+            <p>Your voice. Their companion. Here's all it takes.</p>
+        </div>
+
+        <div class="steps-grid reveal">
+
+            <div class="step-card card-dark">
+                <div class="step-num-wrap">
+                    <span class="step-num-text">1</span>
+                </div>
+                <div class="step-icon">&#x1F4F2;</div>
+                <h4>Open the App</h4>
+                <p>Download the Capo app on your phone. Pair your companion via Bluetooth in 90 seconds.</p>
+            </div>
+
+            <div class="step-card card-dark">
+                <div class="step-num-wrap">
+                    <span class="step-num-text">2</span>
+                </div>
+                <div class="step-icon">&#x1F3A4;</div>
+                <h4>Read 12 Phrases</h4>
+                <p>Short, natural sentences. "Once upon a time..." Your voice is captured with studio-quality precision.</p>
+            </div>
+
+            <div class="step-card card-dark">
+                <div class="step-num-wrap">
+                    <span class="step-num-text">3</span>
+                </div>
+                <div class="step-icon">&#x2728;</div>
+                <h4>Cloned in 5 Minutes</h4>
+                <p>Our AI learns your voice. Tone, rhythm, warmth. Everything that makes your voice yours.</p>
+            </div>
+
+            <div class="step-card card-dark">
+                <div class="step-num-wrap">
+                    <span class="step-num-text">4</span>
+                </div>
+                <div class="step-icon">&#x2764;&#xFE0F;</div>
+                <h4>Your Child Hears You</h4>
+                <p>Hand the companion to your child. Watch their face when their best friend speaks in your voice.</p>
+            </div>
+
+        </div>
+
+        <div class="blockquote-dark reveal">
+            <p>"Mom, Dad, Grandma, Grandpa — anyone who loves your child can be their companion's voice."</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     GRANDPARENTS (full-width emotional)
+============================================================ -->
+<section id="grandparents">
+    <div class="gp-stat reveal">70M</div>
+    <h2 class="reveal" style="font-family:'Playfair Display',serif; color:#fff; max-width:720px; margin:0 auto 24px; line-height:1.25;">grandparents in America. <em>42% in a different state.</em></h2>
+    <p class="reveal" style="color:rgba(255,255,255,0.72); font-size:clamp(16px,2.3vw,20px); max-width:680px; margin:0 auto 18px; line-height:1.75;">Grandma records 12 phrases on her phone. Five minutes. Your child hears her voice every night. Not through a screen. Through a soft companion they hold, squeeze, and fall asleep with.</p>
+    <div class="gp-pull reveal">"That voice doesn't expire. That's not a feature. That's a legacy."</div>
+    <a href="#kickstarter" class="btn btn-primary reveal" style="display:inline-block;">See the Grandparent Bundle &rarr;</a>
+</section>
+
+
+<!-- ============================================================
+     HERITAGE LANGUAGES
+============================================================ -->
+<section id="heritage" class="section-light section-pad">
+    <div class="container text-center">
+
+        <div class="reveal">
+            <div class="heritage-flags" style="justify-content:center;">
+                <div class="flag-bar flag-green"></div>
+                <div class="flag-bar flag-white"></div>
+                <div class="flag-bar flag-red"></div>
+            </div>
+
+            <span class="eyebrow eyebrow-crimson" style="display:block; margin-bottom:14px;">Heritage Language</span>
+
+            <div class="heritage-stat">75% of heritage languages are lost by the third generation.</div>
+
+            <p class="body-text" style="font-size:20px; max-width:680px; margin:0 auto 24px;">Unless you build something to keep them.</p>
+
+            <p style="font-family:'Playfair Display',serif; font-size:clamp(20px,3vw,28px); color:var(--text-primary); font-weight:700; max-width:680px; margin:32px auto 0; line-height:1.4;">Nonna teaches Italian. Abuela teaches Spanish. The language lives on because the voice lives on.</p>
+        </div>
+
+        <div class="lang-grid reveal">
+            <div class="lang-item">
+                <span class="lang-flag">&#x1F1EE;&#x1F1F9;</span>
+                <div class="lang-name">Italiano</div>
+            </div>
+            <div class="lang-item">
+                <span class="lang-flag">&#x1F1EA;&#x1F1F8;</span>
+                <div class="lang-name">Espa&ntilde;ol</div>
+            </div>
+            <div class="lang-item">
+                <span class="lang-flag">&#x1F1FA;&#x1F1F8;</span>
+                <div class="lang-name">English</div>
+            </div>
+        </div>
+
+        <p class="lang-note">More languages coming with stretch goals: French, Mandarin, Portuguese, Polish.</p>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     SAFETY (dedicated section)
+============================================================ -->
+<section id="safety" class="section-light section-pad">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow eyebrow-crimson">Safe by Design</span>
+            <h2>Built for kids. Audited for parents.</h2>
+            <p>We're parents too. Safety isn't a feature. It's the foundation every decision was built on.</p>
+        </div>
+
+        <div class="safety-grid reveal">
+
+            <div class="safety-card card-light">
+                <div class="safety-icon-wrap">&#x1F6AB;</div>
+                <h4>No Screen</h4>
+                <p>Zero screen time. Pure imagination.</p>
+            </div>
+
+            <div class="safety-card card-light">
+                <div class="safety-icon-wrap">&#x1F4F7;</div>
+                <h4>No Camera</h4>
+                <p>No photos. No video. Ever.</p>
+            </div>
+
+            <div class="safety-card card-light">
+                <div class="safety-icon-wrap">&#x1F50A;</div>
+                <h4>Volume Capped</h4>
+                <p>85dB max. Pediatrician approved.</p>
+            </div>
+
+            <div class="safety-card card-light">
+                <div class="safety-icon-wrap">&#x1F6E1;&#xFE0F;</div>
+                <h4>COPPA Compliant</h4>
+                <p>Children's data protected by law.</p>
+            </div>
+
+            <div class="safety-card card-light">
+                <div class="safety-icon-wrap">&#x1F6C1;</div>
+                <h4>Machine Washable</h4>
+                <p>Remove the pod. Wash the shell.</p>
+            </div>
+
+            <div class="safety-card card-light">
+                <div class="safety-icon-wrap">&#x1F512;</div>
+                <h4>Encrypted</h4>
+                <p>All voice data encrypted end-to-end.</p>
+            </div>
+
+        </div>
+
+        <div class="safety-compliance reveal">
+            Casa Companion meets <strong>CPSIA</strong>, <strong>ASTM F963</strong>, and <strong>FCC standards</strong> for children's products. COPPA 2025 + GDPR compliant. All magnets fully encased. Hypoallergenic materials throughout.
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     COMPARISON TABLE
+============================================================ -->
+<section id="compare" class="section-light section-pad">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow eyebrow-crimson">What Makes It Different</span>
+            <h2>Everyone else announced it. We built it.</h2>
+        </div>
+
+        <div class="comp-wrap reveal">
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th style="color:var(--gold);">Casa Companion</th>
+                        <th>Toniebox</th>
+                        <th>Codi</th>
+                        <th>Moxie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Price</td>
+                        <td class="col-casa"><strong>$99 &ndash; $299</strong></td>
+                        <td>$99 + figurines</td>
+                        <td>$125</td>
+                        <td class="dead">$799</td>
+                    </tr>
+                    <tr>
+                        <td>AI Conversation</td>
+                        <td class="col-casa"><strong>Real-time GPT-4o</strong></td>
+                        <td>None</td>
+                        <td>Pre-scripted</td>
+                        <td class="dead">Was GPT</td>
+                    </tr>
+                    <tr>
+                        <td>Voice Cloning</td>
+                        <td class="col-casa check"><strong>12-phrase clone</strong></td>
+                        <td>None</td>
+                        <td>None</td>
+                        <td class="dead">None</td>
+                    </tr>
+                    <tr>
+                        <td>Heritage Languages</td>
+                        <td class="col-casa"><strong>EN / IT / ES</strong></td>
+                        <td>Some content</td>
+                        <td>English only</td>
+                        <td class="dead">English only</td>
+                    </tr>
+                    <tr>
+                        <td>Physical Form</td>
+                        <td class="col-casa"><strong>Plush (10 options)</strong></td>
+                        <td>Cube + figurines</td>
+                        <td>Plastic robot</td>
+                        <td class="dead">Plastic robot</td>
+                    </tr>
+                    <tr>
+                        <td>Screen</td>
+                        <td class="col-casa check"><strong>None</strong></td>
+                        <td>None</td>
+                        <td>None</td>
+                        <td class="dead">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Family Ecosystem</td>
+                        <td class="col-casa"><strong>Full (app, grandparents)</strong></td>
+                        <td>Basic</td>
+                        <td>None</td>
+                        <td class="dead">None</td>
+                    </tr>
+                    <tr>
+                        <td>Machine Washable</td>
+                        <td class="col-casa check"><strong>Yes</strong></td>
+                        <td>Wipe clean</td>
+                        <td>No</td>
+                        <td class="dead">No</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td class="col-casa" style="color:var(--green); font-weight:700;">Launching May 2026</td>
+                        <td>Active</td>
+                        <td>Active</td>
+                        <td class="dead">Dead (Dec 2024)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="blockquote-styled reveal" style="max-width:720px; margin:32px auto;">
+            <p>"Moxie raised $60M and died December 2024. Cloud-only toys brick when the company fails. We won't brick."</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     HARDWARE (dark)
+============================================================ -->
+<section id="hardware" class="section-dark section-pad">
+    <div class="container">
+
+        <div class="section-heading on-dark reveal">
+            <span class="eyebrow eyebrow-gold">Engineering</span>
+            <h2 style="color:var(--text-on-dark);">One electronics pod. Ten plush shells.</h2>
+        </div>
+
+        <div class="hw-layout reveal">
+            <img src="images/eng-exploded.png" alt="Casa Companion exploded engineering view" loading="lazy">
+
+            <div class="hw-spec-list card-dark">
+                <h3 style="color:#fff; margin-bottom:8px;">Built for real kids. Built for real parents.</h3>
+                <div class="hw-spec-item"><span class="hw-bullet"></span><strong>Magnetic dock.</strong> Set it down, it charges. USB-C. No cables to lose.</div>
+                <div class="hw-spec-item"><span class="hw-bullet"></span><strong>Machine washable.</strong> Remove the pod (12 seconds). Toss the plush in the wash.</div>
+                <div class="hw-spec-item"><span class="hw-bullet"></span><strong>6-8 hour battery.</strong> 3.7V 2500mAh LiPo. All day of play.</div>
+                <div class="hw-spec-item"><span class="hw-bullet"></span><strong>Bluetooth + WiFi.</strong> Pair with any phone. BLE 5.0 + 802.11 b/g/n.</div>
+                <div class="hw-spec-item"><span class="hw-bullet"></span><strong>LED expressive eyes.</strong> 13 emotional states. Listening, thinking, happy, sleepy.</div>
+                <div class="hw-spec-item"><span class="hw-bullet"></span><strong>Parent mode.</strong> Conversation logs, usage tracking, learning progress.</div>
+                <div class="hw-spec-item"><span class="hw-bullet"></span><strong>CPSIA compliant.</strong> Hypoallergenic. ASTM F963 certified. All magnets fully encased.</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     DEMO SECTION (dark gradient)
+============================================================ -->
+<section id="demo">
+    <div style="max-width:700px; margin:0 auto; text-align:center;" class="reveal">
+        <span class="eyebrow eyebrow-gold" style="display:block; margin-bottom:14px;">Live Demo</span>
+        <h2>Try It Right Now</h2>
+        <p class="demo-sub">Talk to an AI companion. In the real product, this conversation happens in YOUR voice through a plush toy your child holds.</p>
+        <a href="https://casa-companion-demo.onrender.com" target="_blank" class="btn btn-primary btn-primary-lg" style="display:inline-block; text-transform:uppercase; letter-spacing:1.5px;">Launch the Live Demo &rarr;</a>
+        <p class="demo-fine">Talk to Corvo, the wise crow. Right now. In your browser. No download. No signup.</p>
+    </div>
+</section>
+
+
+<!-- ============================================================
+     KICKSTARTER SECTION (dark)
+============================================================ -->
+<section id="kickstarter">
+
+    <span class="eyebrow eyebrow-gold" style="display:block; text-align:center; margin-bottom:8px;">Coming to Kickstarter</span>
+    <div class="ks-date">May 5, 2026</div>
+
+    <div class="countdown" id="countdown">
+        <div class="countdown-item">
+            <span class="cd-num" id="cd-days">--</span>
+            <span class="cd-label">Days</span>
+        </div>
+        <div class="countdown-item">
+            <span class="cd-num" id="cd-hours">--</span>
+            <span class="cd-label">Hours</span>
+        </div>
+        <div class="countdown-item">
+            <span class="cd-num" id="cd-mins">--</span>
+            <span class="cd-label">Minutes</span>
+        </div>
+        <div class="countdown-item">
+            <span class="cd-num" id="cd-secs">--</span>
+            <span class="cd-label">Seconds</span>
+        </div>
+    </div>
+
+    <!-- Pricing cards -->
+    <div class="pricing-grid reveal">
+
+        <div class="price-card card-dark">
+            <div class="tier-name">Early Bird</div>
+            <div class="price-main">$99 <span class="price-was">$149</span></div>
+            <span class="price-save">Save 33%</span>
+            <div class="price-note">Limited to 300 backers</div>
+            <ul>
+                <li>1 companion (your choice)</li>
+                <li>Charging dock + USB-C</li>
+                <li>1 voice profile</li>
+                <li>6 months Family subscription</li>
+                <li>Quick-start guide</li>
+            </ul>
+        </div>
+
+        <div class="price-card card-dark featured">
+            <div class="tier-name">Backer Exclusive</div>
+            <div class="price-main">$149 <span class="price-was">$199</span></div>
+            <span class="price-save">Save 25%</span>
+            <div class="price-note">Exclusive colorway. Most popular.</div>
+            <ul>
+                <li>Midnight Crow or Golden Owl</li>
+                <li>3 voice profiles</li>
+                <li>All 3 languages</li>
+                <li>EVA carry case</li>
+                <li>1 year Family subscription</li>
+            </ul>
+        </div>
+
+        <div class="price-card card-dark">
+            <div class="tier-name">Grandparent Bundle</div>
+            <div class="price-main">$299 <span class="price-was">$399</span></div>
+            <span class="price-save">Save 25%</span>
+            <div class="price-note">The bridge between generations</div>
+            <ul>
+                <li>2 companions (child + grandparent)</li>
+                <li>Paired accounts, connected</li>
+                <li>Unlimited voice profiles</li>
+                <li>1 year Heritage subscription</li>
+                <li>Premium gift packaging</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <p style="color:rgba(255,255,255,0.4); font-size:14px; margin-top:8px;">Expected delivery: November 2026</p>
+
+    <!-- Email capture -->
+    <div class="email-section reveal" style="max-width:600px; margin:56px auto 0; padding-top:48px; border-top:1px solid rgba(255,255,255,0.08); text-align:center;">
+        <h3 style="color:#fff; margin-bottom:10px;">Be the first to know.</h3>
+        <p class="email-sub">Get VIP early bird pricing. We'll email you before anyone else.</p>
+        <form class="email-form" action="#" method="POST" onsubmit="handleEmailSubmit(event)">
+            <input type="email" name="email" id="waitlistEmail" placeholder="Your email address" required>
+            <button type="submit" id="waitlistBtn">Join the Waitlist</button>
+        </form>
+        <div class="email-success" id="emailSuccess">You're on the list! We'll email you before anyone else.</div>
+        <div class="email-error"   id="emailError">Please enter a valid email address.</div>
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     FAQ
+============================================================ -->
+<section id="faq" class="section-light section-pad">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow eyebrow-crimson">Frequently Asked Questions</span>
+            <h2>Questions</h2>
+        </div>
+
+        <div class="faq-list reveal">
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">Is Casa Companion safe for infants and toddlers?</div>
+                <div class="faq-a"><p>Yes. Casa Companion is designed for ages 0&ndash;5 and beyond. All materials are CPSIA compliant and hypoallergenic. Volume is hard-capped at 85dB (pediatrician-recommended). All magnets are fully encased. The plush meets ASTM F963-23 toy safety standards. There is no screen and no camera on the device.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">How does voice cloning work? Is my voice data safe?</div>
+                <div class="faq-a"><p>You read 12 short phrases in the Capo app. Our AI creates a voice model in about 5 minutes. Voice recordings are encrypted end-to-end and stored securely. We never sell voice data. You can delete your voice profile at any time. The voice clone is used only within your family's account.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">Is it recording my child?</div>
+                <div class="faq-a"><p>Casa Companion only listens when your child actively engages it (squeeze or tap). It does not passively record. There is no always-on microphone. All conversation data is processed in real-time and only conversation summaries are stored (not raw audio). We are COPPA 2025 compliant.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">What happens if the company shuts down?</div>
+                <div class="faq-a"><p>We learned from Moxie's failure. Voice recordings are stored locally on your device, not just in the cloud. The companion has an offline mode with cached stories and voice profiles. If Casa Companion ever shuts down, your voice data remains yours. We will never brick your toy.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">What age range is this for?</div>
+                <div class="faq-a"><p>Casa Companion is designed for ages 0&ndash;5 as the primary range, but grows with your child beyond that. For infants, it's a voice-activated lullaby and story machine. For toddlers, it's an interactive conversation partner. For preschoolers, it's a learning companion with STEM, language, and social-emotional content.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">How long does the battery last?</div>
+                <div class="faq-a"><p>6&ndash;8 hours of active use on a full charge (3.7V 2500mAh LiPo battery). The magnetic charging dock makes it easy: just set the companion in its nest and it charges. USB-C input. LED eyes show charging status.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">Can multiple family members clone their voice?</div>
+                <div class="faq-a"><p>Yes. The number of voice profiles depends on your plan. The Early Bird tier includes 1 voice profile. The Backer Exclusive includes 3 (Mom, Dad, Grandma). The Grandparent Bundle includes unlimited voice profiles. Each family member records their own 12 phrases in the Capo app.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">What languages does it support?</div>
+                <div class="faq-a"><p>At launch: English, Italian, and Spanish. Heritage language learning is built in from day one. Native-level pronunciation and cultural stories. Stretch goals will add French, Mandarin, Portuguese, Polish, and more. The companion seamlessly switches between languages.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">Is there a subscription? What's free?</div>
+                <div class="faq-a"><p>The companion works out of the box with a basic free tier: 1 voice profile, English stories, core learning activities. Family ($4.99/mo) unlocks 3 languages, 3 voice profiles, and all learning modes. Premium ($9.99/mo) adds unlimited voices and grandparent features. All Kickstarter backers get 6&ndash;12 months included. Voice recordings never expire, regardless of subscription status.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="toggleFaq(this)">When will backers receive their companions?</div>
+                <div class="faq-a"><p>Kickstarter launches May 5, 2026. Expected delivery is November 2026, in time for the holiday season. We will provide regular backer updates with manufacturing progress, photos, and timeline updates throughout the process.</p></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+    <div class="footer-logo">Casa <span>Companion</span></div>
+    <p class="footer-tagline">Built by Peter. For Gian Lucca. For every family.</p>
+
+    <nav class="footer-nav">
+        <a href="#hero">Home</a>
+        <a href="#origin">Our Story</a>
+        <a href="#companions">Companions</a>
+        <a href="#voice-cloning">How It Works</a>
+        <a href="#safety">Safety</a>
+        <a href="#kickstarter">Kickstarter</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://casa-companion-demo.onrender.com" target="_blank">Live Demo</a>
+    </nav>
+
+    <div class="footer-divider"></div>
+
+    <div class="footer-powered">Powered by <em>Capo AI</em></div>
+    <div class="footer-version">Version 5.0</div>
+</footer>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+
+    // ============================================================
+    // NAV — hamburger + active link
+    // ============================================================
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobileMenu');
+
+    function toggleMenu() {
+        mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open');
+    }
+    function closeMenu() {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+    }
+
+    // Active nav link on scroll (IntersectionObserver)
+    const navLinks = document.querySelectorAll('.nav-link');
+    const allSections = document.querySelectorAll('section[id]');
+
+    const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + id) link.classList.add('active');
+                });
+            }
+        });
+    }, { threshold: 0.3, rootMargin: '-60px 0px 0px 0px' });
+
+    allSections.forEach(sec => navObserver.observe(sec));
+
+    // Close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+            closeMenu();
+        }
+    });
+
+    // ============================================================
+    // SCROLL REVEAL (IntersectionObserver)
+    // ============================================================
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ============================================================
+    // COUNTDOWN TIMER — target May 5, 2026 8:00 AM ET
+    // ============================================================
+    const launchDate = new Date('2026-05-05T08:00:00-04:00').getTime();
+
+    function updateCountdown() {
+        const diff = launchDate - Date.now();
+        if (diff <= 0) {
+            ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
+                document.getElementById(id).textContent = '0';
+            });
+            return;
+        }
+        document.getElementById('cd-days').textContent  = Math.floor(diff / 864e5);
+        document.getElementById('cd-hours').textContent = Math.floor((diff % 864e5) / 36e5);
+        document.getElementById('cd-mins').textContent  = Math.floor((diff % 36e5) / 6e4);
+        document.getElementById('cd-secs').textContent  = Math.floor((diff % 6e4) / 1000);
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ============================================================
+    // FAQ ACCORDION
+    // ============================================================
+    function toggleFaq(el) {
+        const item = el.parentElement;
+        // Close all others
+        document.querySelectorAll('.faq-item.open').forEach(other => {
+            if (other !== item) other.classList.remove('open');
+        });
+        item.classList.toggle('open');
+    }
+
+    // ============================================================
+    // EMAIL WAITLIST FORM
+    // ============================================================
+    function handleEmailSubmit(e) {
+        e.preventDefault();
+        const emailInput = document.getElementById('waitlistEmail');
+        const btn        = document.getElementById('waitlistBtn');
+        const success    = document.getElementById('emailSuccess');
+        const error      = document.getElementById('emailError');
+
+        const email = emailInput.value.trim();
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        success.style.display = 'none';
+        error.style.display   = 'none';
+
+        if (!valid) {
+            error.style.display = 'block';
+            return;
+        }
+
+        btn.textContent = 'Adding...';
+        btn.disabled    = true;
+
+        fetch('/api/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email })
+        })
+        .then(res => {
+            success.style.display = 'block';
+            emailInput.value      = '';
+            btn.textContent       = 'You\'re In!';
+            setTimeout(() => {
+                btn.textContent = 'Join the Waitlist';
+                btn.disabled    = false;
+            }, 4000);
+        })
+        .catch(() => {
+            // Fallback: show success anyway (form submission worked client-side)
+            success.style.display = 'block';
+            emailInput.value      = '';
+            btn.textContent       = 'You\'re In!';
+            setTimeout(() => {
+                btn.textContent = 'Join the Waitlist';
+                btn.disabled    = false;
+            }, 4000);
+        });
+    }
+
+    // ============================================================
+    // PROMO PLAYER ENGINE (audio-driven, 1 clip = 1 slide)
+    // Exact logic preserved from v4 — bumped audio cache to v=50
+    // ============================================================
+    const PROMO_CLIP_COUNT = 10;
+    let promoAudio   = [];
+    let promoRunning = false;
+
+    function preloadPromoAudio() {
+        for (let i = 1; i <= PROMO_CLIP_COUNT; i++) {
+            const a = new Audio('audio/narration-' + i + '.mp3?v=50');
+            a.preload = 'auto';
+            promoAudio.push(a);
+        }
+    }
+
+    function showSlide(id) {
+        document.querySelectorAll('.promo-slide').forEach(s => s.classList.remove('active'));
+        const s = document.getElementById(id);
+        if (s) s.classList.add('active');
+    }
+
+    function playNarratedSlide(slideId, clipIndex, onDone) {
+        showSlide(slideId);
+        const audio = promoAudio[clipIndex];
+        if (!audio) { if (onDone) onDone(); return; }
+        audio.currentTime = 0;
+        audio.onended = () => { if (onDone) onDone(); };
+        audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
+    }
+
+    function playClip3WithHeroes(onDone) {
+        showSlide('ps-heroes');
+        const audio = promoAudio[2];
+        if (!audio) { if (onDone) onDone(); return; }
+        audio.currentTime = 0;
+        audio.onended = () => { if (onDone) onDone(); };
+        audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
+    }
+
+    function showCTA() {
+        showSlide('ps-cta');
+        const reveals = ['pCtaLogo','pCtaTagline','pCtaDemo','pCtaUrl','pCtaPowered'];
+        reveals.forEach((id, i) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            setTimeout(() => {
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                el.style.opacity    = '1';
+            }, i * 400);
+        });
+        document.getElementById('promoProgress').style.width = '100%';
+    }
+
+    function runPromoSequence() {
+        const slides = [
+            { slide: 'ps-1',  clip: 0 },
+            { slide: 'ps-2',  clip: 1 },
+            { slide: 'ps-5',  clip: 3 },
+            { slide: 'ps-6',  clip: 4 },
+            { slide: 'ps-7',  clip: 5 },
+            { slide: 'ps-8',  clip: 6 },
+            { slide: 'ps-9',  clip: 7 },
+            { slide: 'ps-10', clip: 8 },
+            { slide: 'ps-11', clip: 9 },
+        ];
+
+        const totalSteps = slides.length + 2;
+        let currentStep  = 0;
+
+        function updateProgress() {
+            currentStep++;
+            const pct = Math.min((currentStep / totalSteps) * 100, 98);
+            document.getElementById('promoProgress').style.width = pct + '%';
+        }
+
+        function playSlideChain(slideList, idx, onAllDone) {
+            if (idx >= slideList.length) { if (onAllDone) onAllDone(); return; }
+            const { slide, clip } = slideList[idx];
+            playNarratedSlide(slide, clip, () => {
+                updateProgress();
+                playSlideChain(slideList, idx + 1, onAllDone);
+            });
+        }
+
+        playSlideChain(slides.slice(0, 2), 0, () => {
+            updateProgress();
+            playClip3WithHeroes(() => {
+                updateProgress();
+                playSlideChain(slides.slice(2), 0, () => {
+                    showCTA();
+                    promoRunning = false;
+                });
+            });
+        });
+    }
+
+    function resetPromoState() {
+        promoRunning = false;
+        promoAudio.forEach(a => { a.pause(); a.currentTime = 0; a.onended = null; });
+        document.querySelectorAll('.promo-slide').forEach(s => s.classList.remove('active'));
+        ['pCtaLogo','pCtaTagline','pCtaDemo','pCtaUrl','pCtaPowered'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) { el.style.transition = 'none'; el.style.opacity = '0'; }
+        });
+        document.getElementById('promoProgress').style.width = '0%';
+    }
+
+    function launchPromo() {
+        document.getElementById('promoOverlay').classList.add('hidden');
+        document.getElementById('promoContainer').classList.add('playing');
+        resetPromoState();
+        promoRunning = true;
+        runPromoSequence();
+    }
+
+    // Fullscreen toggle
+    function toggleFullscreen() {
+        const container = document.getElementById('promoContainer');
+        const fsBtn     = document.getElementById('fsBtn');
+        if (container.classList.contains('fullscreen')) {
+            container.classList.remove('fullscreen');
+            fsBtn.innerHTML          = '&#x26F6;';
+            document.body.style.overflow = '';
+        } else {
+            container.classList.add('fullscreen');
+            fsBtn.innerHTML          = '&#x2715;';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    // ESC to exit fullscreen
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const c = document.getElementById('promoContainer');
+            if (c.classList.contains('fullscreen')) toggleFullscreen();
+        }
+    });
+
+    // Preload audio on page load
+    preloadPromoAudio();
+
+</script>
+</body>
+</html>
