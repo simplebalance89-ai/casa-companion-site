@@ -228,6 +228,13 @@
             font-size: clamp(12px, 2vw, 24px);
             color: rgba(255,255,255,0.9); line-height: 1.4;
             text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .p-phrase.revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
         .p-phrase em { color: var(--gold); font-style: italic; }
         .p-phrase.p-highlight { font-weight: 700; font-size: clamp(14px, 2.4vw, 30px); }
@@ -1234,10 +1241,37 @@
         }
     }
 
+    let phraseTimers = [];
+
+    function clearPhraseTimers() {
+        phraseTimers.forEach(t => clearTimeout(t));
+        phraseTimers = [];
+    }
+
     function showSlide(id) {
+        clearPhraseTimers();
         document.querySelectorAll('.promo-slide').forEach(s => s.classList.remove('active'));
+        // Reset all phrases to hidden
+        document.querySelectorAll('.p-phrase').forEach(p => p.classList.remove('revealed'));
         const s = document.getElementById(id);
         if (s) s.classList.add('active');
+    }
+
+    function revealPhrases(slideId, duration) {
+        const slide = document.getElementById(slideId);
+        if (!slide) return;
+        const phrases = slide.querySelectorAll('.p-phrase');
+        if (!phrases.length) return;
+
+        // Stagger: first phrase at 0.2s, rest evenly across audio duration
+        // Leave 15% buffer at end so last phrase is visible before slide ends
+        const usableDuration = duration * 0.85;
+        const interval = phrases.length > 1 ? (usableDuration / phrases.length) * 1000 : 0;
+
+        phrases.forEach((p, i) => {
+            const delay = 200 + (i * interval);
+            phraseTimers.push(setTimeout(() => p.classList.add('revealed'), delay));
+        });
     }
 
     function playNarratedSlide(slideId, clipIndex, onDone) {
@@ -1246,11 +1280,39 @@
         if (!audio) { if (onDone) onDone(); return; }
         audio.currentTime = 0;
         audio.onended = () => { if (onDone) onDone(); };
-        audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
+
+        // Reveal phrases based on audio duration
+        if (audio.duration && !isNaN(audio.duration)) {
+            revealPhrases(slideId, audio.duration);
+        } else {
+            // Duration not loaded yet — listen for it
+            audio.addEventListener('loadedmetadata', function handler() {
+                revealPhrases(slideId, audio.duration);
+                audio.removeEventListener('loadedmetadata', handler);
+            });
+            // Fallback: reveal all after 0.3s if metadata never fires
+            phraseTimers.push(setTimeout(() => {
+                if (!audio.duration || isNaN(audio.duration)) {
+                    const slide = document.getElementById(slideId);
+                    if (slide) slide.querySelectorAll('.p-phrase').forEach(p => p.classList.add('revealed'));
+                }
+            }, 500));
+        }
+
+        audio.play().catch(() => {
+            // If audio fails, reveal all phrases immediately and advance
+            const slide = document.getElementById(slideId);
+            if (slide) slide.querySelectorAll('.p-phrase').forEach(p => p.classList.add('revealed'));
+            if (onDone) setTimeout(onDone, 3000);
+        });
     }
 
     function playClip3WithHeroes(onDone) {
         showSlide('ps-heroes');
+        // Heroes slide has the phrase already in a special layout — reveal it immediately
+        const heroSlide = document.getElementById('ps-heroes');
+        if (heroSlide) heroSlide.querySelectorAll('.p-phrase').forEach(p => p.classList.add('revealed'));
+
         const audio = promoAudio[2];
         if (!audio) { if (onDone) onDone(); return; }
         audio.currentTime = 0;
