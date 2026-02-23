@@ -1,5 +1,5 @@
 """
-Generate 17 narration MP3s for the Casa Companion founder story promo.
+Generate 18 narration MP3s for the Casa Companion founder story promo.
 
 Architecture: 1 audio clip = 1 slide. Each clip maps to exactly one visual slide.
 Audio-driven timeline: JS plays clip N, shows slide N, advances on clip.onended.
@@ -45,9 +45,10 @@ NARRATION = [
     # Clip 6 → ps-6 (heritage languages)
     "Seventy-five percent of heritage languages disappear by the third generation.",
 
-    # Clip 7 → ps-7 (grandparents bridge)
-    "A toy that connects grandparents to grandchildren. "
-    "A bridge across distance, language, and time.",
+    # Clip 7 → ps-7 (grandparents bridge + stats)
+    "Seventy million grandparents. A hundred seventy-nine billion dollars spent on grandkids. "
+    "Forty-two percent in a different state. "
+    "A toy that connects them. A bridge across distance, language, and time.",
 
     # Clip 8 → ps-8 (daddy away)
     "Dad's on a business trip. But tonight, he's still helping with homework. "
@@ -79,11 +80,16 @@ NARRATION = [
     "Memories, homework, bedtime stories — all synced to your phone. "
     "Think Alexa and Siri, but done right.",
 
-    # Clip 16 → ps-16 (projector vision)
+    # Clip 16 → ps-16 (competition)
+    "Everyone else announced it. We built it. "
+    "Moxie raised sixty million and died. Codi is scripted. Toniebox has no AI. "
+    "We have real-time conversation, voice cloning, all languages, and we won't brick.",
+
+    # Clip 17 → ps-17 (projector vision)
     "The premium edition projects from the eyes. Grandma on the wall. "
     "Bedtime stories on the ceiling. No screen. Pure magic.",
 
-    # Clip 17 → ps-17 (capisce closer)
+    # Clip 18 → ps-18 (capisce closer)
     "Casa Companion. US made and built. Taking back childhood. "
     "Kickstarter May fifth. Capisce.",
 ]
