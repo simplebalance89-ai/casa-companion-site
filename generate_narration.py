@@ -45,7 +45,7 @@ NARRATION = [
     "Delfino the Dolphin. Drago the Dragon. And Xolo.",
 
     # Clip 4 — life-nonna-kitchen.png
-    "Stories in Italian, because heritage disappears in one generation if you let it. "
+    "Stories in any language, because heritage disappears in one generation if you let it. "
     "Seventy-five percent of heritage languages are lost by the third generation. "
     "Your grandmother's Italian. Your grandfather's Spanish. Their lullabies. Gone. "
     "Unless you build something to keep them.",
@@ -77,6 +77,8 @@ NARRATION = [
     # Clip 8 — eng-exploded.png
     "One electronics pod. Ten plush shells. Magnetic charging dock. Machine washable. "
     "Volume capped at eighty-five decibels. No camera. No screen. No microtransactions. Ever. "
+    "Sync via Bluetooth to any device. Casting and project to the wall. Coming soon. "
+    "Parent and teaching modes. Track usage. Set preferences. "
     "Built for real kids. Built for real parents.",
 
     # Clip 9 — packaging-unbox.png → packaging-box.png → packaging-shelf.png
