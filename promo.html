@@ -204,7 +204,7 @@
 
         function preloadAudio() {
             for (let i = 1; i <= CLIP_COUNT; i++) {
-                const a = new Audio(`audio/narration-${i}.mp3?v=4`);
+                const a = new Audio(`audio/narration-${i}.mp3?v=6`);
                 a.preload = 'auto';
                 audioClips.push(a);
             }
@@ -258,8 +258,8 @@
                     } else {
                         showSlide(`s-h${heroIdx}`);
                     }
-                }, 2000);
-            }, 4000);
+                }, 1500);
+            }, 3000);
         }
 
         function showCTA() {

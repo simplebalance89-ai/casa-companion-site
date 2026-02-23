@@ -1270,7 +1270,7 @@
     // Preload 10 narration MP3s (v4 = cache bust)
     function preloadPromoAudio() {
         for (let i = 1; i <= PROMO_CLIP_COUNT; i++) {
-            const a = new Audio(`audio/narration-${i}.mp3?v=4`);
+            const a = new Audio(`audio/narration-${i}.mp3?v=6`);
             a.preload = 'auto';
             promoAudio.push(a);
         }
@@ -1319,7 +1319,7 @@
         };
         audio.play().catch(() => { if (onDone) setTimeout(onDone, 3000); });
 
-        // After ~4s intro text, start cycling heroes every 2s as voice names them
+        // After ~3s intro text, start cycling heroes every 1.5s as voice names them
         setTimeout(() => {
             let heroIdx = 0;
             showSlide('ps-h0');
@@ -1331,8 +1331,8 @@
                 } else {
                     showSlide(`ps-h${heroIdx}`);
                 }
-            }, 2000);
-        }, 4000);
+            }, 1500);
+        }, 3000);
     }
 
     // Show CTA slide with staggered reveals, then auto-open demo
