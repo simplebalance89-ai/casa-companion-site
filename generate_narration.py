@@ -99,12 +99,13 @@ def generate_azure(text: str, clip_num: int):
     }
     payload = {
         "model": "gpt-4o-mini-tts",
-        "voice": "nova",
+        "voice": "onyx",
         "input": text,
         "instructions": (
-            "Speak warmly and clearly, like a founder telling his personal story "
-            "in a heartfelt product video. Moderate pace, genuine emotion, natural pauses "
-            "between sentences. Slightly slower on emotional moments."
+            "Deep male voice. Slow, deliberate pace. New York confidence. "
+            "You're a 46-year-old founder telling your story to investors and parents. "
+            "Not salesy. Not rushing. Every sentence lands. Natural pauses between thoughts. "
+            "Warm but authoritative. The kind of voice that makes people stop and listen."
         ),
     }
     resp = httpx.post(url, json=payload, headers=headers, timeout=90.0)
