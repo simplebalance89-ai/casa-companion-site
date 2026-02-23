@@ -144,10 +144,10 @@
         /* Inline promo scenes */
         .promo-scene {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; opacity: 0; z-index: 1; padding: clamp(12px, 3vw, 40px);
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; z-index: 1; padding: clamp(12px, 3vw, 40px);
         }
-        .promo-scene.active { opacity: 1; z-index: 2; }
+        .promo-scene.active { display: flex; z-index: 2; }
         .promo-scene .p-phrase {
             font-family: 'Playfair Display', serif;
             font-size: clamp(14px, 2.5vw, 32px);
@@ -1181,17 +1181,9 @@
     }
 
     function showPromoScene(n) {
-        document.querySelectorAll('.promo-scene').forEach(s => {
-            s.style.transition = 'opacity 0.5s ease';
-            s.style.opacity = '0';
-            s.classList.remove('active');
-        });
+        document.querySelectorAll('.promo-scene').forEach(s => s.classList.remove('active'));
         const s = document.getElementById(`ps-${n}`);
-        if (s) {
-            s.style.transition = 'opacity 0.8s ease';
-            s.style.opacity = '1';
-            s.classList.add('active');
-        }
+        if (s) s.classList.add('active');
     }
 
     function pFadeIn(sel, dur) {
@@ -1273,15 +1265,19 @@
         promoExecuted.clear();
         promoAudio.forEach(a => { a.pause(); a.currentTime = 0; });
         promoCurrentAudio = null;
-        document.querySelectorAll('.promo-scene').forEach(s => { s.classList.remove('active'); s.style.transition = 'none'; s.style.opacity = '0'; });
-        document.querySelectorAll('.p-phrase, .p-toy-name, .p-crow-reveal, .p-subtext, .p-product-title, .p-hero, .p-pill, .p-cta-logo, .p-cta-tagline, .p-cta-url').forEach(el => {
-            el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = '';
+        document.querySelectorAll('.promo-scene').forEach(s => s.classList.remove('active'));
+        // Reset all text/element visibility
+        document.querySelectorAll('#promoStage [style]').forEach(el => {
+            if (el.id === 'promoProgress' || el.id === 'promoOverlay' || el.classList.contains('promo-scene')) return;
+            el.style.opacity = '0';
+            el.style.transition = 'none';
+            el.style.transform = '';
         });
         document.querySelectorAll('.p-hero').forEach(el => { el.style.transform = 'translateY(20px)'; });
         document.querySelectorAll('.p-pill').forEach(el => { el.style.transform = 'scale(0.8)'; });
         document.querySelectorAll('.p-toy-name').forEach(el => { el.classList.remove('flash'); el.style.color = ''; });
-        const cr = document.getElementById('pCrowReveal'); if (cr) cr.style.transform = 'scale(0.5)';
-        const cb = document.getElementById('pCtaBadge'); if (cb) cb.style.cssText = 'opacity:0; transform:scale(0.8);';
+        const cr = document.getElementById('pCrowReveal'); if (cr) { cr.style.opacity = '0'; cr.style.transform = 'scale(0.5)'; }
+        const cb = document.getElementById('pCtaBadge'); if (cb) { cb.style.opacity = '0'; cb.style.transform = 'scale(0.8)'; }
         document.getElementById('promoProgress').style.width = '0%';
     }
 
@@ -1298,11 +1294,9 @@
     function launchPromo() {
         document.getElementById('promoOverlay').classList.add('hidden');
         resetPromoState();
-        // Force reflow so opacity:0 (from reset) is committed before we start animating
-        document.getElementById('promoStage').offsetHeight;
         promoStart = Date.now();
         promoRunning = true;
-        requestAnimationFrame(() => promoTick());
+        promoTick();
     }
 
     // Preload on page load
