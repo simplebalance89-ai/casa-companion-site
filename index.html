@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="3.0">
+    <meta name="version" content="3.1">
     <title>Casa Companion — Your Voice. Their Companion.</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -508,6 +508,9 @@
                         <div class="hero-grid-item"><img src="images/hero-dragon.png" alt="Drago"><div class="hg-name">Drago</div><div class="hg-animal">the Dragon</div></div>
                         <div class="hero-grid-item"><img src="images/hero-xolo.png" alt="Xolo"><div class="hg-name">Xolo</div><div class="hg-animal">the Xolo</div></div>
                     </div>
+                    <div style="position:relative; z-index:2; text-align:center; padding:0 0 clamp(6px,1vw,12px);">
+                        <div style="font-size:clamp(9px,1.1vw,13px); color:rgba(255,255,255,0.45); letter-spacing:1.5px; font-weight:300;">Powered by <span style="color:var(--gold); font-weight:600; font-style:italic;">Capo AI</span></div>
+                    </div>
                 </div>
 
                 <!-- Slide 8: This Generation -->
@@ -520,14 +523,18 @@
                 <!-- Slide 9: Engineering -->
                 <div class="promo-slide ps-9" id="ps-9">
                     <div class="p-text-box">
-                        <div class="p-phrase">One electronics pod. <em>Ten plush shells.</em> Magnetic dock. Machine washable. Volume capped. <em>No camera. No screen. No microtransactions.</em></div>
+                        <div class="p-phrase">One electronics pod. <em>Ten plush shells.</em></div>
+                        <div class="p-phrase">Magnetic dock. Machine washable. Volume capped.</div>
+                        <div class="p-phrase"><em>No camera. No screen. No microtransactions.</em></div>
                     </div>
                 </div>
 
                 <!-- Slide 10: Packaging/Features -->
                 <div class="promo-slide ps-10" id="ps-10">
                     <div class="p-text-box">
-                        <div class="p-phrase">Bluetooth sync. <em>Parent mode. Teaching mode.</em> Built for real kids. Built for <em>real parents.</em></div>
+                        <div class="p-phrase">Bluetooth sync. <em>Pair with any phone.</em></div>
+                        <div class="p-phrase">Parent mode. Teaching mode. Screencast.</div>
+                        <div class="p-phrase">Built for real kids. <em>Built for real parents.</em></div>
                     </div>
                 </div>
 
@@ -1275,7 +1282,7 @@
     // Slide advances ONLY when the audio clip ends (onended event).
     // Hero parade is visual-only (3s interval). No setTimeout drift.
 
-    const PROMO_CLIP_COUNT = 11;
+    const PROMO_CLIP_COUNT = 10;
     let promoAudio = [];
     let promoRunning = false;
     let promoHeroInterval = null;
@@ -1291,7 +1298,7 @@
     // Preload 10 narration MP3s (v4 = cache bust)
     function preloadPromoAudio() {
         for (let i = 1; i <= PROMO_CLIP_COUNT; i++) {
-            const a = new Audio(`audio/narration-${i}.mp3?v=8`);
+            const a = new Audio(`audio/narration-${i}.mp3?v=31`);
             a.preload = 'auto';
             promoAudio.push(a);
         }
@@ -1358,20 +1365,20 @@
         }, reveals.length * 400 + 1500);
     }
 
-    // Main sequence: clip1 → clip2 → clip3+heroes → clip5-11 → CTA
-    // Note: narration-4.mp3 does not exist — ps-3 and ps-4 are removed
+    // Main sequence: clip1 → clip2 → clip3+heroes → clips4-10 → CTA
+    // 10 clips total: narration-1.mp3 through narration-10.mp3
     function runPromoSequence() {
         const slides = [
-            { slide: 'ps-1', clip: 0 },
-            { slide: 'ps-2', clip: 1 },
-            // clip 3 (index 2) handled specially (heroes shown immediately during audio)
-            { slide: 'ps-5', clip: 4 },
-            { slide: 'ps-6', clip: 5 },
-            { slide: 'ps-7', clip: 6 },
-            { slide: 'ps-8', clip: 7 },
-            { slide: 'ps-9', clip: 8 },
-            { slide: 'ps-10', clip: 9 },
-            { slide: 'ps-11', clip: 10 },
+            { slide: 'ps-1', clip: 0 },   // narration-1
+            { slide: 'ps-2', clip: 1 },   // narration-2
+            // clip 2 (narration-3) handled specially for heroes
+            { slide: 'ps-5', clip: 3 },   // narration-4
+            { slide: 'ps-6', clip: 4 },   // narration-5
+            { slide: 'ps-7', clip: 5 },   // narration-6
+            { slide: 'ps-8', clip: 6 },   // narration-7
+            { slide: 'ps-9', clip: 7 },   // narration-8
+            { slide: 'ps-10', clip: 8 },  // narration-9
+            { slide: 'ps-11', clip: 9 },  // narration-10 (Capisce)
         ];
 
         const totalSteps = slides.length + 2; // +1 for clip3+heroes (shown before rest), +1 for CTA
