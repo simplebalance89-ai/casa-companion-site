@@ -149,11 +149,13 @@
         /* Promo scenes: full-bleed image + text overlay */
         .promo-scene {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: none; flex-direction: column; justify-content: flex-end; align-items: center;
+            display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
             text-align: center; z-index: 1;
             background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 0.8s ease;
+            pointer-events: none;
         }
-        .promo-scene.active { display: flex; z-index: 2; }
+        .promo-scene.active { opacity: 1; z-index: 2; pointer-events: auto; }
         .ps-1  { background-image: url('images/scene1-father.png'); }
         .ps-2  { background-image: url('images/life-boy-crow.png'); }
         .ps-3  { background-image: url('images/life-toddler-rug.png'); }
@@ -1309,7 +1311,7 @@
     }
 
     // ====== INLINE PROMO ENGINE (60s founder story) ======
-    const PROMO_DURATION = 120000;
+    const PROMO_DURATION = 140000;
     let promoAudio = [];
     let promoMuted = false;
     let promoCurrentAudio = null;
@@ -1334,7 +1336,13 @@
     }
 
     function showPromoScene(n) {
-        document.querySelectorAll('.promo-scene').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.promo-scene').forEach(s => {
+            s.classList.remove('active');
+            // Reset text opacity on outgoing scenes
+            s.querySelectorAll('.p-phrase, .p-hero-name-overlay').forEach(el => {
+                el.style.transition = 'none'; el.style.opacity = '0';
+            });
+        });
         const s = document.getElementById(`ps-${n}`);
         if (s) s.classList.add('active');
     }
@@ -1362,98 +1370,98 @@
 
     function showHeroSlide(i) {
         showPromoScene(`h${i}`);
-        pFadeIn(`#phn-${i}`, 400);
+        setTimeout(() => pFadeIn(`#phn-${i}`, 500), 300);
     }
 
     const promoTimeline = [
-        // S1: Father + toddler (0-5s) — "I build AI tools"
+        // S1: Father + toddler (0-7s) — Audio 1
         [0,     () => { showPromoScene(1); playPromoNarration(0); }],
-        [300,   () => pFadeIn('#p1a', 700)],
+        [500,   () => pFadeIn('#p1a', 800)],
 
-        // S2: Boy hugging crow (5-10s) — "When my first son was born"
-        [5000,  () => { showPromoScene(2); }],
-        [5300,  () => pFadeIn('#p1b', 700)],
+        // S2: Boy hugging crow (7-14s)
+        [7000,  () => showPromoScene(2)],
+        [7500,  () => pFadeIn('#p1b', 800)],
 
-        // S3: Toddler on rug (10-14s) — "Nothing existed"
-        [10000, () => { showPromoScene(3); }],
-        [10300, () => pFadeIn('#p1c', 500)],
+        // S3: Toddler on rug (14-18s)
+        [14000, () => showPromoScene(3)],
+        [14500, () => pFadeIn('#p1c', 600)],
 
-        // S4: Father recording (14-19s) — "Custom GPT"
-        [14000, () => { showPromoScene(4); playPromoNarration(1); }],
-        [14300, () => pFadeIn('#p2a', 700)],
-        [16500, () => pFadeIn('#p2b', 700)],
+        // S4: Father recording (18-26s) — Audio 2
+        [18000, () => { showPromoScene(4); playPromoNarration(1); }],
+        [18500, () => pFadeIn('#p2a', 800)],
+        [21000, () => pFadeIn('#p2b', 800)],
 
-        // S5: Two kids playing (19-24s) — "Flew to Florida"
-        [19000, () => { showPromoScene(5); }],
-        [19300, () => pFadeIn('#p2c', 700)],
-        [21500, () => pFadeIn('#p2d', 500)],
+        // S5: Two kids playing (26-33s)
+        [26000, () => showPromoScene(5)],
+        [26500, () => pFadeIn('#p2c', 800)],
+        [29000, () => pFadeIn('#p2d', 600)],
 
-        // S6: Kids closeup (24-27s) — "That's when I knew"
-        [24000, () => { showPromoScene(6); }],
-        [24300, () => pFadeIn('#p2e', 600)],
+        // S6: Kids closeup (33-37s)
+        [33000, () => showPromoScene(6)],
+        [33500, () => pFadeIn('#p2e', 700)],
 
-        // S7: Heroes intro text (27-30s)
-        [27000, () => { showPromoScene(7); playPromoNarration(2); }],
-        [27300, () => pFadeIn('#p3a', 700)],
-        [28500, () => pFadeIn('#p3b', 700)],
+        // S7: Heroes intro text (37-42s) — Audio 3
+        [37000, () => { showPromoScene(7); playPromoNarration(2); }],
+        [37500, () => pFadeIn('#p3a', 800)],
+        [39500, () => pFadeIn('#p3b', 800)],
 
-        // === HERO PARADE (30-67.5s) — 2.5s each, 15 heroes ===
-        [30000,  () => showHeroSlide(0)],   // Crow
-        [32500,  () => showHeroSlide(1)],   // Owl
-        [35000,  () => showHeroSlide(2)],   // Bear
-        [37500,  () => showHeroSlide(3)],   // Fox
-        [40000,  () => showHeroSlide(4)],   // Bunny
-        [42500,  () => showHeroSlide(5)],   // Turtle
-        [45000,  () => showHeroSlide(6)],   // Elephant
-        [47500,  () => showHeroSlide(7)],   // Wolf
-        [50000,  () => showHeroSlide(8)],   // Otter
-        [52500,  () => showHeroSlide(9)],   // Lion
-        [55000,  () => showHeroSlide(10)],  // Dolphin
-        [57500,  () => showHeroSlide(11)],  // Dragon
-        [60000,  () => showHeroSlide(12)],  // Deer
-        [62500,  () => showHeroSlide(13)],  // Alebrije
-        [65000,  () => showHeroSlide(14)],  // Xolo
+        // === HERO PARADE (42-87s) — 3s each, 15 heroes ===
+        [42000,  () => showHeroSlide(0)],   // Crow
+        [45000,  () => showHeroSlide(1)],   // Owl
+        [48000,  () => showHeroSlide(2)],   // Bear
+        [51000,  () => showHeroSlide(3)],   // Fox
+        [54000,  () => showHeroSlide(4)],   // Bunny
+        [57000,  () => showHeroSlide(5)],   // Turtle
+        [60000,  () => showHeroSlide(6)],   // Elephant
+        [63000,  () => showHeroSlide(7)],   // Wolf
+        [66000,  () => showHeroSlide(8)],   // Otter
+        [69000,  () => showHeroSlide(9)],   // Lion
+        [72000,  () => showHeroSlide(10)],  // Dolphin
+        [75000,  () => showHeroSlide(11)],  // Dragon
+        [78000,  () => showHeroSlide(12)],  // Deer
+        [81000,  () => showHeroSlide(13)],  // Alebrije
+        [84000,  () => showHeroSlide(14)],  // Xolo
 
-        // S8: Packaging (67.5-72s)
-        [67500, () => { showPromoScene(8); }],
-        [67800, () => pFadeIn('#p3c', 700)],
+        // S8: Packaging (87-93s)
+        [87000, () => showPromoScene(8)],
+        [87500, () => pFadeIn('#p3c', 800)],
 
-        // S9: Nonna kitchen (72-76s) — "Stories. Languages."
-        [72000, () => { showPromoScene(9); playPromoNarration(3); }],
-        [72300, () => pFadeIn('#p4a', 700)],
+        // S9: Nonna kitchen (93-99s) — Audio 4
+        [93000, () => { showPromoScene(9); playPromoNarration(3); }],
+        [93500, () => pFadeIn('#p4a', 800)],
 
-        // S10: Grandma FaceTime (76-80s)
-        [76000, () => { showPromoScene(10); }],
-        [76300, () => pFadeIn('#p4b', 700)],
+        // S10: Grandma FaceTime (99-105s)
+        [99000, () => showPromoScene(10)],
+        [99500, () => pFadeIn('#p4b', 800)],
 
-        // S11: Grandparent distance (80-87s) — features + pills
-        [80000, () => { showPromoScene(11); }],
-        [80300, () => pFadeIn('#p4c', 600)],
-        [82000, () => pFadeIn('#p4d', 800)],
-        [84500, () => pFlashPills()],
+        // S11: Grandparent distance (105-114s) — pills
+        [105000, () => showPromoScene(11)],
+        [105500, () => pFadeIn('#p4c', 700)],
+        [108000, () => pFadeIn('#p4d', 800)],
+        [111000, () => pFlashPills()],
 
-        // S12: Crow cinematic (87-97s) — Teddy/Cabbage/Furby
-        [87000, () => { showPromoScene(12); playPromoNarration(4); }],
-        [87200, () => pFlashToy('pt-teddy')],
-        [89500, () => pFlashToy('pt-cabbage')],
-        [91800, () => pFlashToy('pt-furby')],
-        [93500, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
-        [94000, () => pFadeIn('#p5a', 700)],
-        [95500, () => pFadeIn('#p5b', 600)],
+        // S12: Crow cinematic (114-126s) — Audio 5
+        [114000, () => { showPromoScene(12); playPromoNarration(4); }],
+        [114300, () => pFlashToy('pt-teddy')],
+        [117000, () => pFlashToy('pt-cabbage')],
+        [119700, () => pFlashToy('pt-furby')],
+        [122000, () => { document.querySelectorAll('.p-toy-name').forEach(e => { e.style.transition = 'opacity 0.6s'; e.style.opacity = '0'; }); }],
+        [122500, () => pFadeIn('#p5a', 700)],
+        [124000, () => pFadeIn('#p5b', 700)],
 
-        // S13: Bunny glow (97-100s) — "No screen"
-        [97000, () => { showPromoScene(13); }],
-        [97300, () => pFadeIn('#p5c', 600)],
+        // S13: Bunny glow (126-130s)
+        [126000, () => showPromoScene(13)],
+        [126500, () => pFadeIn('#p5c', 700)],
 
-        // S14: CTA (100-120s)
-        [100000, () => { showPromoScene(14); playPromoNarration(5); }],
-        [100300, () => pFadeIn('#pCtaLogo', 700)],
-        [102000, () => pFadeIn('#pCtaTag', 600)],
-        [104500, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
-        [106500, () => pFadeIn('#pCtaUrl', 500)],
-        [109000, () => pFadeIn('#pCtaPowered', 600)],
-        [111000, () => pFadeIn('#pCtaArch', 600)],
-        [113500, () => pFadeIn('#pCtaDemo', 700)],
+        // S14: CTA (130-145s) — Audio 6
+        [130000, () => { showPromoScene(14); playPromoNarration(5); }],
+        [130500, () => pFadeIn('#pCtaLogo', 800)],
+        [132500, () => pFadeIn('#pCtaTag', 700)],
+        [135000, () => { const b = document.getElementById('pCtaBadge'); b.style.transition = 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; b.style.opacity = '1'; b.style.transform = 'scale(1)'; }],
+        [137000, () => pFadeIn('#pCtaUrl', 600)],
+        [139000, () => pFadeIn('#pCtaPowered', 600)],
+        [141000, () => pFadeIn('#pCtaArch', 600)],
+        [143000, () => pFadeIn('#pCtaDemo', 700)],
     ];
 
     function pRevealHero(i) {
