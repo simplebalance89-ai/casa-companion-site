@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="version" content="4.0">
+    <meta name="version" content="5.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="description" content="Casa Companion - An AI plush toy that tells bedtime stories in your voice. Voice cloning, heritage languages, and a family companion that grows with your child. Coming to Kickstarter May 5, 2026.">
     <meta property="og:title" content="Casa Companion — Your Voice. Their Companion.">
     <meta property="og:description" content="An AI plush toy that tells bedtime stories in your voice. Even when you can't be there. 10 companions, all languages, powered by Capo AI.">
@@ -1268,7 +1271,7 @@
 
     function preloadPromoAudio() {
         for (let i = 1; i <= PROMO_CLIP_COUNT; i++) {
-            const a = new Audio('audio/narration-' + i + '.mp3?v=80');
+            const a = new Audio('audio/narration-' + i + '.mp3?v=90');
             a.preload = 'auto';
             promoAudio.push(a);
         }
