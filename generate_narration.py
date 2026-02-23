@@ -85,7 +85,9 @@ NARRATION = [
     "Your voice. Their companion.",
 
     # Clip 10 — banner-crow-cinematic.png
-    "Everyone else announced it. We built it.",
+    "Everyone else announced it. We built it. "
+    "Capisce. "
+    "Powered by Capo AI.",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "audio")
