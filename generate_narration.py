@@ -25,71 +25,47 @@ TTS_API_VERSION = "2025-04-01-preview"
 
 NARRATION = [
     # Clip 1 — scene1-father.png
-    "I build AI tools for business. ERP solutions. Enterprise software. "
-    "When my first son was born, I wanted something that would actually get him playing, learning, and off a screen. "
+    "I build AI for business. When my son was born, I wanted something real. "
     "Nothing existed. So I built one.",
 
     # Clip 2 — life-boy-crow.png
-    "Started as a custom GPT on my phone. Just ChatGPT. "
-    "I saw the potential, but I saw the limitations. "
-    "Flew to Florida and let my nephews try it. Two and four years old. "
-    "They wouldn't put it down. We were in the car and all five of us wouldn't put it down. "
-    "Mom and dad jumped in. My first prototype. All of us laughing, bonding, communicating. No screen. "
-    "That's when I knew.",
+    "Let my nephews try it. Two and four years old. "
+    "They wouldn't put it down. That's when I knew.",
 
-    # Clip 3 — scene3-heroes.png
-    "So I built it the right way. The way I build for work. "
+    # Clip 3 — kid-playing-fox.png
     "Ten companions. Each with their own personality. "
-    "Corvo the Crow. Gufo the Owl. Orsetto the Bear. Coniglio the Bunny. "
-    "Tartaruga the Sea Turtle. Elefante the Elephant. Leone the Lion. "
-    "Delfino the Dolphin. Drago the Dragon. And Xolo.",
+    "Corvo, Gufo, Orsetto, Coniglio, Tartaruga, Elefante, Leone, Delfino, Drago, and Xolo.",
 
-    # Clip 4 — life-nonna-kitchen.png
-    "Stories in any language, because heritage disappears in one generation if you let it. "
+    # Clip 4 — life-two-kids.png (no separate narration — names finish over this image)
+    "",
+
+    # Clip 5 — life-nonna-kitchen.png
     "Seventy-five percent of heritage languages are lost by the third generation. "
-    "Your grandmother's Italian. Your grandfather's Spanish. Their lullabies. Gone. "
     "Unless you build something to keep them.",
 
-    # Clip 5 — life-grandparent-distance.png
-    "Seventy million grandparents in America. "
-    "Forty-two percent live in a different state than their grandchildren. "
-    "They spend thousands every year. But what they really want to give can't be bought in a store. "
-    "Record twelve phrases. Five minutes. That voice lives inside the toy. "
-    "Grandma reads bedtime stories from a thousand miles away. "
-    "Not through a screen. Through a companion the child holds and falls asleep with.",
+    # Clip 6 — life-grandparent-distance.png
+    "Record twelve phrases. Five minutes. "
+    "Grandma reads bedtime stories from a thousand miles away. Not through a screen.",
 
-    # Clip 6 — banner-father-recording.png
-    "This was born from losing my mother at a very early age. "
-    "Her spirit lives with my son and me. "
-    "So we cloned her voice so my son could hear her. And you can too. "
-    "For all family generations. "
-    "When a grandparent records their voice in Casa Companion, that voice doesn't expire. "
-    "It doesn't require a subscription. "
-    "Your child can hear Nonna say buonanotte ten years from now. Twenty years from now. "
-    "That's not a feature. That's a legacy.",
+    # Clip 7 — banner-father-recording.png
+    "We cloned my mother's voice so my son could hear her. "
+    "That voice doesn't expire. That's not a feature. That's a legacy.",
 
-    # Clip 7 — scene5-crow.png
-    "Teddy Ruxpin gave us a bond with a toy. Cabbage Patch made it personal. Furby gave it personality. "
-    "This is what this generation deserves. But built with real AI. "
-    "Seven agents built in. Stories. Languages. Sign language. Music. Brain games. Milestones. "
-    "No screen. Just your voice.",
+    # Clip 8 — scene5-crow.png
+    "Teddy Ruxpin gave us a bond. Cabbage Patch made it personal. "
+    "This is what this generation deserves. Built with real AI.",
 
-    # Clip 8 — eng-exploded.png
-    "One electronics pod. Ten plush shells. Magnetic charging dock. Machine washable. "
-    "Volume capped at eighty-five decibels. No camera. No screen. No microtransactions. Ever. "
-    "Sync via Bluetooth to any device. Casting and project to the wall. Coming soon. "
-    "Parent and teaching modes. Track usage. Set preferences. "
+    # Clip 9 — eng-exploded.png
+    "One electronics pod. Ten plush shells. Magnetic dock. Machine washable. "
+    "Volume capped. No camera. No screen. No microtransactions.",
+
+    # Clip 10 — packaging-box.png
+    "Bluetooth sync. Parent mode. Teaching mode. "
     "Built for real kids. Built for real parents.",
 
-    # Clip 9 — packaging-unbox.png → packaging-box.png → packaging-shelf.png
-    "Casa Companion. Coming to Kickstarter May fifth, twenty twenty-six. "
-    "Early bird pricing. Limited quantities. "
-    "Your voice. Their companion.",
-
-    # Clip 10 — banner-crow-cinematic.png
-    "Everyone else announced it. We built it. "
-    "Capisce. "
-    "Powered by Capo AI.",
+    # Clip 11 — banner-crow-cinematic.png
+    "Casa Companion. Kickstarter May fifth. "
+    "Everyone else announced it. We built it. Capisce.",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "audio")
@@ -134,6 +110,9 @@ def main():
 
     for i, text in enumerate(NARRATION, 1):
         filename = f"narration-{i}.mp3"
+        if not text.strip():
+            print(f"Clip {i}/{len(NARRATION)}: [SKIP — silent slide]")
+            continue
         print(f"Clip {i}/{len(NARRATION)}: {text[:60]}...")
         content = generate_azure(text, i)
         filepath = os.path.join(OUTPUT_DIR, filename)
