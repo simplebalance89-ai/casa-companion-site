@@ -31,6 +31,13 @@
             height: 1080px;
         }
 
+        /* Embedded mode: scale the fixed canvas to fit the iframe */
+        body.embedded {
+            width: 1920px;
+            height: 1080px;
+            transform-origin: top left;
+        }
+
         .scene {
             position: absolute;
             top: 0; left: 0;
@@ -422,6 +429,10 @@
             width: 0%;
             transition: width 0.1s linear;
         }
+
+        /* Hide controls and timer when embedded */
+        body.embedded .controls,
+        body.embedded .timer { display: none; }
 
         /* ====== CONTROLS ====== */
         .controls {
@@ -869,7 +880,26 @@
         style.textContent = `@keyframes ledPulseAnim { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 1; } }`;
         document.head.appendChild(style);
 
+        // ====== EMBED SCALING ======
+        function setupEmbed() {
+            const isEmbed = window.self !== window.top || new URLSearchParams(window.location.search).has('embed');
+            if (!isEmbed) return;
+
+            document.body.classList.add('embedded');
+
+            function scaleToFit() {
+                const scaleX = window.innerWidth / 1920;
+                const scaleY = window.innerHeight / 1080;
+                const scale = Math.min(scaleX, scaleY);
+                document.body.style.transform = `scale(${scale})`;
+            }
+
+            scaleToFit();
+            window.addEventListener('resize', scaleToFit);
+        }
+
         // Boot
+        setupEmbed();
         preloadNarration();
         initParticles();
         initWaveBars();
