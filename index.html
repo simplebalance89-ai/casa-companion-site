@@ -432,6 +432,34 @@
         }
         .demo-btn:hover { transform: scale(1.05); text-decoration: none; }
 
+        /* === MORE FROM CASA GIANELLI === */
+        .products-section {
+            background: linear-gradient(135deg, #0D0D1A 0%, #1A1A2E 50%, #0D0D1A 100%);
+            padding: 80px 24px; text-align: center;
+        }
+        .products-section h2 {
+            font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 42px);
+            color: #fff; margin-bottom: 8px;
+        }
+        .products-section .subtitle { color: var(--gold); font-size: 14px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px; max-width: 900px; margin: 0 auto;
+        }
+        .product-card {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px; padding: 32px 24px; transition: transform 0.2s, border-color 0.2s;
+        }
+        .product-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+        .product-card h3 { font-family: 'Playfair Display', serif; color: #fff; font-size: 22px; margin: 0 0 8px; }
+        .product-card p { color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 20px; }
+        .product-card .product-link {
+            display: inline-block; padding: 12px 32px; border: 2px solid var(--gold);
+            color: var(--gold); font-weight: 700; font-size: 14px; border-radius: 50px;
+            letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s; text-decoration: none;
+        }
+        .product-card .product-link:hover { background: var(--gold); color: #0D0D1A; }
+
         /* === KICKSTARTER / PRICING === */
         .ks-section { background: var(--dark); padding: 80px 24px; text-align: center; }
         .ks-section h2 {
@@ -584,6 +612,7 @@
             <a href="#grandparents" class="nav-link">Grandparents</a>
             <a href="#hardware" class="nav-link">Hardware</a>
             <a href="#demo" class="nav-link">Try It</a>
+            <a href="#products" class="nav-link">Products</a>
             <a href="#kickstarter" class="nav-link">Kickstarter</a>
             <a href="#faq" class="nav-link">FAQ</a>
         </div>
@@ -1078,6 +1107,32 @@
 </section>
 
 
+<!-- ===== 9B. MORE FROM CASA GIANELLI ===== -->
+<section id="products" class="products-section">
+    <div class="subtitle">The Full Suite</div>
+    <h2>More from Casa Gianelli</h2>
+    <p style="color:rgba(255,255,255,0.5); max-width:600px; margin:0 auto 40px; font-size:16px;">Every product built with the same philosophy. No fluff. Real tools. Real edge.</p>
+
+    <div class="products-grid">
+        <div class="product-card">
+            <h3>Casa Companion</h3>
+            <p>AI-powered plush toy that speaks in your family's voice. Stories, learning, heritage preservation.</p>
+            <a href="https://casa-companion-demo.onrender.com" target="_blank" class="product-link">Try Demo</a>
+        </div>
+        <div class="product-card">
+            <h3>Simple Balance Music</h3>
+            <p>AI music production suite. Mastering, stem separation, MIDI generation, DJ tools. Built for creators.</p>
+            <a href="https://simple-balance-demo.onrender.com" target="_blank" class="product-link">Try Demo</a>
+        </div>
+        <div class="product-card">
+            <h3>Edge Finder</h3>
+            <p>Sports betting edge analysis. Thesis-based picks, gut validation, trend tracking. No edge, no bet.</p>
+            <a href="https://edge-finder-demo.onrender.com" target="_blank" class="product-link">Try Demo</a>
+        </div>
+    </div>
+</section>
+
+
 <!-- ===== 10. COMING TO KICKSTARTER ===== -->
 <section id="kickstarter" class="ks-section">
     <div class="subtitle">Coming to Kickstarter</div>
@@ -1216,8 +1271,14 @@
         <a href="#hero">Home</a>
         <a href="#origin">Our Story</a>
         <a href="#companions">Companions</a>
+        <a href="#products">Products</a>
         <a href="#kickstarter">Kickstarter</a>
-        <a href="https://casa-companion-demo.onrender.com" target="_blank">Live Demo</a>
+    </div>
+
+    <div class="footer-links">
+        <a href="https://casa-companion-demo.onrender.com" target="_blank">Casa Companion Demo</a>
+        <a href="https://simple-balance-demo.onrender.com" target="_blank">Simple Balance Demo</a>
+        <a href="https://edge-finder-demo.onrender.com" target="_blank">Edge Finder Demo</a>
     </div>
 
     <div class="footer-links">
